@@ -1,0 +1,1518 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Trueline — Verified living expenses for mortgage brokers</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700;800&family=Public+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#0F1216; --ink-2:#3D4553; --ink-3:#6E7684; --ink-4:#9AA1AE;
+  --paper:#FFFFFF; --wash:#F4F6F9; --wash-2:#FAFBFC; --line:#E3E7EE; --line-2:#EDF0F5;
+  --accent:#1F3BC4; --accent-hover:#182F9E; --accent-wash:#EEF1FF; --accent-line:#C9D3FF;
+  --navy:#0E1533; --navy-2:#19224A; --navy-line:#2A3462; --navy-text:#A8B0D0;
+  --ok:#0E7C57; --ok-wash:#E6F4EE; --warn:#B26A0F; --warn-wash:#FBF0DF; --warn-line:#EFD5A8;
+  --r-sm:8px; --r:12px; --r-lg:18px; --r-xl:24px;
+  --shadow-sm:0 1px 2px rgba(15,18,22,.04),0 1px 1px rgba(15,18,22,.03);
+  --shadow:0 2px 4px rgba(15,18,22,.03),0 8px 24px rgba(15,18,22,.06);
+  --shadow-lg:0 4px 8px rgba(15,18,22,.03),0 24px 60px rgba(15,18,22,.10);
+  --sans:"Public Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  --display:"Schibsted Grotesk",-apple-system,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+  --container:1180px; --gutter:40px;
+}
+*,*::before,*::after{box-sizing:border-box;}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;}
+body{margin:0;font-family:var(--sans);font-size:17px;line-height:1.62;color:var(--ink-2);background:var(--paper);-webkit-font-smoothing:antialiased;}
+h1,h2,h3,h4{font-family:var(--display);color:var(--ink);margin:0;letter-spacing:-.028em;line-height:1.08;font-weight:700;}
+p{margin:0;} a{color:inherit;text-decoration:none;} ul{margin:0;padding:0;list-style:none;}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;}
+svg{display:block;}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:4px;}
+
+.wrap{width:100%;max-width:var(--container);margin:0 auto;padding-inline:var(--gutter);}
+.band{padding-block:112px;}
+.band--wash{background:var(--wash);border-top:1px solid var(--line);}
+.eyebrow{font-family:var(--mono);font-size:11.5px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin-bottom:20px;display:flex;align-items:center;gap:10px;}
+.eyebrow::before{content:"";width:20px;height:1px;background:var(--accent-line);}
+.band--dark .eyebrow{color:#8FA3FF;}
+.band--dark .eyebrow::before{background:#3A4682;}
+h2.h2{font-size:clamp(2rem,3.1vw,2.6rem);}
+.lede{font-size:19px;line-height:1.6;color:var(--ink-3);max-width:58ch;margin-top:20px;}
+.band--dark .lede{color:var(--navy-text);}
+.section-head{max-width:700px;margin-bottom:52px;}
+
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;height:46px;padding:0 22px;border-radius:var(--r-sm);font-size:15px;font-weight:600;transition:background .16s,border-color .16s;}
+.btn--primary{background:var(--accent);color:#fff;}
+.btn--primary:hover{background:var(--accent-hover);}
+.btn--ghost{background:var(--paper);color:var(--ink);border:1px solid var(--line);box-shadow:var(--shadow-sm);}
+.btn--ghost:hover{border-color:#CBD2DE;}
+.btn--sm{height:38px;padding:0 16px;font-size:14px;}
+.btn--onDark{background:#fff;color:var(--navy);}
+.btn--onDark:hover{background:#E9ECF8;}
+.btn--outlineDark{border:1px solid var(--navy-line);color:#fff;}
+.btn--outlineDark:hover{border-color:#4A5691;}
+.btn .arw{transition:transform .2s;}
+.btn:hover .arw{transform:translateX(3px);}
+
+/* header */
+.site-head{position:sticky;top:0;z-index:60;background:rgba(255,255,255,.88);backdrop-filter:blur(14px);border-bottom:1px solid transparent;transition:border-color .2s;}
+.site-head.is-stuck{border-bottom-color:var(--line);}
+.head-row{display:flex;align-items:center;gap:40px;height:70px;}
+.brand{display:flex;align-items:center;gap:10px;}
+.brand-mark{width:26px;height:26px;border-radius:7px;background:var(--accent);position:relative;flex:none;}
+.brand-mark::before,.brand-mark::after{content:"";position:absolute;left:6px;height:1.5px;background:rgba(255,255,255,.92);border-radius:1px;}
+.brand-mark::before{top:9px;width:14px;} .brand-mark::after{top:14px;width:8px;}
+.brand-name{font-family:var(--display);font-weight:700;font-size:17.5px;letter-spacing:-.03em;color:var(--ink);}
+.nav{display:flex;gap:28px;margin-left:8px;}
+.nav a{font-size:14.5px;font-weight:500;color:var(--ink-2);}
+.nav a:hover{color:var(--ink);}
+.head-actions{display:flex;align-items:center;gap:18px;margin-left:auto;}
+.head-actions .signin{font-size:14.5px;font-weight:500;color:var(--ink-2);}
+
+/* hero */
+.hero{padding-top:46px;padding-bottom:76px;position:relative;overflow:hidden;}
+
+.hero-inner{max-width:780px;margin:0 auto;}
+.hero h1{font-size:clamp(2.4rem,3.8vw,3.4rem);letter-spacing:-.036em;line-height:1.04;}
+.hero .lede{max-width:52ch;font-size:19px;}
+.hero-cta{display:flex;gap:14px;margin-top:26px;margin-bottom:36px;flex-wrap:wrap;}
+
+/* ============ ASSESSMENT PANEL ============ */
+.assess{background:var(--paper);border:1px solid var(--line);border-radius:var(--r-xl);box-shadow:var(--shadow-lg);overflow:hidden;}
+.as-head{display:flex;align-items:baseline;gap:14px;padding:18px 22px 16px;border-bottom:1px solid var(--line-2);background:var(--wash-2);flex-wrap:wrap;}
+.as-title{font-family:var(--display);font-size:17px;font-weight:800;letter-spacing:-.03em;color:var(--ink);}
+.as-ref{margin-left:auto;font-family:var(--mono);font-size:10.5px;letter-spacing:.04em;color:var(--ink-4);}
+.sumband{padding:22px 22px 24px;border-bottom:1px solid var(--line-2);}
+.sum-line{display:flex;align-items:flex-end;gap:18px;flex-wrap:wrap;}
+.sum-col{min-width:0;}
+.sum-k{font-family:var(--mono);font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-4);margin-bottom:7px;}
+.sum-k--now{color:var(--ok);}
+.sum-was{font-family:var(--display);font-size:29px;font-weight:700;letter-spacing:-.042em;line-height:.88;color:var(--ink-4);font-variant-numeric:tabular-nums;text-decoration-thickness:2px;display:block;}
+.sum-arrow{flex:none;margin-bottom:7px;}
+.sum-now{font-family:var(--display);font-size:29px;font-weight:700;letter-spacing:-.042em;color:var(--ok);font-variant-numeric:tabular-nums;line-height:.88;display:block;}
+.sum-now small{font-family:var(--mono);font-size:11px;font-weight:400;letter-spacing:-.01em;color:var(--ink-4);margin-left:5px;}
+.sum-delta{margin-left:auto;font-family:var(--mono);font-size:12px;font-weight:500;color:var(--ok);background:var(--ok-wash);border-radius:5px;padding:4px 9px;}
+
+/* generic fold */
+.foldbtn{width:100%;display:flex;align-items:center;gap:12px;text-align:left;transition:background .14s;}
+.fold-chev{color:var(--ink-4);flex:none;transition:transform .24s cubic-bezier(.22,.8,.3,1);}
+.foldw[data-open="true"] > .foldbtn .fold-chev{transform:rotate(90deg);}
+.foldp{display:grid;grid-template-rows:0fr;transition:grid-template-rows .32s cubic-bezier(.22,.8,.3,1);}
+.foldw[data-open="true"] > .foldp{grid-template-rows:1fr;}
+.foldp > div{overflow:hidden;}
+
+/* adjustments fold */
+.assess > .foldw{border-bottom:1px solid var(--line-2);}
+.assess > .foldw > .foldbtn{padding:14px 22px;}
+.assess > .foldw > .foldbtn:hover{background:var(--wash-2);}
+.fold-t{font-family:var(--display);font-size:15.5px;font-weight:800;letter-spacing:-.025em;color:var(--ink);}
+.assess > .foldw > .foldbtn > .pill:last-of-type{margin-right:auto;}
+.pill{font-family:var(--mono);font-size:10px;letter-spacing:.06em;text-transform:uppercase;padding:3px 8px;border-radius:5px;white-space:nowrap;}
+.pill--ok{background:var(--ok-wash);color:var(--ok);}
+.pill--bad{background:var(--bad-wash);color:var(--bad);}
+.foldi{padding:8px 22px 18px;background:var(--wash-2);}
+
+.foldi-note{font-family:var(--mono);font-size:11px;color:var(--ink-3);padding:0 2px 10px;letter-spacing:-.01em;}
+.foldi-note b{font-weight:600;color:var(--ink);}
+.adjrow{padding:10px 12px;border-radius:6px;border:1px solid var(--line);background:var(--paper);}
+.adjrow + .adjrow{margin-top:5px;}
+.adjrow-top{display:flex;align-items:center;gap:10px;}
+.adjrow-i{width:6px;height:6px;border-radius:50%;flex:none;}
+.adjrow--ok{border-color:rgba(14,124,87,.28);background:#F6FBF8;}
+.adjrow--ok .adjrow-i{background:var(--ok);}
+.adjrow--bad{border-color:rgba(179,53,44,.28);background:#FDF7F6;}
+.adjrow--bad .adjrow-i{background:var(--bad);}
+.adjrow-d{
+  flex:1;min-width:0;overflow-wrap:anywhere;
+  font-family:var(--mono);font-size:11.5px;font-weight:500;color:var(--ink);letter-spacing:-.015em;
+}
+.adjrow-x{flex:none;white-space:nowrap;font-family:var(--mono);font-size:12px;font-variant-numeric:tabular-nums;}
+.adjrow-x s{color:var(--ink-4);text-decoration-thickness:1px;}
+.adjrow-ar{color:var(--ok);margin:0 5px;}
+.adjrow--bad .adjrow-ar{color:var(--bad);opacity:.55;}
+.adjrow-x b{font-weight:600;}
+.adjrow--ok .adjrow-x b{color:var(--ok);}
+.adjrow--bad .adjrow-x b{color:var(--bad);}
+.adjrow-s{margin-top:6px;padding-left:16px;font-size:12.5px;color:var(--ink-3);line-height:1.4;overflow-wrap:anywhere;}
+.more{
+  vertical-align:baseline;line-height:inherit;
+  font-family:var(--mono);font-size:10px;letter-spacing:.04em;color:var(--accent);
+  border-bottom:1px solid var(--accent-line);padding:0;margin-left:4px;white-space:nowrap;
+}
+.more:hover{border-bottom-color:var(--accent);}
+.adjrow-full{
+  display:none;margin-top:8px;margin-left:16px;padding-top:8px;
+  border-top:1px dashed var(--line);
+  font-family:var(--sans);font-weight:400;font-size:12.5px;line-height:1.55;
+  color:var(--ink-2);overflow-wrap:anywhere;
+}
+.adjrow.is-open .adjrow-full{display:block;}
+.adjrow-full br{content:"";display:block;height:7px;}
+.adjrow-full q{color:var(--ink);font-style:italic;quotes:"\201C" "\201D";}
+.adjrow-full q::before{content:open-quote;}
+.adjrow-full q::after{content:close-quote;}
+
+/* category breakdown */
+.cats-head{display:flex;align-items:baseline;gap:12px;padding:20px 22px 10px;flex-wrap:wrap;}
+.cats-note{margin-left:auto;font-family:var(--mono);font-size:10px;letter-spacing:.06em;color:var(--ink-4);}
+.cats-t{font-family:var(--display);font-size:15.5px;font-weight:800;letter-spacing:-.025em;color:var(--ink);}
+.cat{border-top:1px solid var(--line-2);}
+.catbtn{display:flex;flex-direction:column;gap:9px;width:100%;padding:12px 22px 14px;}
+.cat-top{display:flex;align-items:baseline;gap:10px;width:100%;}
+.cat-top .fold-chev{align-self:center;}
+.catbtn:hover{background:var(--wash-2);}
+.cat[data-open="true"] > .catbtn{background:var(--wash-2);}
+.cat-n{font-size:14px;font-weight:500;color:var(--ink);letter-spacing:-.01em;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0;}
+.cat-bot{display:flex;align-items:center;gap:12px;width:100%;}
+.bars{position:relative;height:8px;flex:1;min-width:0;border-radius:99px;background:var(--wash);}
+.cat-pct{flex:none;width:38px;text-align:right;font-family:var(--mono);font-size:11px;color:var(--ink-4);font-variant-numeric:tabular-nums;}
+.bar--doc,.bar--adj{position:absolute;top:0;left:0;height:100%;border-radius:99px;transition:width .5s cubic-bezier(.22,.8,.3,1);}
+.bar--doc{background:#D8DDE8;}
+.bar--adj{background:var(--ok);}
+.cat-f{margin-left:auto;flex:none;font-family:var(--mono);font-size:12.5px;white-space:nowrap;font-variant-numeric:tabular-nums;}
+.cat-f s{color:var(--ink-4);text-decoration-thickness:1px;}
+.cat-f em{font-style:normal;font-weight:600;color:var(--ok);}
+.cat-ar{color:var(--ok);margin:0 3px;}
+.cat-same{color:var(--ink-2);font-weight:500;}
+.catinner{padding:2px 22px 16px;background:var(--wash-2);}
+.tl{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr) auto;gap:14px;align-items:center;padding:9px 12px;border-radius:6px;background:var(--paper);border:1px solid var(--line);}
+.tl + .tl{margin-top:6px;}
+.tl--ok{border-color:rgba(14,124,87,.3);background:#F5FBF8;}
+.tl--bad{border-color:rgba(179,53,44,.28);background:#FDF7F6;}
+.tl-d{font-family:var(--mono);font-size:12px;font-weight:500;color:var(--ink);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.tl-s{font-size:12.5px;color:var(--ink-3);line-height:1.4;}
+.tl-n{font-family:var(--mono);font-size:12px;font-weight:600;text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap;}
+.tl-n s{font-weight:400;color:var(--ink-4);text-decoration-thickness:1px;}
+.tl-ar{margin:0 4px;color:var(--ok);}
+.tl--bad .tl-ar{color:var(--bad);opacity:.55;}
+.tl--ok .tl-n{color:var(--ok);}
+.tl--bad .tl-n{color:var(--bad);}
+.tl-n--flat{color:var(--ink-2);font-weight:500;}
+
+.as-foot{padding:14px 22px;background:var(--wash-2);border-top:1px solid var(--line-2);font-size:13px;color:var(--ink-3);}
+
+/* audit */
+.band--dark{background:var(--navy);color:var(--navy-text);}
+.band--dark h2,.band--dark h3,.band--dark h4{color:#fff;}
+.audit-grid{display:grid;grid-template-columns:minmax(0,.88fr) minmax(0,1.12fr);gap:74px;align-items:start;}
+.audit-card{background:var(--navy-2);border:1px solid var(--navy-line);border-radius:var(--r-lg);overflow:hidden;}
+.audit-card-head{padding:20px 24px;border-bottom:1px solid var(--navy-line);display:grid;grid-template-columns:minmax(0,1fr) auto;gap:16px;align-items:center;}
+.audit-card-head .d{font-family:var(--mono);font-size:14px;font-weight:500;color:#fff;}
+.audit-card-head .s{font-family:var(--mono);font-size:11.5px;color:#7681B4;margin-top:4px;}
+.audit-card-head .a{font-family:var(--display);font-size:23px;font-weight:700;color:#fff;letter-spacing:-.03em;text-align:right;font-variant-numeric:tabular-nums;}
+.audit-card-head .a small{display:block;font-family:var(--mono);font-size:10px;font-weight:400;letter-spacing:.1em;text-transform:uppercase;color:#7681B4;margin-top:5px;}
+.rail{padding:8px 24px 22px;}
+.rail-item{display:grid;grid-template-columns:60px 1fr;gap:18px;position:relative;padding:15px 0;}
+.rail-item::before{content:"";position:absolute;left:71px;top:0;bottom:0;width:1px;background:var(--navy-line);}
+.rail-item:first-child::before{top:50%;}
+.rail-item:last-child::before{bottom:50%;}
+.rail-item::after{content:"";position:absolute;left:67px;top:calc(50% - 4px);width:9px;height:9px;border-radius:50%;background:var(--navy);border:1.5px solid #4A5691;}
+.rail-item--final::after{background:#3DD68C;border-color:#3DD68C;}
+.rail-when{font-family:var(--mono);font-size:11px;color:#7681B4;text-align:right;padding-top:2px;}
+.rail-what{padding-left:22px;}
+.rail-actor{font-family:var(--mono);font-size:10px;letter-spacing:.11em;text-transform:uppercase;color:#6C77AC;margin-bottom:4px;}
+.rail-text{font-size:14.5px;color:#DDE2F5;line-height:1.45;}
+.rail-treat{display:inline-block;font-family:var(--mono);font-size:11px;margin-top:8px;padding:3px 9px;border-radius:5px;background:rgba(255,255,255,.06);color:#A8B0D0;border:1px solid var(--navy-line);}
+.rail-treat--final{background:rgba(61,214,140,.12);border-color:rgba(61,214,140,.35);color:#5FE0A2;}
+.audit-note{margin-top:22px;padding:20px 22px;border:1px dashed var(--navy-line);border-radius:var(--r);background:rgba(255,255,255,.02);}
+.audit-note p{font-size:14.5px;color:var(--navy-text);line-height:1.55;}
+.audit-note strong{color:#fff;font-weight:600;}
+.akey{padding:22px 0;border-top:1px solid var(--navy-line);}
+.akey:last-child{border-bottom:1px solid var(--navy-line);}
+.akey h4{font-size:16.5px;font-weight:600;letter-spacing:-.02em;margin-bottom:6px;}
+.akey p{font-size:14.5px;color:var(--navy-text);line-height:1.55;}
+
+/* security strip */
+.sec{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:40px;}
+.scard{border:1px solid var(--line);border-radius:var(--r-lg);padding:24px 22px 26px;background:var(--paper);}
+.scard h3{font-size:16px;font-weight:600;letter-spacing:-.02em;margin-bottom:7px;}
+.scard p{font-size:14px;line-height:1.55;color:var(--ink-3);}
+
+/* cta */
+.cta-box{background:var(--navy);border-radius:var(--r-xl);padding:68px 60px;position:relative;overflow:hidden;}
+.cta-box::before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(90deg,rgba(255,255,255,.035) 0 1px,transparent 1px 92px);}
+.cta-inner{position:relative;max-width:640px;}
+.cta-box h2{font-size:clamp(1.9rem,2.9vw,2.5rem);color:#fff;}
+.cta-box p{color:var(--navy-text);font-size:18px;margin-top:18px;line-height:1.6;}
+.cta-btns{display:flex;gap:14px;margin-top:34px;flex-wrap:wrap;}
+
+.site-foot{border-top:1px solid var(--line);padding-block:48px 36px;}
+.foot-row{display:flex;gap:26px;align-items:center;flex-wrap:wrap;}
+.foot-links{display:flex;gap:22px;flex-wrap:wrap;}
+.foot-links a{font-size:14px;color:var(--ink-3);}
+.foot-links a:hover{color:var(--accent);}
+.foot-base{margin-top:28px;padding-top:22px;border-top:1px solid var(--line-2);display:flex;gap:24px;flex-wrap:wrap;}
+.foot-base p{font-family:var(--mono);font-size:11.5px;color:var(--ink-4);}
+.foot-base p:last-child{margin-left:auto;}
+
+.rev{opacity:0;transform:translateY(16px);transition:opacity .6s cubic-bezier(.22,.8,.3,1),transform .6s cubic-bezier(.22,.8,.3,1);}
+.rev.is-in{opacity:1;transform:none;}
+.rev-d1{transition-delay:.08s;}
+
+@media (max-width:1080px){
+  :root{--gutter:28px;}
+  .triage,.audit-grid{grid-template-columns:1fr;gap:52px;}
+  .prob,.sec{grid-template-columns:1fr;}
+  .nav{display:none;}
+  .cta-box{padding:52px 34px;}
+}
+@media (max-width:680px){
+  :root{--gutter:18px;}
+  body{font-size:16px;}
+  .band{padding-block:70px;}
+  .hero{padding-top:32px;padding-bottom:52px;}
+  .head-actions .signin{display:none;}
+  .qbtn{grid-template-columns:10px minmax(0,1fr) auto;gap:12px;padding:15px 18px;}
+  .qchev{display:none;}
+  .qinner{padding:2px 18px 22px;}
+  .rail-item{grid-template-columns:1fr;gap:4px;}
+  .rail-item::before,.rail-item::after{display:none;}
+  .rail-when{text-align:left;}
+  .rail-what{padding-left:14px;border-left:1px solid var(--navy-line);}
+  .cta-box{padding:40px 24px;}
+  .sumband{padding:16px 16px 18px;}
+  .sum-now,.sum-was{font-size:21px;}
+  .sum-delta{margin-left:0;}
+  .assess > .foldw > .foldbtn,.catbtn{
+    position:sticky;top:70px;z-index:6;
+    background:var(--paper);
+    box-shadow:0 1px 0 var(--line-2);
+  }
+  .assess > .foldw[data-open="true"] > .foldbtn,.cat[data-open="true"] > .catbtn{background:var(--wash);}
+  .adjrow-x{font-size:11.5px;}
+  .as-head,.cats-head,.as-foot{padding-inline:16px;}
+  .assess > .foldw > .foldbtn{padding:13px 16px;flex-wrap:wrap;}
+  .foldi{padding:4px 16px 18px;}
+  .catbtn{padding:11px 16px 13px;}
+  .cat-f{font-size:11.5px;}
+  .catinner{padding:2px 16px 14px;}
+  .tl{grid-template-columns:1fr;gap:4px;}
+  .tl-n{text-align:left;}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto;}
+  *,*::before,*::after{transition-duration:.001ms !important;}
+  .rev{opacity:1;transform:none;}
+}
+
+/* ---- dev ID labels (toggle bottom-right) ---- */
+.dv{position:relative;}
+body.ids-off .dv::after{display:none;}
+.dv::after{
+  content:"#" attr(id);
+  position:absolute;top:3px;right:5px;z-index:40;
+  font-family:var(--mono);font-size:9px;letter-spacing:.08em;
+  color:rgba(15,18,22,.34);
+  background:rgba(255,255,255,.72);border-radius:3px;padding:1px 4px;
+  pointer-events:none;white-space:nowrap;
+}
+.band--dark .dv::after,.band--dark.dv::after,#audit-rail::after,#audit-note::after{color:rgba(255,255,255,.45);background:rgba(14,21,51,.6);}
+#idtoggle{
+  position:fixed;right:16px;bottom:16px;z-index:200;
+  font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;
+  color:rgba(15,18,22,.4);background:rgba(255,255,255,.9);backdrop-filter:blur(6px);
+  border:1px solid var(--line);border-radius:99px;padding:7px 13px;
+}
+#idtoggle:hover{color:var(--ink);border-color:#CBD2DE;}
+
+/* ============ WALKTHROUGH ANIMATION ============ */
+.an-wrap{max-width:100%;margin:0 auto;}
+.an-stage{position:relative;background:var(--paper);border:1px solid var(--line);border-radius:var(--r-xl);box-shadow:var(--shadow-lg);overflow:hidden;}
+.an-bar{display:flex;align-items:center;gap:12px;padding:12px 18px;border-bottom:1px solid var(--line-2);background:var(--accent-wash);transition:background .35s;}
+.an-stage.is-broker .an-bar{background:var(--ok-wash);}
+.an-stage{border-top:3px solid var(--accent);transition:border-color .35s;}
+.an-stage.is-broker{border-top-color:var(--ok);}
+.an-who svg{display:inline-block;vertical-align:-2px;margin-right:5px;}
+.an-cursor svg path{fill:#1F3BC4;transition:fill .35s;}
+.an-stage.is-broker .an-cursor svg path{fill:#0E7C57;}
+.an-dots{display:flex;gap:5px;}
+.an-dots i{width:8px;height:8px;border-radius:50%;background:#DDE2EA;display:block;}
+.an-url{font-family:var(--mono);font-size:11px;color:var(--ink-4);}
+.an-who{margin-left:auto;font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;padding:4px 9px;border-radius:5px;background:var(--accent-wash);color:var(--accent);transition:background .3s,color .3s;}
+.an-who.is-broker{background:var(--ok-wash);color:var(--ok);}
+.an-body{padding:18px 20px 22px;min-height:330px;}
+
+.an-tot-k{font-family:var(--mono);font-size:9.5px;letter-spacing:.11em;text-transform:uppercase;color:var(--ink-4);}
+.an-tot-v{font-family:var(--display);font-size:22px;font-weight:700;letter-spacing:-.035em;color:var(--ink);font-variant-numeric:tabular-nums;}
+
+.an-cat{border:1px solid var(--line);border-radius:var(--r);margin-bottom:8px;overflow:hidden;background:var(--paper);}
+.an-cat-hd{display:flex;align-items:center;gap:11px;padding:11px 14px;}
+.an-chev{width:0;height:0;border-left:5px solid var(--ink-4);border-top:4px solid transparent;border-bottom:4px solid transparent;transition:transform .3s;flex:none;}
+.an-cat.is-open .an-chev{transform:rotate(90deg);}
+.an-cat.is-open .an-cat-hd{background:var(--wash-2);border-bottom:1px solid var(--line-2);}
+.an-cat-n{font-size:13.5px;font-weight:500;color:var(--ink);}
+.an-cat-v{margin-left:auto;font-family:var(--mono);font-size:12.5px;font-weight:600;color:var(--ink);font-variant-numeric:tabular-nums;transition:color .4s;}
+.an-cat-v.is-cut{color:var(--ok);}
+.an-cat-bd{display:grid;grid-template-rows:0fr;transition:grid-template-rows .16s cubic-bezier(.22,.8,.3,1);}
+.an-cat.is-open .an-cat-bd{grid-template-rows:1fr;}
+.an-cat-bd > *{overflow:hidden;}
+.an-cat--locked{opacity:.55;}
+
+.an-tx{margin:8px 10px;padding:9px 11px;border:1px solid var(--line);border-radius:8px;background:var(--paper);transition:border-color .3s,background .3s;}
+.an-tx.is-sel{border-color:var(--accent);background:var(--accent-wash);}
+.an-tx.is-ok{border-color:rgba(14,124,87,.4);background:#F6FBF8;}
+.an-tx.is-part{border-color:rgba(178,106,15,.4);background:#FEFAF3;}
+.an-tx.is-bad{border-color:rgba(179,53,44,.4);background:#FDF7F6;}
+.an-tx--plain{opacity:.7;}
+.an-tx-hd{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;}
+.an-tx-d{font-family:var(--mono);font-size:11.5px;font-weight:500;color:var(--ink);}
+.an-tx-s{font-size:11.5px;color:var(--ink-4);}
+.an-tx-v{margin-left:auto;font-family:var(--mono);font-size:12.5px;color:var(--ink);font-variant-numeric:tabular-nums;white-space:nowrap;}
+.an-tx-v b{font-weight:600;}
+.an-tx-v s{color:var(--ink-4);margin-right:5px;text-decoration-thickness:1px;}
+.an-tx-mo{color:var(--ink-4);font-size:10px;margin-left:2px;}
+
+.an-form{display:none;margin-top:10px;padding-top:10px;border-top:1px dashed var(--line);}
+.an-tx.is-form .an-form{display:block;}
+.an-f-row{display:flex;align-items:center;gap:10px;margin-bottom:8px;}
+.an-f-k{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-4);}
+.an-f-note{min-height:34px;border:1px solid var(--line);border-radius:6px;padding:8px 10px;background:var(--paper);font-size:12.5px;color:var(--ink-2);line-height:1.4;transition:border-color .2s;}
+.an-f-note.is-active{border-color:var(--accent);}
+.an-caret{display:none;width:1.5px;height:12px;background:var(--accent);vertical-align:-2px;margin-left:1px;}
+.is-active .an-caret{display:inline-block;animation:anBlink .8s step-end infinite;}
+@keyframes anBlink{50%{opacity:0}}
+.an-f-send{margin-top:9px;display:inline-flex;align-items:center;justify-content:center;height:30px;padding:0 14px;border-radius:6px;background:var(--accent);color:#fff;font-size:12px;font-weight:600;}
+
+.an-verdict{display:none;margin-top:9px;padding-top:9px;border-top:1px dashed var(--line);font-size:12.5px;line-height:1.45;}
+.an-tx.is-verdict .an-verdict{display:block;}
+.an-verdict b{font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;padding:3px 7px;border-radius:4px;margin-right:8px;}
+.an-v-ok b{background:var(--ok-wash);color:var(--ok);}
+.an-v-part b{background:var(--warn-wash);color:var(--warn);}
+.an-v-bad b{background:var(--bad-wash);color:var(--bad);}
+
+.an-gen{display:inline-flex;align-items:center;justify-content:center;height:38px;padding:0 18px;border-radius:8px;background:var(--ink);color:#fff;font-size:13px;font-weight:600;margin-top:10px;opacity:.25;transition:opacity .4s;}
+.an-gen.is-live{opacity:1;}
+
+.an-report{display:none;margin-top:14px;border:1px solid var(--line);border-radius:var(--r);background:var(--wash-2);padding:15px 16px;}
+.an-report.is-on{display:block;animation:anRise .28s cubic-bezier(.22,.8,.3,1);}
+@keyframes anRise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.an-rep-hd{font-family:var(--mono);font-size:9.5px;letter-spacing:.11em;text-transform:uppercase;color:var(--ink-4);margin-bottom:10px;}
+.an-rep-sum{display:flex;align-items:baseline;gap:9px;font-family:var(--display);font-variant-numeric:tabular-nums;margin-bottom:12px;flex-wrap:wrap;}
+.an-rep-sum s{font-size:20px;font-weight:600;color:var(--ink-4);text-decoration-thickness:1.5px;}
+.an-rep-ar{color:var(--ok);}
+.an-rep-sum b{font-size:26px;font-weight:700;color:var(--ok);letter-spacing:-.04em;}
+.an-rep-d{margin-left:auto;font-family:var(--mono);font-size:11px;color:var(--ok);background:var(--ok-wash);border-radius:5px;padding:3px 8px;}
+.an-rep-l{display:flex;align-items:baseline;gap:10px;padding:7px 0;border-top:1px solid var(--line-2);font-size:12.5px;color:var(--ink-2);flex-wrap:wrap;}
+.an-rep-l em{font-style:normal;font-family:var(--mono);font-size:11.5px;color:var(--ink);margin-left:auto;}
+.an-rep-l i{font-style:normal;font-family:var(--mono);font-size:9.5px;letter-spacing:.07em;text-transform:uppercase;padding:2px 7px;border-radius:4px;width:74px;text-align:center;}
+.an-rep-l--ok i{background:var(--ok-wash);color:var(--ok);}
+.an-rep-l--part i{background:var(--warn-wash);color:var(--warn);}
+.an-rep-l--bad i{background:var(--bad-wash);color:var(--bad);}
+.an-rep-f{margin-top:10px;padding-top:9px;border-top:1px solid var(--line-2);font-size:11.5px;color:var(--ink-4);line-height:1.45;}
+
+
+.an-tot{display:flex;align-items:flex-end;gap:14px;padding-bottom:14px;border-bottom:1px solid var(--line-2);margin-bottom:12px;flex-wrap:wrap;}
+.an-tot-c{display:flex;flex-direction:column;gap:5px;}
+.an-tot-ar{color:var(--ok);font-size:15px;line-height:1.9;opacity:0;transition:opacity .3s;}
+.an-tot-c#anNowWrap{opacity:0;transition:opacity .3s;}
+.an-tot.is-live .an-tot-ar,.an-tot.is-live #anNowWrap{opacity:1;}
+.an-tot-now{color:var(--ok);transition:color .2s;}
+.an-tot-now.is-bump{animation:anBump .45s cubic-bezier(.22,.8,.3,1);}
+@keyframes anBump{0%{transform:scale(1)}45%{transform:scale(1.14)}100%{transform:scale(1)}}
+.an-tot-sep{margin-left:auto;font-family:var(--mono);font-size:10px;color:var(--ink-4);}
+
+.an-f-amt{margin-left:auto;font-family:var(--mono);font-size:12.5px;font-weight:600;color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:4px 10px;background:var(--paper);min-width:62px;text-align:right;}
+.an-f-amt.is-active{border-color:var(--accent);color:var(--accent);}
+
+.an-pending{display:none;margin-top:9px;padding-top:9px;border-top:1px dashed var(--line);font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);}
+.an-tx.is-pending .an-pending{display:block;}
+
+.an-review{display:none;margin-top:9px;padding-top:9px;border-top:1px dashed var(--line);}
+.an-tx.is-review .an-review{display:block;}
+.an-r-row{display:flex;align-items:center;gap:10px;margin-bottom:8px;}
+.an-r-amt{margin-left:auto;font-family:var(--mono);font-size:12.5px;font-weight:600;color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:4px 10px;background:var(--paper);min-width:62px;text-align:right;}
+.an-r-amt.is-active{border-color:var(--ok);color:var(--ok);}
+.an-r-note{background:var(--wash-2);}
+.an-r-note.is-active{border-color:var(--ok);}
+.an-r-note .an-caret{background:var(--ok);}
+.an-r-btns{display:flex;gap:8px;margin-top:9px;}
+.an-r-b{display:inline-flex;align-items:center;justify-content:center;height:28px;padding:0 13px;border-radius:6px;font-size:11.5px;font-weight:600;border:1px solid var(--line);color:var(--ink-3);background:var(--paper);}
+.an-r-yes{border-color:rgba(14,124,87,.4);color:var(--ok);background:var(--ok-wash);}
+.an-r-no{border-color:rgba(179,53,44,.35);color:var(--bad);background:var(--bad-wash);}
+
+.an-cursor{position:absolute;top:0;left:0;z-index:30;pointer-events:none;transition:transform .25s cubic-bezier(.4,.05,.2,1);filter:drop-shadow(0 2px 4px rgba(0,0,0,.22));}
+.an-cursor::after{content:"";position:absolute;top:-9px;left:-9px;width:34px;height:34px;border-radius:50%;background:var(--accent);opacity:0;transform:scale(.3);}
+.an-cursor.is-click::after{animation:anTap .18s ease-out;}
+@keyframes anTap{0%{opacity:.3;transform:scale(.3)}100%{opacity:0;transform:scale(1)}}
+
+.an-foot{display:flex;align-items:center;gap:12px;margin-top:16px;flex-wrap:wrap;}
+.an-cap{flex:1;min-width:200px;font-family:var(--mono);font-size:11px;letter-spacing:.04em;color:var(--ink-3);}
+.an-btn{font-family:var(--mono);font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-3);border:1px solid var(--line);border-radius:99px;padding:6px 14px;background:var(--paper);}
+.an-btn:hover{border-color:#CBD2DE;color:var(--ink);}
+
+@media (max-width:680px){
+  .an-body{padding:14px 12px 18px;min-height:300px;}
+  .an-tx{margin:7px 6px;}
+  .an-tx-v{margin-left:0;}
+  .an-cursor{display:none;}
+  .an-rep-l i{width:auto;}
+}
+
+/* ============ HOW IT HELPS ============ */
+.helps{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px;}
+.hc{border:1px solid var(--line);border-radius:var(--r-lg);background:var(--paper);padding:0 0 6px;overflow:hidden;box-shadow:var(--shadow-sm);}
+.hc-hd{display:flex;align-items:center;gap:12px;padding:15px 22px;border-bottom:1px solid var(--line-2);flex-wrap:wrap;}
+.hc-tag{font-family:var(--display);font-size:15px;font-weight:800;letter-spacing:-.025em;color:var(--ink);}
+.hc-time{margin-left:auto;font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;padding:4px 9px;border-radius:5px;}
+.hc--broker .hc-hd{background:var(--ok-wash);border-bottom-color:rgba(14,124,87,.18);}
+.hc--broker .hc-time{background:rgba(255,255,255,.7);color:var(--ok);}
+.hc--borrower .hc-hd{background:var(--accent-wash);border-bottom-color:var(--accent-line);}
+.hc--borrower .hc-time{background:rgba(255,255,255,.7);color:var(--accent);}
+.hc-l{padding:6px 22px 12px;}
+.hc-l li{padding:14px 0;border-bottom:1px solid var(--line-2);font-size:14.5px;line-height:1.55;color:var(--ink-3);}
+.hc-l li:last-child{border-bottom:0;}
+.hc-l b{display:block;color:var(--ink);font-weight:600;font-size:15px;margin-bottom:3px;letter-spacing:-.01em;}
+
+.swap{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px;margin-top:20px;}
+.sw-col{border:1px solid var(--line);border-radius:var(--r-lg);padding:22px 24px 24px;background:var(--paper);}
+.sw-col--was{background:var(--wash-2);}
+.sw-col--now{border-color:rgba(14,124,87,.3);background:#F6FBF8;}
+.sw-k{font-family:var(--mono);font-size:10px;letter-spacing:.11em;text-transform:uppercase;color:var(--ink-4);margin-bottom:14px;}
+.sw-col--now .sw-k{color:var(--ok);}
+.sw-l{counter-reset:sw;}
+.sw-l li{counter-increment:sw;position:relative;padding:8px 0 8px 30px;font-size:14.5px;line-height:1.5;color:var(--ink-2);}
+.sw-l li::before{
+  content:counter(sw);position:absolute;left:0;top:9px;
+  width:19px;height:19px;border-radius:50%;
+  font-family:var(--mono);font-size:10px;line-height:19px;text-align:center;
+  background:var(--line);color:var(--ink-3);
+}
+.sw-col--now .sw-l li::before{background:var(--ok);color:#fff;}
+.sw-col--was .sw-l li{color:var(--ink-3);}
+.swap-note{margin-top:16px;font-family:var(--mono);font-size:10.5px;color:var(--ink-4);letter-spacing:-.01em;}
+
+@media (max-width:900px){
+  .helps,.swap{grid-template-columns:1fr;}
+}
+
+/* ============ HERO COMPARISON ============ */
+.vs{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);
+  border:1px solid var(--line);border-radius:var(--r-lg);overflow:hidden;box-shadow:var(--shadow);}
+.vs-col{background:var(--paper);padding:0 0 6px;}
+.vs-col--us{background:linear-gradient(180deg,var(--accent-wash),#fff 34%);}
+.vs-hd{display:flex;align-items:center;gap:9px;padding:15px 20px;border-bottom:1px solid var(--line-2);}
+.vs-t{font-family:var(--display);font-size:14.5px;font-weight:800;letter-spacing:-.025em;color:var(--ink-3);}
+.vs-col--us .vs-t{color:var(--accent);}
+.vs-l li{display:grid;grid-template-columns:15px minmax(0,1fr);gap:9px;align-items:start;
+  padding:11px 20px;min-height:56px;border-bottom:1px solid var(--line-2);font-size:13.5px;line-height:1.45;color:var(--ink-2);}
+.vs-l li:last-child{border-bottom:0;}
+.vs-l li b{color:var(--ink);font-weight:600;}
+.vs-i{width:14px;height:14px;border-radius:50%;margin-top:3px;display:flex;align-items:center;justify-content:center;flex:none;}
+.vs-i--x{background:var(--wash);color:var(--ink-4);}
+.vs-i--n{background:var(--line-2);color:var(--ink-3);}
+.vs-l li.is-off{color:var(--ink-4);}
+.vs-l li.is-off span:last-child{opacity:.72;}
+.vs-i--y{background:var(--ok-wash);color:var(--ok);}
+.vs-foot{padding:14px 20px 4px;font-family:var(--mono);font-size:11px;color:var(--ink-4);line-height:1.5;}
+.vs-col--us .vs-foot{color:var(--accent);}
+
+/* ============ PAIN POINTS ============ */
+.pain{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:22px;}
+.pn{border:1px solid var(--line);border-radius:var(--r-lg);background:var(--paper);overflow:hidden;box-shadow:var(--shadow-sm);}
+.pn-hd{padding:15px 22px;border-bottom:1px solid var(--line-2);background:var(--wash-2);
+  font-family:var(--display);font-size:15px;font-weight:800;letter-spacing:-.025em;color:var(--ink);}
+.pn-l{padding:6px 22px 14px;}
+.pn-l li{padding:13px 0;border-bottom:1px solid var(--line-2);font-size:14.5px;line-height:1.55;color:var(--ink-3);}
+.pn-l li:last-child{border-bottom:0;}
+.pn-l b{display:block;color:var(--ink);font-weight:600;margin-bottom:3px;letter-spacing:-.01em;}
+
+/* ============ EMBEDDED DEMO ============ */
+.demo-wrap{border:1px solid var(--line);border-radius:var(--r-xl);overflow:hidden;background:var(--paper);
+  box-shadow:var(--shadow-lg);}
+.demo-bar{display:flex;align-items:center;gap:12px;padding:12px 20px;border-bottom:1px solid var(--line-2);background:var(--wash-2);flex-wrap:wrap;}
+.demo-bar b{font-family:var(--display);font-size:14px;font-weight:800;letter-spacing:-.025em;}
+.demo-bar span{font-family:var(--mono);font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-4);}
+.demo-bar a{margin-left:auto;font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);}
+.demo-frame{height:940px;background:var(--paper);}
+.demo-frame iframe{width:100%;height:100%;border:0;display:block;}
+
+/* ============ PRICING ============ */
+.price{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
+.pc2{border:1px solid var(--line);border-radius:var(--r-lg);background:var(--paper);padding:26px 24px 28px;
+  display:flex;flex-direction:column;box-shadow:var(--shadow-sm);}
+.pc2--mid{border-color:var(--accent-line);box-shadow:0 2px 4px rgba(31,59,196,.05),0 14px 34px rgba(31,59,196,.10);position:relative;}
+.pc2-tag{position:absolute;top:-10px;left:24px;font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;
+  text-transform:uppercase;background:var(--accent);color:#fff;border-radius:5px;padding:4px 9px;}
+.pc2-k{font-family:var(--mono);font-size:10px;letter-spacing:.11em;text-transform:uppercase;color:var(--ink-4);}
+.pc2-p{font-family:var(--display);font-size:34px;font-weight:800;letter-spacing:-.04em;color:var(--ink);margin-top:10px;line-height:1;}
+.pc2-p small{font-family:var(--mono);font-size:12px;font-weight:400;letter-spacing:-.01em;color:var(--ink-4);margin-left:5px;}
+.pc2-s{font-size:14px;color:var(--ink-3);margin-top:9px;line-height:1.5;}
+.pc2-l{margin-top:18px;padding-top:16px;border-top:1px solid var(--line-2);flex:1;}
+.pc2-l li{display:grid;grid-template-columns:15px minmax(0,1fr);gap:9px;padding:7px 0;font-size:14px;color:var(--ink-3);line-height:1.5;}
+.pc2-l svg{margin-top:4px;color:var(--ok);}
+.pc2 .btn{margin-top:20px;}
+.price-note{margin-top:18px;font-family:var(--mono);font-size:10.5px;color:var(--ink-4);line-height:1.6;}
+
+@media (max-width:900px){
+  .vs,.pain,.price{grid-template-columns:1fr;}
+  .demo-frame{height:780px;}
+}
+</style>
+</head>
+<body>
+<header class="dv site-head" id="site-header">
+  <div class="wrap head-row">
+    <a href="#" class="brand"><span class="brand-mark"></span><span class="brand-name">Trueline</span></a>
+    <nav class="nav">
+      <a href="#problem">The problem</a>
+      <a href="#solution">The solution</a>
+      <a href="#demo">Demo</a>
+      <a href="#pricing">Pricing</a>
+    </nav>
+    <div class="head-actions">
+      <a href="#" class="signin">Sign in</a>
+      <a href="#cta" class="btn btn--primary btn--sm">Book a demo</a>
+    </div>
+  </div>
+</header>
+
+<main>
+
+<!-- 1 · HERO -->
+<section class="dv hero" id="hero">
+  <div class="wrap hero-inner">
+    <div class="dv" id="hero-copy">
+      <p class="eyebrow">Living expense verification</p>
+      <h1>Other tools show what was spent. We find what&rsquo;s ongoing.</h1>
+      <p class="lede">The borrower explains, you decide what counts, and every decision lands on the file.</p>
+      <div class="hero-cta">
+        <a href="#demo" class="btn btn--primary">See the demo <svg class="arw" width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7h9M7.5 3.5 11 7l-3.5 3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        <a href="#cta" class="btn btn--ghost">Book a walkthrough</a>
+      </div>
+    </div>
+
+    <div class="vs dv" id="hero-compare">
+      <div class="vs-col">
+        <div class="vs-hd"><span class="vs-t">Other expense tools</span></div>
+        <ul class="vs-l">
+          <li><span class="vs-i vs-i--n">&#10003;</span><span>Reads statements and sorts spending into categories</span></li>
+          <li><span class="vs-i vs-i--n">&#10003;</span><span>Gives you a monthly average for each category</span></li>
+          <li><span class="vs-i vs-i--n">&#10003;</span><span>Flags irregular or unusual transactions</span></li>
+          <li class="is-off"><span class="vs-i vs-i--x">&times;</span><span>Works out which costs are one-off and will not repeat</span></li>
+          <li class="is-off"><span class="vs-i vs-i--x">&times;</span><span>Lets the borrower explain a transaction, in writing, with evidence</span></li>
+          <li class="is-off"><span class="vs-i vs-i--x">&times;</span><span>Records your approval, reduction or refusal against each one</span></li>
+          <li class="is-off"><span class="vs-i vs-i--x">&times;</span><span>Leaves an audit trail you can put on the credit file</span></li>
+        </ul>
+        <div class="vs-foot">You get a number. You still have to justify it.</div>
+      </div>
+
+      <div class="vs-col vs-col--us">
+        <div class="vs-hd"><span class="brand-mark" style="width:18px;height:18px;border-radius:5px"></span><span class="vs-t">Trueline</span></div>
+        <ul class="vs-l">
+          <li><span class="vs-i vs-i--y">&#10003;</span><span>Reads statements and sorts spending into categories</span></li>
+          <li><span class="vs-i vs-i--y">&#10003;</span><span>Gives you a monthly average for each category</span></li>
+          <li><span class="vs-i vs-i--y">&#10003;</span><span>Flags irregular or unusual transactions</span></li>
+          <li><span class="vs-i vs-i--y">&#10003;</span><span>Works out which costs are one-off and will not repeat</span></li>
+          <li><span class="vs-i vs-i--y">&#10003;</span><span>Lets the borrower explain a transaction, in writing, with evidence</span></li>
+          <li><span class="vs-i vs-i--y">&#10003;</span><span>Records your approval, reduction or refusal against each one</span></li>
+          <li><span class="vs-i vs-i--y">&#10003;</span><span>Leaves an audit trail you can put on the credit file</span></li>
+        </ul>
+        <div class="vs-foot">You get a number and the reasoning behind it.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROBLEM -->
+<section class="dv band band--wash" id="problem">
+  <div class="wrap">
+    <div class="section-head rev">
+      <p class="eyebrow">The problem</p>
+      <h2 class="h2">Six months of spending is not six months of living.</h2>
+      <p class="lede">A statement records what left the account. It has no way of saying which of it will still be happening next year — and that distinction is the entire assessment.</p>
+    </div>
+
+    <div class="dv prob rev" id="problem-cards">
+      <article class="pc">
+        <div class="pc-k">Counted, but never again</div>
+        <h3>The one-off purchase</h3>
+        <p>Moving costs, a wedding, a replacement fridge, a car repair. It lands once in the window and a monthly average treats it as a permanent commitment.</p>
+      </article>
+      <article class="pc">
+        <div class="pc-k">Counted, but not spending</div>
+        <h3>The money that never left</h3>
+        <p>Transfers to a savings account, an offset, a partner or a second account of their own. It looks identical to an expense and it isn't one.</p>
+      </article>
+      <article class="pc">
+        <div class="pc-k">Counted at the wrong size</div>
+        <h3>The reimbursed and the shared</h3>
+        <p>Fuel and tolls an employer pays back. A dinner one person paid for and everyone split. The debit is real; the household's cost isn't.</p>
+      </article>
+    </div>
+
+    <p class="dv prob-close rev" id="problem-close">Every one of these needs the same thing to resolve: a reason. <b>The reason isn't on the statement — it's with the person who spent the money.</b> Until now, getting it meant an email chain, one transaction at a time, with the answers scattered across a mailbox and nothing left on the file to show for it.</p>
+
+    <div class="pain dv rev" id="problem-pain">
+      <article class="pn">
+        <div class="pn-hd">What it costs the broker today</div>
+        <ul class="pn-l">
+          <li><b>An afternoon per file</b>Downloading statements, reading them line by line, highlighting anything irregular.</li>
+          <li><b>One email per question</b>Then waiting. Then a reminder. Then a reply that answers half of it.</li>
+          <li><b>Answers scattered across a mailbox</b>Three months later you cannot find the message that justified the number.</li>
+          <li><b>A file note written from memory</b>Reconstructed after the fact, because nothing recorded the reasoning as it happened.</li>
+        </ul>
+      </article>
+      <article class="pn">
+        <div class="pn-hd">What it costs the borrower today</div>
+        <ul class="pn-l">
+          <li><b>Questions with no context</b>&ldquo;What was this $4,200?&rdquo; &mdash; with no idea why it matters or what turns on the answer.</li>
+          <li><b>Handing over everything</b>Full statements by email, names and account numbers included, with no idea where they go.</li>
+          <li><b>No way to raise anything</b>They know the wedding was a one-off. Nobody asked, so it stays in the figure.</li>
+          <li><b>Silence at the end</b>They never find out what was accepted, what was not, or why.</li>
+        </ul>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT HELPS -->
+<section class="dv band" id="solution">
+  <div class="wrap">
+    <div class="section-head rev">
+      <p class="eyebrow">The solution</p>
+      <h2 class="h2">An afternoon of email, in about ten minutes.</h2>
+      <p class="lede">The same questions get asked and the same judgement gets made. What changes is that they happen once, in the right place, with the answers already attached to the transaction.</p>
+    </div>
+
+    <div class="helps dv rev" id="helps-cols">
+      <article class="hc hc--broker">
+        <div class="hc-hd"><span class="hc-tag">For the broker</span><span class="hc-time">~10 min review</span></div>
+        <ul class="hc-l">
+          <li><b>One request, not twenty emails.</b> Every question goes out together and every answer comes back attached to the line it explains.</li>
+          <li><b>Ranked by what it&rsquo;s worth.</b> The transactions that move the figure sit at the top, with the monthly impact on each, so you work down and stop when it stops mattering.</li>
+          <li><b>Nothing moves without you.</b> A borrower&rsquo;s explanation is a proposal. You set the final amount, approve, reduce or decline.</li>
+          <li><b>The file note writes itself.</b> Both notes, the evidence and a timestamp on every adjustment &mdash; including the ones you refused.</li>
+        </ul>
+      </article>
+
+      <article class="hc hc--borrower">
+        <div class="hc-hd"><span class="hc-tag">For the borrower</span><span class="hc-time">~10 min to answer</span></div>
+        <ul class="hc-l">
+          <li><b>One link, no account.</b> They open it on their phone, upload their statements, and never install anything or set a password.</li>
+          <li><b>They can see why they&rsquo;re being asked.</b> Each question shows what the transaction is worth per month, so they know which ones actually matter.</li>
+          <li><b>They answer in their own words.</b> Plain language and a photo of a receipt, not a spreadsheet or a category dropdown.</li>
+          <li><b>They find out where it landed.</b> Approved, reduced or declined, with the reason &mdash; instead of silence and a number they never see.</li>
+        </ul>
+      </article>
+    </div>
+
+    <div class="swap dv rev" id="helps-swap">
+      <div class="sw-col sw-col--was">
+        <div class="sw-k">How it goes now</div>
+        <ol class="sw-l">
+          <li>Download statements and read them line by line</li>
+          <li>Highlight anything that looks irregular</li>
+          <li>One email per query, then wait</li>
+          <li>Answers scatter across a mailbox</li>
+          <li>Write the file note afterwards, from memory</li>
+        </ol>
+      </div>
+      <div class="sw-col sw-col--now">
+        <div class="sw-k">How it goes with Trueline</div>
+        <ol class="sw-l">
+          <li>Send one link</li>
+          <li>AI ranks every transaction by monthly impact</li>
+          <li>The borrower explains the handful that need it</li>
+          <li>You approve, reduce or decline in one pass</li>
+          <li>The assessment and audit trail are already written</li>
+        </ol>
+      </div>
+    </div>
+    <p class="swap-note">Times shown are indicative of a straightforward two-account file, not a guarantee.</p>
+  </div>
+</section>
+
+<!-- THE WORK -->
+<section class="dv band band--wash" id="verify">
+  <div class="wrap triage">
+    <div class="dv rev" id="verify-copy">
+      <p class="eyebrow">What the borrower confirms</p>
+      <h2 class="h2">Ask once. On the transaction. In their own words.</h2>
+      <p class="lede">The borrower sees the transactions that need a reason, ordered by what each one is worth per month. They answer where the transaction lives and attach evidence if they have it. Everything stays editable — this is an ordering, not a gate.</p>
+
+      <div class="point-list">
+        <div class="point">
+          <svg width="18" height="18" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="7.4" stroke="currentColor" stroke-width="1.5"/><path d="m6.8 10.2 2.1 2.1 4.3-4.6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <div>
+            <h4>They see what it's worth</h4>
+            <p>A borrower who can see that a question is worth $520 a month answers it properly, and answers it first.</p>
+          </div>
+        </div>
+        <div class="point">
+          <svg width="18" height="18" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="7.4" stroke="currentColor" stroke-width="1.5"/><path d="m6.8 10.2 2.1 2.1 4.3-4.6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <div>
+            <h4>An explanation is a proposal, not a change</h4>
+            <p>Nothing moves the figure until you act on it. You can accept it, decline it, or substitute your own number and say why.</p>
+          </div>
+        </div>
+        <div class="point">
+          <svg width="18" height="18" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="7.4" stroke="currentColor" stroke-width="1.5"/><path d="m6.8 10.2 2.1 2.1 4.3-4.6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <div>
+            <h4>The answer stays on the transaction</h4>
+            <p>Not in an inbox. When you come back to the file in three months, the reason is still sitting next to the line it explains.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="dv queue rev rev-d1" id="verify-queue">
+      <div class="queue-head">
+        <h3>Needs a reason</h3>
+        <span class="queue-count">Top 4 of 1,184</span>
+        <span class="meta">Ordered by monthly impact</span>
+      </div>
+
+      <article class="qitem qitem--done" data-open="true">
+        <button class="qbtn" aria-expanded="true">
+          <span class="qdot"></span>
+          <span class="qmain">
+            <span class="qdesc">TFR TO 062-000 447102</span>
+            <span class="qsub">Monthly · recurring · answered</span>
+          </span>
+          <span class="qnums"><span class="qamt">$520.00</span><span class="qimpact">&minus;$520 / mo confirmed</span></span>
+          <span class="qchev"><svg width="15" height="15" viewBox="0 0 16 16" fill="none"><path d="m6 3.5 5 4.5-5 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        </button>
+        <div class="qpanel"><div><div class="qinner">
+          <div class="qwhy">
+            <div class="qwhy-k">Why it needs a reason</div>
+            <p>A regular monthly transfer to an account outside the statement set. Savings, board, a loan repayment and child support all look identical here, and only one of them is a living expense.</p>
+          </div>
+          <div class="qopts">
+            <span class="qopt qopt--live">Savings — <b>not an expense</b> · chosen</span>
+            <span class="qopt">Board or rent — <b>$520/mo</b></span>
+            <span class="qopt">Repayment — <b>a liability</b></span>
+          </div>
+          <div class="qnote">
+            <div class="qnote-k">Notes on this transaction</div>
+            <div class="qmsg qmsg--c">
+              <div class="qmsg-who"><i></i> Borrower · 15 Aug, 7:07pm</div>
+              <p>That's money we put aside into a savings account each month. It's still ours, we're not paying it to anyone. I've attached the savings statement so you can see it going in.</p>
+              <span class="qmsg-file"><svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M3 3.2h4L9 5v4H3V3.2Z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></svg> savings-jul-aug.pdf</span>
+            </div>
+            <div class="qmsg qmsg--b">
+              <div class="qmsg-who"><i></i> Broker · 16 Aug, 9:12am</div>
+              <p>Deposits line up against all four transfers. Treated as a transfer between the borrower's own accounts, not a living expense.</p>
+            </div>
+            <div class="qcompose">
+              <span class="qcompose-ph">Add a note or attach evidence…</span>
+              <span class="qcompose-btn">Send</span>
+            </div>
+          </div>
+        </div></div></div>
+      </article>
+
+      <article class="qitem" data-open="false">
+        <button class="qbtn" aria-expanded="false">
+          <span class="qdot"></span>
+          <span class="qmain">
+            <span class="qdesc">FLIGHT CENTRE RICHMOND</span>
+            <span class="qsub">12 Jun 2026 · awaiting borrower</span>
+          </span>
+          <span class="qnums"><span class="qamt">$4,180.00</span><span class="qimpact">up to &minus;$447 / mo</span></span>
+          <span class="qchev"><svg width="15" height="15" viewBox="0 0 16 16" fill="none"><path d="m6 3.5 5 4.5-5 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        </button>
+        <div class="qpanel"><div><div class="qinner">
+          <div class="qwhy">
+            <div class="qwhy-k">Why it needs a reason</div>
+            <p>One large travel booking in the statement period. It plainly isn't a monthly cost — but the household does travel, so the question isn't whether to remove it, it's what a sustainable ongoing figure looks like.</p>
+          </div>
+          <div class="qopts">
+            <span class="qopt">One-off — <b>normalise the category</b></span>
+            <span class="qopt">Most years — <b>$697/mo retained</b></span>
+          </div>
+          <div class="qnote">
+            <div class="qnote-k">Notes on this transaction</div>
+            <div class="qempty">No notes yet. The borrower can explain here, attach a booking confirmation, or ask you a question.</div>
+            <div class="qcompose">
+              <span class="qcompose-ph">Add a note or attach evidence…</span>
+              <span class="qcompose-btn">Send</span>
+            </div>
+          </div>
+        </div></div></div>
+      </article>
+
+      <article class="qitem" data-open="false">
+        <button class="qbtn" aria-expanded="false">
+          <span class="qdot"></span>
+          <span class="qmain">
+            <span class="qdesc">ATM WDL — 9 withdrawals</span>
+            <span class="qsub">Answered · declined, retained</span>
+          </span>
+          <span class="qnums"><span class="qamt">$2,700.00</span><span class="qimpact">requested &minus;$300 / mo</span></span>
+          <span class="qchev"><svg width="15" height="15" viewBox="0 0 16 16" fill="none"><path d="m6 3.5 5 4.5-5 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        </button>
+        <div class="qpanel"><div><div class="qinner">
+          <div class="qwhy">
+            <div class="qwhy-k">Why it needs a reason</div>
+            <p>Cash leaves no record of what it bought. There is nothing to evidence either way, which usually means it stays in the figure.</p>
+          </div>
+          <div class="qnote">
+            <div class="qnote-k">Notes on this transaction</div>
+            <div class="qmsg qmsg--c">
+              <div class="qmsg-who"><i></i> Borrower · 15 Aug, 7:19pm</div>
+              <p>Mostly the farmers market on Saturdays and my son's sport fees. Some of it just sits in the car for parking.</p>
+            </div>
+            <div class="qmsg qmsg--b">
+              <div class="qmsg-who"><i></i> Broker · 16 Aug, 9:26am</div>
+              <p>There's nothing to support treating this as one-off — card spending already covers the groceries and recreation. Declined, retained in full.</p>
+            </div>
+            <div class="qcompose">
+              <span class="qcompose-ph">Add a note or attach evidence…</span>
+              <span class="qcompose-btn">Send</span>
+            </div>
+          </div>
+        </div></div></div>
+      </article>
+
+      <article class="qitem" data-open="false">
+        <button class="qbtn" aria-expanded="false">
+          <span class="qdot"></span>
+          <span class="qmain">
+            <span class="qdesc">HARVEY NORMAN RICHMOND</span>
+            <span class="qsub">28 Jul 2026 · answered, awaiting approval</span>
+          </span>
+          <span class="qnums"><span class="qamt">$3,450.00</span><span class="qimpact">up to &minus;$455 / mo</span></span>
+          <span class="qchev"><svg width="15" height="15" viewBox="0 0 16 16" fill="none"><path d="m6 3.5 5 4.5-5 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        </button>
+        <div class="qpanel"><div><div class="qinner">
+          <div class="qwhy">
+            <div class="qwhy-k">Why it needs a reason</div>
+            <p>A large one-off purchase on relocation, and a place interest-free finance often hides. Confirming it was paid outright settles both — but furniture gets replaced eventually, so an allowance stays in the figure.</p>
+          </div>
+          <div class="qopts">
+            <span class="qopt qopt--live">Paid outright — <b>$120/mo allowance retained</b> · chosen</span>
+            <span class="qopt">On finance — <b>declare as a liability</b></span>
+          </div>
+          <div class="qnote">
+            <div class="qnote-k">Notes on this transaction</div>
+            <div class="qmsg qmsg--c">
+              <div class="qmsg-who"><i></i> Borrower · 15 Aug, 7:22pm</div>
+              <p>Furniture when we moved house — lounge and a bed. Paid outright on the card, no plan on it.</p>
+            </div>
+            <div class="qcompose">
+              <span class="qcompose-ph">Add a note or attach evidence…</span>
+              <span class="qcompose-btn">Send</span>
+            </div>
+          </div>
+        </div></div></div>
+      </article>
+
+      <div class="queue-foot">Below these, impact falls away quickly — but all 1,184 stay one click down, every one of them editable and open to a note.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 3c · THE ARTEFACT -->
+<section class="dv band" id="assessment">
+  <div class="wrap">
+    <div class="section-head rev">
+      <p class="eyebrow">What lands on the file</p>
+      <h2 class="h2">Documented against assessed, line by line.</h2>
+      <p class="lede">Every adjustment traceable to the transaction, the borrower&rsquo;s reason and your decision.</p>
+    </div>
+    <div class="dv assess" id="assessment-panel">
+      <div class="as-head">
+        <span class="as-title">Living expense assessment</span>
+        <span class="as-ref">Ref 4417 · 1,184 transactions · 6 months</span>
+      </div>
+
+      <div class="dv sumband" id="assessment-summary">
+        <div class="sum-line">
+          <div class="sum-col">
+            <div class="sum-k">Documented</div>
+            <s class="sum-was">$7,486</s>
+          </div>
+          <svg class="sum-arrow" width="20" height="13" viewBox="0 0 20 14" fill="none" aria-hidden="true"><path d="M1 7h17m0 0-5-5m5 5-5 5" stroke="#0E7C57" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <div class="sum-col">
+            <div class="sum-k sum-k--now">Assessed</div>
+            <span class="sum-now">$5,466<small>/mo</small></span>
+          </div>
+          <span class="sum-delta">&minus;$2,020</span>
+        </div>
+      </div>
+
+      <div class="dv foldw" data-open="true" id="assessment-adjustments">
+        <button class="foldbtn" aria-expanded="true">
+          <span class="fold-chev"><svg width="13" height="13" viewBox="0 0 16 16" fill="none"><path d="m6 3.5 5 4.5-5 4.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <span class="fold-t">Adjustments</span>
+          <span class="pill pill--ok">11 allowed</span>
+          <span class="pill pill--bad">2 declined</span>
+        </button>
+        <div class="foldp"><div><div class="foldi">
+          <p class="foldi-note">13 items raised · <b>&minus;$2,020</b> allowed · <b>$956</b> refused or reduced · each figure is a monthly equivalent</p>
+          <div class="adjrow adjrow--ok">
+            <div class="adjrow-top">
+              <span class="adjrow-i"></span>
+              <span class="adjrow-d">TFR 062-000 447102</span>
+              <span class="adjrow-x"><s>$520</s><span class="adjrow-ar">&rarr;</span><b>$0</b></span>
+            </div>
+            <div class="adjrow-s">Transfer between own accounts <button class="more" aria-expanded="false">more</button></div>
+            <div class="adjrow-full">Borrower: <q>That&rsquo;s money we put aside into our savings each month. It&rsquo;s still ours, we&rsquo;re not paying it to anyone.</q><br>A savings account statement in the same name was provided. Deposits of $520 appear on the same day as each of the six debits, and the closing balance grows accordingly. Money moved between accounts the borrower controls is not expenditure, so the full amount comes out.</div>
+          </div>
+          <div class="adjrow adjrow--ok">
+            <div class="adjrow-top">
+              <span class="adjrow-i"></span>
+              <span class="adjrow-d">FLIGHT CENTRE</span>
+              <span class="adjrow-x"><s>$697</s><span class="adjrow-ar">&rarr;</span><b>$250</b></span>
+            </div>
+            <div class="adjrow-s">Honeymoon · travel allowance retained <button class="more" aria-expanded="false">more</button></div>
+            <div class="adjrow-full">Borrower: <q>That was our honeymoon. We&rsquo;d been saving two years for it and we&rsquo;re not doing it again.</q><br>Booking confirmation shows a single return itinerary for two, paid in one instalment. No comparable travel appears anywhere else in six months of statements. It is plainly not a monthly cost &mdash; but the household will take holidays, so rather than removing it the category is set to $250 a month, in line with what they spent on travel outside this booking.</div>
+          </div>
+          <div class="adjrow adjrow--ok">
+            <div class="adjrow-top">
+              <span class="adjrow-i"></span>
+              <span class="adjrow-d">HARVEY NORMAN</span>
+              <span class="adjrow-x"><s>$575</s><span class="adjrow-ar">&rarr;</span><b>$120</b></span>
+            </div>
+            <div class="adjrow-s">Relocation furniture · allowance kept <button class="more" aria-expanded="false">more</button></div>
+            <div class="adjrow-full">Borrower: <q>We bought a lounge and a bed when we moved in. Paid outright on the card, there&rsquo;s no plan on it.</q><br>The purchase falls in the same week as the first rates notice at the new address. No instalment pattern or finance debit follows it, so it has not created a commitment. Furniture and whitegoods do get replaced over time, so $120 a month is retained as an ongoing household replacement allowance rather than removing the line.</div>
+          </div>
+          <div class="adjrow adjrow--ok">
+            <div class="adjrow-top">
+              <span class="adjrow-i"></span>
+              <span class="adjrow-d">AIRBNB AU</span>
+              <span class="adjrow-x"><s>$85</s><span class="adjrow-ar">&rarr;</span><b>$0</b></span>
+            </div>
+            <div class="adjrow-s">Refundable bond · credit matched <button class="more" aria-expanded="false">more</button></div>
+            <div class="adjrow-full">Borrower: <q>That was the security bond on a weekend rental. It came back a few days later.</q><br>A credit of $510 from the same merchant appears four days after the $510 debit, and the two net to zero within the statement period. A bond that has been returned in full was never a cost to the household, so both sides are removed.</div>
+          </div>
+          <div class="adjrow adjrow--ok">
+            <div class="adjrow-top">
+              <span class="adjrow-i"></span>
+              <span class="adjrow-d">SQ *TOMBOLINO</span>
+              <span class="adjrow-x"><s>$140</s><span class="adjrow-ar">&rarr;</span><b>$30</b></span>
+            </div>
+            <div class="adjrow-s">Group dinner · reimbursed by guests <button class="more" aria-expanded="false">more</button></div>
+            <div class="adjrow-full">Borrower: <q>I put the table on my card and everyone paid me back on the night.</q><br>Three inbound transfers totalling $412 landed within 48 hours of the $520 restaurant charge, from three separate accounts. The unreimbursed remainder is the household&rsquo;s actual share and stays in the figure at $30 a month.</div>
+          </div>
+          <div class="adjrow adjrow--ok">
+            <div class="adjrow-top">
+              <span class="adjrow-i"></span>
+              <span class="adjrow-d">TICKETEK</span>
+              <span class="adjrow-x"><s>$95</s><span class="adjrow-ar">&rarr;</span><b>$0</b></span>
+            </div>
+            <div class="adjrow-s">Group booking · fully reimbursed <button class="more" aria-expanded="false">more</button></div>
+            <div class="adjrow-full">Borrower: <q>I booked six tickets for my brother&rsquo;s birthday and they all sent their share.</q><br>$475 was received back from four accounts over the following week against a $570 booking. The borrower&rsquo;s own ticket is already captured in ongoing entertainment spending, so counting it here as well would double it.</div>
+          </div>
+          <div class="adjrow adjrow--ok">
+            <div class="adjrow-top">
+              <span class="adjrow-i"></span>
+              <span class="adjrow-d">FUEL &amp; LINKT</span>
+              <span class="adjrow-x"><s>$80</s><span class="adjrow-ar">&rarr;</span><b>$0</b></span>
+            </div>
+            <div class="adjrow-s">Reimbursed by employer <button class="more" aria-expanded="false">more</button></div>
+            <div class="adjrow-full">Borrower: <q>Work pays back my fuel and tolls, it comes through with my pay.</q><br>Two payslips were provided showing a separate reimbursement line matching the fuel and toll debits for those months. The debit is real but the household does not carry the cost, so it comes out of the assessment while the borrower&rsquo;s private fuel use remains in Transport.</div>
+          </div>
+          <div class="adjrow adjrow--ok">
+            <div class="adjrow-top">
+              <span class="adjrow-i"></span>
+              <span class="adjrow-d">ADVANCED VET CARE</span>
+              <span class="adjrow-x"><s>$120</s><span class="adjrow-ar">&rarr;</span><b>$45</b></span>
+            </div>
+            <div class="adjrow-s">Emergency surgery · one-off <button class="more" aria-expanded="false">more</button></div>
+            <div class="adjrow-full">Borrower: <q>Our dog swallowed something and needed surgery. It was a one-off, we&rsquo;ve never had a bill like it.</q><br>A single itemised invoice for emergency exploratory surgery was provided. Food, flea treatment and an annual vaccination appear regularly across the period at roughly $45 a month, and that ongoing pet cost is retained.</div>
+          </div>
+          <div class="adjrow adjrow--ok">
+            <div class="adjrow-top">
+              <span class="adjrow-i"></span>
+              <span class="adjrow-d">MYER · HENS WEEKEND</span>
+              <span class="adjrow-x"><s>$105</s><span class="adjrow-ar">&rarr;</span><b>$45</b></span>
+            </div>
+            <div class="adjrow-s">Wedding season · normalised <button class="more" aria-expanded="false">more</button></div>
+            <div class="adjrow-full">Borrower: <q>Two weddings landed in the same three months &mdash; gifts, a hens weekend, an outfit.</q><br>The spending clusters around two dates and then stops entirely. Gifts and occasions do recur for most households, so the line is reduced rather than removed, to a level consistent with the quieter months in the statement period.</div>
+          </div>
+          <div class="adjrow adjrow--ok">
+            <div class="adjrow-top">
+              <span class="adjrow-i"></span>
+              <span class="adjrow-d">ULTRA TUNE</span>
+              <span class="adjrow-x"><s>$92</s><span class="adjrow-ar">&rarr;</span><b>$42</b></span>
+            </div>
+            <div class="adjrow-s">Insurance excess after collision <button class="more" aria-expanded="false">more</button></div>
+            <div class="adjrow-full">Borrower: <q>Someone went into the back of me. That was the excess, and the repair went through insurance.</q><br>A claim number and the insurer&rsquo;s letter were provided, and the repair itself does not appear on the statements. Routine servicing and tyres continue at about $42 a month and remain in Transport.</div>
+          </div>
+          <div class="adjrow adjrow--ok">
+            <div class="adjrow-top">
+              <span class="adjrow-i"></span>
+              <span class="adjrow-d">SMILE DENTAL</span>
+              <span class="adjrow-x"><s>$78</s><span class="adjrow-ar">&rarr;</span><b>$35</b></span>
+            </div>
+            <div class="adjrow-s">Crown · single course of work <button class="more" aria-expanded="false">more</button></div>
+            <div class="adjrow-full">Borrower: <q>I needed a crown replaced. It&rsquo;s not something that happens again.</q><br>The treatment plan shows a single course of work billed across two visits. Six-monthly check-ups and a health fund gap continue at around $35 a month and stay in the figure.</div>
+          </div>
+          <div class="adjrow adjrow--bad">
+            <div class="adjrow-top">
+              <span class="adjrow-i"></span>
+              <span class="adjrow-d">ATM CASH</span>
+              <span class="adjrow-x"><s>$300</s><span class="adjrow-ar">&rarr;</span><b>$300</b></span>
+            </div>
+            <div class="adjrow-s">Declined · nothing to support removal <button class="more" aria-expanded="false">more</button></div>
+            <div class="adjrow-full">Borrower: <q>That&rsquo;s just cash for the markets and my son&rsquo;s sport.</q><br>Broker: there is not enough information to remove this. Cash leaves no record of what it bought, and no receipts, club invoices or market spending were provided to support the explanation. Groceries and recreation are already tracking at full retail on card, so treating the cash as the same spending twice cannot be justified. Retained in full.</div>
+          </div>
+          <div class="adjrow adjrow--bad">
+            <div class="adjrow-top">
+              <span class="adjrow-i"></span>
+              <span class="adjrow-d">SP *MPWR FITNESS</span>
+              <span class="adjrow-x"><s>$89</s><span class="adjrow-ar">&rarr;</span><b>$89</b></span>
+            </div>
+            <div class="adjrow-s">Declined · debits still running <button class="more" aria-expanded="false">more</button></div>
+            <div class="adjrow-full">Borrower: <q>I cancelled that gym months ago, it shouldn&rsquo;t be counted.</q><br>Broker: there is not enough information to remove this. No cancellation confirmation was provided, and the debit appears again in the most recent statement in the period. If a cancellation notice is supplied the line can be revisited before submission. Retained in full.</div>
+          </div>
+        </div></div></div>
+      </div>
+
+      <div class="dv cats" id="assessment-categories">
+        <div class="cats-head">
+          <span class="cats-t">Living expense breakdown</span>
+          <span class="cats-note">% of assessed total</span>
+        </div>
+        <div class="dv cat foldw" data-open="false">
+          <button class="catbtn foldbtn" aria-expanded="false">
+            <span class="cat-top">
+              <span class="fold-chev"><svg width="12" height="12" viewBox="0 0 16 16" fill="none"><path d="m6 3.5 5 4.5-5 4.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              <span class="cat-n">Other Expenses</span>
+              <span class="cat-f"><s>$1,700</s> <span class="cat-ar">&rarr;</span> <em>$565</em></span>
+            </span>
+            <span class="cat-bot">
+              <span class="bars"><span class="bar--doc" style="width:100.0%"></span><span class="bar--adj" style="width:33.2%"></span></span>
+              <span class="cat-pct">10.3%</span>
+            </span>
+          </button>
+          <div class="foldp"><div><div class="catinner">
+            <div class="tl tl--ok"><span class="tl-d">TFR TO 062-000 447102</span><span class="tl-s">Transfer to own savings · not expenditure</span><span class="tl-n"><s>$520</s><span class="tl-ar">&rarr;</span><b>$0</b></span></div>
+            <div class="tl tl--ok"><span class="tl-d">HARVEY NORMAN RICHMOND</span><span class="tl-s">Relocation furniture · replacement allowance kept</span><span class="tl-n"><s>$575</s><span class="tl-ar">&rarr;</span><b>$120</b></span></div>
+            <div class="tl tl--ok"><span class="tl-d">ADVANCED VET CARE</span><span class="tl-s">Emergency surgery · routine pet costs retained</span><span class="tl-n"><s>$120</s><span class="tl-ar">&rarr;</span><b>$45</b></span></div>
+            <div class="tl tl--ok"><span class="tl-d">AIRBNB AU</span><span class="tl-s">Refundable bond · matching credit found</span><span class="tl-n"><s>$85</s><span class="tl-ar">&rarr;</span><b>$0</b></span></div>
+            <div class="tl tl--bad"><span class="tl-d">ATM WDL — cash</span><span class="tl-s">Declined · nothing provided to support removal</span><span class="tl-n"><s>$300</s><span class="tl-ar">&rarr;</span><b>$300</b></span></div>
+            <div class="tl"><span class="tl-d">Gifts and donations</span><span class="tl-s">Ongoing</span><span class="tl-n tl-n--flat">$54</span></div>
+            <div class="tl"><span class="tl-d">Post and stationery</span><span class="tl-s">Ongoing</span><span class="tl-n tl-n--flat">$28</span></div>
+            <div class="tl"><span class="tl-d">Bank and account fees</span><span class="tl-s">Ongoing</span><span class="tl-n tl-n--flat">$18</span></div>
+          </div></div></div>
+        </div>
+        <div class="dv cat foldw" data-open="false">
+          <button class="catbtn foldbtn" aria-expanded="false">
+            <span class="cat-top">
+              <span class="fold-chev"><svg width="12" height="12" viewBox="0 0 16 16" fill="none"><path d="m6 3.5 5 4.5-5 4.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              <span class="cat-n">Recreation and Entertainment</span>
+              <span class="cat-f"><s>$1,641</s> <span class="cat-ar">&rarr;</span> <em>$929</em></span>
+            </span>
+            <span class="cat-bot">
+              <span class="bars"><span class="bar--doc" style="width:96.5%"></span><span class="bar--adj" style="width:54.6%"></span></span>
+              <span class="cat-pct">17.0%</span>
+            </span>
+          </button>
+          <div class="foldp"><div><div class="catinner">
+            <div class="tl tl--ok"><span class="tl-d">FLIGHT CENTRE RICHMOND</span><span class="tl-s">Honeymoon · travel allowance retained</span><span class="tl-n"><s>$697</s><span class="tl-ar">&rarr;</span><b>$250</b></span></div>
+            <div class="tl tl--ok"><span class="tl-d">SQ *TOMBOLINO</span><span class="tl-s">Group dinner · guests reimbursed</span><span class="tl-n"><s>$140</s><span class="tl-ar">&rarr;</span><b>$30</b></span></div>
+            <div class="tl tl--ok"><span class="tl-d">MYER · HENS WEEKEND</span><span class="tl-s">Wedding season · normalised</span><span class="tl-n"><s>$105</s><span class="tl-ar">&rarr;</span><b>$45</b></span></div>
+            <div class="tl tl--ok"><span class="tl-d">TICKETEK</span><span class="tl-s">Group booking · fully reimbursed</span><span class="tl-n"><s>$95</s><span class="tl-ar">&rarr;</span><b>$0</b></span></div>
+            <div class="tl tl--bad"><span class="tl-d">SP *MPWR FITNESS</span><span class="tl-s">Declined · debits still running</span><span class="tl-n"><s>$89</s><span class="tl-ar">&rarr;</span><b>$89</b></span></div>
+            <div class="tl"><span class="tl-d">Dining out and cafes</span><span class="tl-s">142 transactions · ongoing</span><span class="tl-n tl-n--flat">$214</span></div>
+            <div class="tl"><span class="tl-d">Takeaway and delivery</span><span class="tl-s">76 transactions · ongoing</span><span class="tl-n tl-n--flat">$166</span></div>
+            <div class="tl"><span class="tl-d">Bars and bottle shop</span><span class="tl-s">Ongoing</span><span class="tl-n tl-n--flat">$88</span></div>
+            <div class="tl"><span class="tl-d">Sport, hobbies and books</span><span class="tl-s">Ongoing</span><span class="tl-n tl-n--flat">$47</span></div>
+          </div></div></div>
+        </div>
+        <div class="dv cat foldw" data-open="false">
+          <button class="catbtn foldbtn" aria-expanded="false">
+            <span class="cat-top">
+              <span class="fold-chev"><svg width="12" height="12" viewBox="0 0 16 16" fill="none"><path d="m6 3.5 5 4.5-5 4.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              <span class="cat-n">Primary Residence</span>
+              <span class="cat-f"><span class="cat-same">$1,150</span></span>
+            </span>
+            <span class="cat-bot">
+              <span class="bars"><span class="bar--doc" style="width:67.6%"></span><span class="bar--adj" style="width:67.6%"></span></span>
+              <span class="cat-pct">21.0%</span>
+            </span>
+          </button>
+          <div class="foldp"><div><div class="catinner">
+            <div class="tl"><span class="tl-d">Body corporate</span><span class="tl-s">Ongoing</span><span class="tl-n tl-n--flat">$392</span></div>
+            <div class="tl"><span class="tl-d">Council rates</span><span class="tl-s">Ongoing</span><span class="tl-n tl-n--flat">$310</span></div>
+            <div class="tl"><span class="tl-d">Electricity</span><span class="tl-s">Ongoing</span><span class="tl-n tl-n--flat">$186</span></div>
+            <div class="tl"><span class="tl-d">Gas</span><span class="tl-s">Ongoing</span><span class="tl-n tl-n--flat">$94</span></div>
+            <div class="tl"><span class="tl-d">Water</span><span class="tl-s">Ongoing</span><span class="tl-n tl-n--flat">$78</span></div>
+            <div class="tl"><span class="tl-d">Repairs and garden</span><span class="tl-s">Ongoing</span><span class="tl-n tl-n--flat">$56</span></div>
+            <div class="tl"><span class="tl-d">Home and contents insurance</span><span class="tl-s">Ongoing</span><span class="tl-n tl-n--flat">$34</span></div>
+          </div></div></div>
+        </div>
+        <div class="dv cat foldw" data-open="false">
+          <button class="catbtn foldbtn" aria-expanded="false">
+            <span class="cat-top">
+              <span class="fold-chev"><svg width="12" height="12" viewBox="0 0 16 16" fill="none"><path d="m6 3.5 5 4.5-5 4.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              <span class="cat-n">Groceries</span>
+              <span class="cat-f"><span class="cat-same">$1,060</span></span>
+            </span>
+            <span class="cat-bot">
+              <span class="bars"><span class="bar--doc" style="width:62.4%"></span><span class="bar--adj" style="width:62.4%"></span></span>
+              <span class="cat-pct">19.4%</span>
+            </span>
+          </button>
+          <div class="foldp"><div><div class="catinner">
+            <div class="tl"><span class="tl-d">Supermarkets</span><span class="tl-s">146 transactions · ongoing</span><span class="tl-n tl-n--flat">$812</span></div>
+            <div class="tl"><span class="tl-d">Fruit, vegetable and market</span><span class="tl-s">Ongoing</span><span class="tl-n tl-n--flat">$104</span></div>
+            <div class="tl"><span class="tl-d">Butcher and fishmonger</span><span class="tl-s">Ongoing</span><span class="tl-n tl-n--flat">$88</span></div>
+            <div class="tl"><span class="tl-d">Household and cleaning</span><span class="tl-s">Ongoing</span><span class="tl-n tl-n--flat">$56</span></div>
+          </div></div></div>
+        </div>
+        <div class="dv cat foldw" data-open="false">
+          <button class="catbtn foldbtn" aria-expanded="false">
+            <span class="cat-top">
+              <span class="fold-chev"><svg width="12" height="12" viewBox="0 0 16 16" fill="none"><path d="m6 3.5 5 4.5-5 4.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              <span class="cat-n">Transport</span>
+              <span class="cat-f"><s>$760</s> <span class="cat-ar">&rarr;</span> <em>$630</em></span>
+            </span>
+            <span class="cat-bot">
+              <span class="bars"><span class="bar--doc" style="width:44.7%"></span><span class="bar--adj" style="width:37.1%"></span></span>
+              <span class="cat-pct">11.5%</span>
+            </span>
+          </button>
+          <div class="foldp"><div><div class="catinner">
+            <div class="tl tl--ok"><span class="tl-d">ULTRA TUNE</span><span class="tl-s">Insurance excess after a collision · one-off</span><span class="tl-n"><s>$92</s><span class="tl-ar">&rarr;</span><b>$42</b></span></div>
+            <div class="tl tl--ok"><span class="tl-d">Employer-reimbursed fuel and Linkt</span><span class="tl-s">Payslips provided · not carried by the household</span><span class="tl-n"><s>$80</s><span class="tl-ar">&rarr;</span><b>$0</b></span></div>
+            <div class="tl"><span class="tl-d">Fuel</span><span class="tl-s">Ongoing</span><span class="tl-n tl-n--flat">$268</span></div>
+            <div class="tl"><span class="tl-d">Tolls</span><span class="tl-s">Ongoing</span><span class="tl-n tl-n--flat">$96</span></div>
+            <div class="tl"><span class="tl-d">Parking</span><span class="tl-s">Ongoing</span><span class="tl-n tl-n--flat">$88</span></div>
+            <div class="tl"><span class="tl-d">Registration and CTP</span><span class="tl-s">Ongoing</span><span class="tl-n tl-n--flat">$74</span></div>
+            <div class="tl"><span class="tl-d">Public transport</span><span class="tl-s">Ongoing</span><span class="tl-n tl-n--flat">$62</span></div>
+          </div></div></div>
+        </div>
+        <div class="dv cat foldw" data-open="false">
+          <button class="catbtn foldbtn" aria-expanded="false">
+            <span class="cat-top">
+              <span class="fold-chev"><svg width="12" height="12" viewBox="0 0 16 16" fill="none"><path d="m6 3.5 5 4.5-5 4.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              <span class="cat-n">Insurance</span>
+              <span class="cat-f"><span class="cat-same">$425</span></span>
+            </span>
+            <span class="cat-bot">
+              <span class="bars"><span class="bar--doc" style="width:25.0%"></span><span class="bar--adj" style="width:25.0%"></span></span>
+              <span class="cat-pct">7.8%</span>
+            </span>
+          </button>
+          <div class="foldp"><div><div class="catinner">
+            <div class="tl"><span class="tl-d">Private health cover</span><span class="tl-s">Ongoing</span><span class="tl-n tl-n--flat">$275</span></div>
+            <div class="tl"><span class="tl-d">Comprehensive motor</span><span class="tl-s">Ongoing</span><span class="tl-n tl-n--flat">$150</span></div>
+          </div></div></div>
+        </div>
+        <div class="dv cat foldw" data-open="false">
+          <button class="catbtn foldbtn" aria-expanded="false">
+            <span class="cat-top">
+              <span class="fold-chev"><svg width="12" height="12" viewBox="0 0 16 16" fill="none"><path d="m6 3.5 5 4.5-5 4.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              <span class="cat-n">Clothing and Personal Care</span>
+              <span class="cat-f"><span class="cat-same">$310</span></span>
+            </span>
+            <span class="cat-bot">
+              <span class="bars"><span class="bar--doc" style="width:18.2%"></span><span class="bar--adj" style="width:18.2%"></span></span>
+              <span class="cat-pct">5.7%</span>
+            </span>
+          </button>
+          <div class="foldp"><div><div class="catinner">
+            <div class="tl"><span class="tl-d">Clothing and footwear</span><span class="tl-s">Ongoing</span><span class="tl-n tl-n--flat">$164</span></div>
+            <div class="tl"><span class="tl-d">Hairdressing</span><span class="tl-s">Ongoing</span><span class="tl-n tl-n--flat">$68</span></div>
+            <div class="tl"><span class="tl-d">Beauty and cosmetics</span><span class="tl-s">Ongoing</span><span class="tl-n tl-n--flat">$42</span></div>
+            <div class="tl"><span class="tl-d">Toiletries</span><span class="tl-s">Ongoing</span><span class="tl-n tl-n--flat">$36</span></div>
+          </div></div></div>
+        </div>
+        <div class="dv cat foldw" data-open="false">
+          <button class="catbtn foldbtn" aria-expanded="false">
+            <span class="cat-top">
+              <span class="fold-chev"><svg width="12" height="12" viewBox="0 0 16 16" fill="none"><path d="m6 3.5 5 4.5-5 4.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              <span class="cat-n">Medical and Health</span>
+              <span class="cat-f"><s>$240</s> <span class="cat-ar">&rarr;</span> <em>$197</em></span>
+            </span>
+            <span class="cat-bot">
+              <span class="bars"><span class="bar--doc" style="width:14.1%"></span><span class="bar--adj" style="width:11.6%"></span></span>
+              <span class="cat-pct">3.6%</span>
+            </span>
+          </button>
+          <div class="foldp"><div><div class="catinner">
+            <div class="tl tl--ok"><span class="tl-d">SMILE DENTAL</span><span class="tl-s">Crown · single course of work</span><span class="tl-n"><s>$78</s><span class="tl-ar">&rarr;</span><b>$35</b></span></div>
+            <div class="tl"><span class="tl-d">Pharmacy</span><span class="tl-s">Ongoing</span><span class="tl-n tl-n--flat">$64</span></div>
+            <div class="tl"><span class="tl-d">GP and specialist gaps</span><span class="tl-s">Ongoing</span><span class="tl-n tl-n--flat">$52</span></div>
+            <div class="tl"><span class="tl-d">Physiotherapy</span><span class="tl-s">Ongoing</span><span class="tl-n tl-n--flat">$46</span></div>
+          </div></div></div>
+        </div>
+        <div class="dv cat foldw" data-open="false">
+          <button class="catbtn foldbtn" aria-expanded="false">
+            <span class="cat-top">
+              <span class="fold-chev"><svg width="12" height="12" viewBox="0 0 16 16" fill="none"><path d="m6 3.5 5 4.5-5 4.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              <span class="cat-n">Telephone, internet and media</span>
+              <span class="cat-f"><span class="cat-same">$200</span></span>
+            </span>
+            <span class="cat-bot">
+              <span class="bars"><span class="bar--doc" style="width:11.8%"></span><span class="bar--adj" style="width:11.8%"></span></span>
+              <span class="cat-pct">3.7%</span>
+            </span>
+          </button>
+          <div class="foldp"><div><div class="catinner">
+            <div class="tl"><span class="tl-d">Mobile plans (2)</span><span class="tl-s">Ongoing</span><span class="tl-n tl-n--flat">$95</span></div>
+            <div class="tl"><span class="tl-d">Home internet</span><span class="tl-s">Ongoing</span><span class="tl-n tl-n--flat">$79</span></div>
+            <div class="tl"><span class="tl-d">Streaming subscriptions</span><span class="tl-s">Ongoing</span><span class="tl-n tl-n--flat">$26</span></div>
+          </div></div></div>
+        </div>
+      </div>
+
+      <div class="as-foot">Costs that are real but not repeating are brought to a sustainable level, not removed.</div>
+    </div>
+
+  </div>
+</section>
+
+<!-- AUDIT -->
+<section class="dv band band--dark" id="audit">
+  <div class="wrap audit-grid">
+    <div class="rev">
+      <p class="eyebrow">The documentation</p>
+      <h2 class="h2">A reason on its own isn't enough. It has to be on the file.</h2>
+      <p class="lede">The transaction is never edited away. The amount, date and description stay exactly as the bank recorded them. What changes is how the assessment treats them — and every change carries who made it, when, and what they relied on.</p>
+
+      <div>
+        <div class="akey">
+          <h4>Evidence travels with the transaction</h4>
+          <p>The borrower's wording and anything they attach stay on the line they explain, not in a mailbox you'd have to go back through.</p>
+        </div>
+        <div class="akey">
+          <h4>Declining is recorded too</h4>
+          <p>A proposal you rejected, and the number you substituted instead, is part of the record. That's often the entry that matters most.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="rev rev-d1">
+      <div class="dv audit-card" id="audit-rail">
+        <div class="audit-card-head">
+          <div>
+            <div class="d">TFR TO 062-000 447102</div>
+            <div class="s">Monthly · Account xx9775 · ref 4417-0862</div>
+          </div>
+          <div class="a">$520.00<small>As recorded</small></div>
+        </div>
+        <div class="rail">
+          <div class="rail-item">
+            <div class="rail-when">15 Aug<br>08:41</div>
+            <div class="rail-what">
+              <div class="rail-actor">Trueline</div>
+              <div class="rail-text">No merchant identity, destination outside the uploaded set. Ranked first — the largest recurring amount with no reason attached</div>
+              <span class="rail-treat">Ranked to the top of the review list</span>
+            </div>
+          </div>
+          <div class="rail-item">
+            <div class="rail-when">15 Aug<br>19:07</div>
+            <div class="rail-what">
+              <div class="rail-actor">Borrower</div>
+              <div class="rail-text">"Money we put aside into a savings account each month." Attached savings-jul-aug.pdf</div>
+              <span class="rail-treat">Proposed: not a living expense</span>
+            </div>
+          </div>
+          <div class="rail-item">
+            <div class="rail-when">16 Aug<br>09:12</div>
+            <div class="rail-what">
+              <div class="rail-actor">Broker</div>
+              <div class="rail-text">Deposits on the attached statement reconciled against all four transfers. Amounts and dates match</div>
+              <span class="rail-treat">Evidence accepted</span>
+            </div>
+          </div>
+          <div class="rail-item rail-item--final">
+            <div class="rail-when">16 Aug<br>09:14</div>
+            <div class="rail-what">
+              <div class="rail-actor">Broker</div>
+              <div class="rail-text">Approved as a transfer between the borrower's own accounts</div>
+              <span class="rail-treat rail-treat--final">Final treatment: not a living expense · $0.00 / month</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="dv audit-note" id="audit-note">
+        <p><strong>This is the part that has to hold up.</strong> $520 a month left the account and isn't in the living expense figure. The reason is on the file, in the borrower's words, with the document they provided and the check you made against it — before anyone asks.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 4 · DEMO -->
+<section class="dv band band--wash" id="demo">
+  <div class="wrap">
+    <div class="section-head rev">
+      <p class="eyebrow">See it work</p>
+      <h2 class="h2">Seven steps, two people, one file note.</h2>
+      <p class="lede">The full journey, at your own pace &mdash; the broker&rsquo;s side and the borrower&rsquo;s, on the screen each of them actually sees.</p>
+    </div>
+    <div class="demo-wrap rev">
+      <div class="demo-bar">
+        <b>Interactive demo</b><span>Press start, then drive it yourself</span>
+        <a href="trueline-how-it-works.html" target="_blank">Open full page &rarr;</a>
+      </div>
+      <div class="demo-frame">
+        <iframe src="trueline-how-it-works.html" title="Trueline interactive walkthrough" loading="lazy"></iframe>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 5 · PRICING -->
+<section class="dv band" id="pricing">
+  <div class="wrap">
+    <div class="section-head rev">
+      <p class="eyebrow">Pricing</p>
+      <h2 class="h2">Pay for the files you actually run.</h2>
+      <p class="lede">No lock-in and no per-seat minimum. An assessment is only charged once the borrower has submitted and you have finalised it.</p>
+    </div>
+
+    <div class="price rev">
+      <article class="pc2">
+        <div class="pc2-k">Pay as you go</div>
+        <div class="pc2-p">$29<small>per assessment</small></div>
+        <p class="pc2-s">For brokers writing a handful of files a month, or trying it on one deal.</p>
+        <ul class="pc2-l">
+          <li><svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="m2.6 7.2 2.6 2.6 6.2-6.6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Unlimited accounts and transactions per file</span></li>
+          <li><svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="m2.6 7.2 2.6 2.6 6.2-6.6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Full audit trail and exportable file note</span></li>
+          <li><svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="m2.6 7.2 2.6 2.6 6.2-6.6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Charged only on finalised assessments</span></li>
+        </ul>
+        <a href="#cta" class="btn btn--ghost">Start a file</a>
+      </article>
+
+      <article class="pc2 pc2--mid">
+        <span class="pc2-tag">Most brokers</span>
+        <div class="pc2-k">Broker</div>
+        <div class="pc2-p">$99<small>per month</small></div>
+        <p class="pc2-s">Includes 8 assessments a month, then $15 each. Cancel any time.</p>
+        <ul class="pc2-l">
+          <li><svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="m2.6 7.2 2.6 2.6 6.2-6.6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Everything in pay as you go</span></li>
+          <li><svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="m2.6 7.2 2.6 2.6 6.2-6.6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Your branding on the borrower&rsquo;s link</span></li>
+          <li><svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="m2.6 7.2 2.6 2.6 6.2-6.6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Saved templates for the questions you always ask</span></li>
+          <li><svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="m2.6 7.2 2.6 2.6 6.2-6.6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Email support, next business day</span></li>
+        </ul>
+        <a href="#cta" class="btn btn--primary">Get started</a>
+      </article>
+
+      <article class="pc2">
+        <div class="pc2-k">Brokerage &amp; aggregator</div>
+        <div class="pc2-p">Talk to us<small></small></div>
+        <p class="pc2-s">Volume pricing per user, with the controls a group needs across its writers.</p>
+        <ul class="pc2-l">
+          <li><svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="m2.6 7.2 2.6 2.6 6.2-6.6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Everything in Broker, across every writer</span></li>
+          <li><svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="m2.6 7.2 2.6 2.6 6.2-6.6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Group-level audit reporting and file review</span></li>
+          <li><svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="m2.6 7.2 2.6 2.6 6.2-6.6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg><span>House policy on what may be adjusted</span></li>
+          <li><svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="m2.6 7.2 2.6 2.6 6.2-6.6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Onboarding and a named contact</span></li>
+        </ul>
+        <a href="#cta" class="btn btn--ghost">Arrange a call</a>
+      </article>
+    </div>
+
+    <p class="price-note rev">Indicative pricing, GST exclusive. An assessment covers one application, however many accounts and applicants it involves.</p>
+  </div>
+</section>
+
+<!-- SECURITY -->
+<section class="dv band band--wash" id="security">
+  <div class="wrap">
+    <div class="section-head rev" style="margin-bottom:0">
+      <p class="eyebrow">Handling the data</p>
+      <h2 class="h2">Built for sensitive financial information.</h2>
+      <p class="lede">Borrower information is minimised as early as possible. Original bank files can be processed temporarily and removed after extraction, while the platform retains only the structured information required for the assessment and its audit trail.</p>
+    </div>
+    <div class="dv sec rev" id="security-cards">
+      <article class="scard">
+        <h3>Data minimisation</h3>
+        <p>Only the fields needed for the assessment are retained. Original files are not kept once transactions have been read.</p>
+      </article>
+      <article class="scard">
+        <h3>Role-based access</h3>
+        <p>Borrowers see only their own file. Brokers see only the files assigned to them. Access is scoped per assessment.</p>
+      </article>
+      <article class="scard">
+        <h3>Controlled AI processing</h3>
+        <p>Categorisation runs on transaction descriptions and amounts only, under contracted terms that exclude model training.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="dv band" id="cta">
+  <div class="wrap">
+    <div class="cta-box rev">
+      <div class="cta-inner">
+        <h2>Stop chasing reasons one email at a time.</h2>
+        <p>We'll run a demo assessment against a real statement set and show you what needs a reason, what the borrower sees, and what the file note looks like at the end.</p>
+        <div class="cta-btns">
+          <a href="#" class="btn btn--onDark">Book a demo</a>
+          <a href="trueline-how-it-works.html" class="btn btn--outlineDark">See how it works</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+<button id="idtoggle">IDs on</button>
+
+
+<footer class="dv site-foot" id="site-footer">
+  <div class="wrap">
+    <div class="foot-row">
+      <a href="#" class="brand"><span class="brand-mark"></span><span class="brand-name">Trueline</span></a>
+      <div class="foot-links">
+        <a href="trueline-how-it-works.html">How it works</a>
+        <a href="#audit">Documentation</a>
+        <a href="#">Security</a>
+        <a href="#">Privacy</a>
+        <a href="#">Terms</a>
+        <a href="#">Contact</a>
+      </div>
+    </div>
+    <div class="foot-base">
+      <p>&copy; 2026 Trueline Pty Ltd · Melbourne, Australia</p>
+      <p>Trueline is a documentation tool. Credit assessment decisions remain with the broker and the lender.</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  "use strict";
+  var idt=document.getElementById("idtoggle");
+  if(idt){ idt.addEventListener("click",function(){
+    var off=document.body.classList.toggle("ids-off");
+    idt.textContent=off?"IDs off":"IDs on";
+  }); }
+
+  var head=document.getElementById("site-header");
+  var onScroll=function(){head.classList.toggle("is-stuck",window.scrollY>8);};
+  onScroll(); window.addEventListener("scroll",onScroll,{passive:true});
+
+  document.querySelectorAll(".more").forEach(function(b){
+    b.addEventListener("click",function(e){
+      e.stopPropagation();
+      var r=b.closest(".adjrow"), open=r.classList.toggle("is-open");
+      b.textContent=open?"less":"more";
+      b.setAttribute("aria-expanded",open?"true":"false");
+    });
+  });
+
+  document.querySelectorAll(".qbtn, .foldbtn").forEach(function(btn){
+    btn.addEventListener("click",function(){
+      var it=btn.closest(".qitem, .foldw");
+      var open=it.getAttribute("data-open")==="true";
+      it.setAttribute("data-open",open?"false":"true");
+      btn.setAttribute("aria-expanded",open?"false":"true");
+    });
+  });
+
+  var reduce=window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var t=document.querySelectorAll(".rev");
+  if(reduce||!("IntersectionObserver" in window)){
+    t.forEach(function(el){el.classList.add("is-in");});
+  }else{
+    var io=new IntersectionObserver(function(es){
+      es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add("is-in"); io.unobserve(e.target); } });
+    },{threshold:.12,rootMargin:"0px 0px -8% 0px"});
+    t.forEach(function(el){io.observe(el);});
+  }
+})();
+</script>
+
+</body>
+</html>

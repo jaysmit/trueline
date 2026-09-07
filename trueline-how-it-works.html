@@ -1,0 +1,1964 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>How it works — Trueline</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700;800&family=Public+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#0F1216; --ink-2:#3D4553; --ink-3:#6E7684; --ink-4:#9AA1AE;
+  --paper:#FFFFFF; --wash:#F4F6F9; --wash-2:#FAFBFC; --line:#E3E7EE; --line-2:#EDF0F5;
+  --accent:#1F3BC4; --accent-hover:#182F9E; --accent-wash:#EEF1FF; --accent-line:#C9D3FF;
+  --navy:#0E1533; --navy-2:#19224A; --navy-line:#2A3462; --navy-text:#A8B0D0;
+  --ok:#0E7C57; --ok-wash:#E6F4EE; --warn:#B26A0F; --warn-wash:#FBF0DF;
+  --bad:#B3352C; --bad-wash:#FBEBE9;
+  --r-sm:8px; --r:12px; --r-lg:18px; --r-xl:24px;
+  --shadow-sm:0 1px 2px rgba(15,18,22,.04),0 1px 1px rgba(15,18,22,.03);
+  --shadow:0 2px 4px rgba(15,18,22,.03),0 8px 24px rgba(15,18,22,.06);
+  --shadow-lg:0 4px 8px rgba(15,18,22,.03),0 24px 60px rgba(15,18,22,.10);
+  --sans:"Public Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  --display:"Schibsted Grotesk",-apple-system,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+  --container:1180px; --gutter:40px;
+}
+*,*::before,*::after{box-sizing:border-box;}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;}
+body{margin:0;font-family:var(--sans);font-size:17px;line-height:1.62;color:var(--ink-2);background:var(--paper);-webkit-font-smoothing:antialiased;}
+h1,h2,h3,h4{font-family:var(--display);color:var(--ink);margin:0;letter-spacing:-.028em;line-height:1.08;font-weight:700;}
+p{margin:0;} a{color:inherit;text-decoration:none;} ul{margin:0;padding:0;list-style:none;}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;}
+svg{display:block;}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:4px;}
+
+.wrap{width:100%;max-width:var(--container);margin:0 auto;padding-inline:var(--gutter);}
+.band{padding-block:96px;}
+.band--wash{background:var(--wash);border-top:1px solid var(--line);}
+.eyebrow{font-family:var(--mono);font-size:11px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin-bottom:12px;display:flex;align-items:center;gap:10px;}
+.eyebrow::before{content:"";width:20px;height:1px;background:var(--accent-line);}
+.lede{font-size:19px;line-height:1.6;color:var(--ink-3);max-width:58ch;margin-top:20px;}
+
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;height:46px;padding:0 22px;border-radius:var(--r-sm);font-size:15px;font-weight:600;transition:background .16s,border-color .16s;}
+.btn--primary{background:var(--accent);color:#fff;}
+.btn--primary:hover{background:var(--accent-hover);}
+.btn--sm{height:38px;padding:0 16px;font-size:14px;}
+.btn--onDark{background:#fff;color:var(--navy);}
+.btn--outlineDark{border:1px solid var(--navy-line);color:#fff;}
+
+.site-head{position:sticky;top:0;z-index:60;background:rgba(255,255,255,.9);backdrop-filter:blur(14px);border-bottom:1px solid transparent;transition:border-color .2s;}
+.site-head.is-stuck{border-bottom-color:var(--line);}
+.head-row{display:flex;align-items:center;gap:40px;height:70px;}
+.brand{display:flex;align-items:center;gap:10px;}
+.brand-mark{width:26px;height:26px;border-radius:7px;background:var(--accent);position:relative;flex:none;}
+.brand-mark::before,.brand-mark::after{content:"";position:absolute;left:6px;height:1.5px;background:rgba(255,255,255,.92);border-radius:1px;}
+.brand-mark::before{top:9px;width:14px;} .brand-mark::after{top:14px;width:8px;}
+.brand-name{font-family:var(--display);font-weight:700;font-size:17.5px;letter-spacing:-.03em;color:var(--ink);}
+.nav{display:flex;gap:28px;margin-left:8px;}
+.nav a{font-size:14.5px;font-weight:500;color:var(--ink-2);}
+.nav a.is-here{color:var(--accent);}
+.head-actions{margin-left:auto;}
+
+.page-hero{padding-top:24px;padding-bottom:10px;text-align:center;}
+.page-hero h1{font-size:clamp(1.5rem,2.2vw,1.85rem);letter-spacing:-.032em;max-width:24ch;margin:0 auto;}
+/* ============ WALKTHROUGH ANIMATION ============ */
+.an-wrap{max-width:100%;margin:0 auto;}
+.an-stage{position:relative;background:var(--paper);border:1px solid var(--line);border-radius:var(--r-xl);box-shadow:var(--shadow-lg);overflow:hidden;}
+.an-bar{display:flex;align-items:center;gap:12px;padding:12px 18px;border-bottom:1px solid var(--line-2);background:var(--wash-2);}
+.an-dots{display:flex;gap:5px;}
+.an-dots i{width:8px;height:8px;border-radius:50%;background:#DDE2EA;display:block;}
+.an-url{font-family:var(--mono);font-size:11px;color:var(--ink-4);}
+.an-who{margin-left:auto;font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;padding:4px 9px;border-radius:5px;background:var(--accent-wash);color:var(--accent);transition:background .3s,color .3s;}
+.an-who.is-broker{background:var(--accent-wash);color:var(--accent);}
+.an-body{padding:18px 20px 22px;min-height:330px;}
+
+.an-tot-k{font-family:var(--mono);font-size:9.5px;letter-spacing:.11em;text-transform:uppercase;color:var(--ink-4);}
+.an-tot-v{font-family:var(--display);font-size:22px;font-weight:700;letter-spacing:-.035em;color:var(--ink);font-variant-numeric:tabular-nums;}
+
+.an-cat{border:1px solid var(--line);border-radius:var(--r);margin-bottom:8px;overflow:hidden;background:var(--paper);}
+.an-cat-hd{display:flex;align-items:center;gap:11px;padding:11px 14px;}
+.an-chev{width:0;height:0;border-left:5px solid var(--ink-4);border-top:4px solid transparent;border-bottom:4px solid transparent;transition:transform .3s;flex:none;}
+.an-cat.is-open .an-chev{transform:rotate(90deg);}
+.an-cat.is-open .an-cat-hd{background:var(--wash-2);border-bottom:1px solid var(--line-2);}
+.an-cat-n{font-size:13.5px;font-weight:500;color:var(--ink);}
+.an-cat-v{margin-left:auto;font-family:var(--mono);font-size:12.5px;font-weight:600;color:var(--ink);font-variant-numeric:tabular-nums;transition:color .4s;}
+.an-cat-v.is-cut{color:var(--ok);}
+.an-cat-bd{display:grid;grid-template-rows:0fr;transition:grid-template-rows .12s cubic-bezier(.22,.8,.3,1);}
+.an-cat.is-open .an-cat-bd{grid-template-rows:1fr;}
+.an-cat-bd > *{overflow:hidden;}
+.an-cat--locked{opacity:.55;}
+
+.an-tx{margin:8px 10px;padding:9px 11px;border:1px solid var(--line);border-radius:8px;background:var(--paper);transition:border-color .3s,background .3s;}
+.an-tx.is-sel{border-color:var(--accent);background:var(--accent-wash);}
+.an-tx.is-ok{border-color:rgba(14,124,87,.4);background:#F6FBF8;}
+.an-tx.is-part{border-color:rgba(178,106,15,.4);background:#FEFAF3;}
+.an-tx.is-bad{border-color:rgba(179,53,44,.4);background:#FDF7F6;}
+.an-tx--plain{opacity:.7;}
+.an-tx-hd{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;}
+.an-tx-d{font-family:var(--mono);font-size:11.5px;font-weight:500;color:var(--ink);}
+.an-tx-s{font-size:11.5px;color:var(--ink-4);}
+.an-tx-v{margin-left:auto;font-family:var(--mono);font-size:12.5px;color:var(--ink);font-variant-numeric:tabular-nums;white-space:nowrap;}
+.an-tx-v b{font-weight:600;}
+.an-tx-v s{color:var(--ink-4);margin-right:5px;text-decoration-thickness:1px;}
+.an-tx-mo{color:var(--ink-4);font-size:10px;margin-left:2px;}
+
+.an-form{display:none;margin-top:10px;padding-top:10px;border-top:1px dashed var(--line);}
+.an-tx.is-form .an-form{display:block;}
+.fl .an-form{display:block;}
+.fl.is-review .an-form,.fl.is-ok .an-form,.fl.is-part .an-form,.fl.is-bad .an-form{display:none;}
+.an-f-row{display:flex;align-items:center;gap:10px;margin-bottom:8px;}
+.an-f-k{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-4);}
+.an-f-note{min-height:36px;box-sizing:border-box;border:1px solid var(--line);border-radius:6px;padding:8px 10px;background:var(--paper);font-size:12.5px;color:var(--ink-2);line-height:1.4;transition:border-color .2s;}
+.an-f-note.is-active{border-color:var(--accent);}
+.an-caret{display:none;width:1.5px;height:12px;background:var(--accent);vertical-align:middle;margin-left:2px;flex:none;}
+.is-active .an-caret{display:inline-block;animation:anBlink .8s step-end infinite;}
+@keyframes anBlink{50%{opacity:0}}
+.an-f-send{margin-top:9px;display:inline-flex;align-items:center;justify-content:center;height:30px;padding:0 14px;border-radius:6px;background:var(--accent);color:#fff;font-size:12px;font-weight:600;}
+
+.an-verdict{display:none;margin:9px 11px 11px;padding-top:9px;border-top:1px dashed var(--line);font-size:12.5px;line-height:1.45;overflow-wrap:anywhere;}
+.an-tx.is-verdict .an-verdict{display:block;}
+.fl.is-ok .an-verdict,.fl.is-part .an-verdict,.fl.is-bad .an-verdict{display:block;}
+.an-verdict b{font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;padding:3px 7px;border-radius:4px;margin-right:8px;}
+.an-v-ok b{background:var(--ok-wash);color:var(--ok);}
+.an-v-part b{background:var(--warn-wash);color:var(--warn);}
+.an-v-bad b{background:var(--bad-wash);color:var(--bad);}
+
+.an-gen{display:inline-flex;align-items:center;justify-content:center;height:38px;padding:0 18px;border-radius:8px;background:var(--ink);color:#fff;font-size:13px;font-weight:600;margin-top:10px;opacity:.25;transition:opacity .4s;}
+.an-gen.is-live{opacity:1;}
+
+.an-report{display:none;margin-top:14px;border:1px solid var(--line);border-radius:var(--r);background:var(--wash-2);padding:15px 16px;}
+.an-report.is-on{display:block;animation:anRise .28s cubic-bezier(.22,.8,.3,1);}
+@keyframes anRise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.an-rep-hd{font-family:var(--mono);font-size:9.5px;letter-spacing:.11em;text-transform:uppercase;color:var(--ink-4);margin-bottom:10px;}
+.an-rep-sum{display:flex;align-items:baseline;gap:9px;font-family:var(--display);font-variant-numeric:tabular-nums;margin-bottom:12px;flex-wrap:wrap;}
+.an-rep-sum s{font-size:20px;font-weight:600;color:var(--ink-4);text-decoration-thickness:1.5px;}
+.an-rep-ar{color:var(--ok);}
+.an-rep-sum b{font-size:26px;font-weight:700;color:var(--ok);letter-spacing:-.04em;}
+.an-rep-d{margin-left:auto;font-family:var(--mono);font-size:11px;color:var(--ok);background:var(--ok-wash);border-radius:5px;padding:3px 8px;}
+.an-rep-l{display:flex;align-items:baseline;gap:10px;padding:7px 0;border-top:1px solid var(--line-2);font-size:12.5px;color:var(--ink-2);flex-wrap:wrap;}
+.an-rep-l em{font-style:normal;font-family:var(--mono);font-size:11.5px;color:var(--ink);margin-left:auto;}
+.an-rep-l i{font-style:normal;font-family:var(--mono);font-size:9.5px;letter-spacing:.07em;text-transform:uppercase;padding:2px 7px;border-radius:4px;width:74px;text-align:center;}
+.an-rep-l--ok i{background:var(--ok-wash);color:var(--ok);}
+.an-rep-l--part i{background:var(--warn-wash);color:var(--warn);}
+.an-rep-l--bad i{background:var(--bad-wash);color:var(--bad);}
+.an-rep-f{margin-top:10px;padding-top:9px;border-top:1px solid var(--line-2);font-size:11.5px;color:var(--ink-4);line-height:1.45;}
+
+
+.an-tot{display:flex;align-items:flex-end;gap:14px;padding-bottom:14px;border-bottom:1px solid var(--line-2);margin-bottom:12px;flex-wrap:wrap;}
+.an-tot-c{display:flex;flex-direction:column;gap:5px;}
+.an-tot-ar{color:var(--ok);font-size:15px;line-height:1.9;}
+.an-tot-now{color:var(--ok);transition:color .2s;}
+.an-tot-now.is-bump{animation:anBump .45s cubic-bezier(.22,.8,.3,1);}
+@keyframes anBump{0%{transform:scale(1)}45%{transform:scale(1.14)}100%{transform:scale(1)}}
+.an-tot-sep{margin-left:auto;font-family:var(--mono);font-size:10px;color:var(--ink-4);}
+
+.an-f-amt{margin-left:auto;display:inline-flex;align-items:center;justify-content:flex-end;height:27px;box-sizing:border-box;font-family:var(--mono);font-size:12.5px;font-weight:600;line-height:1;color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:0 10px;background:var(--paper);min-width:72px;text-align:right;}
+.an-f-amt.is-active{border-color:var(--accent);color:var(--accent);}
+
+.an-pending{display:none;margin-top:9px;padding-top:9px;border-top:1px dashed var(--line);font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);}
+.an-tx.is-pending .an-pending{display:block;}
+
+.an-review{display:none;margin-top:9px;padding-top:9px;border-top:1px dashed var(--line);}
+.an-tx.is-review .an-review{display:block;}
+.fl.is-review .an-review{display:block;}
+.an-r-row{display:flex;align-items:center;gap:10px;margin-bottom:8px;}
+.an-r-amt{margin-left:auto;display:inline-flex;align-items:center;justify-content:flex-end;height:27px;box-sizing:border-box;font-family:var(--mono);font-size:12.5px;font-weight:600;line-height:1;color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:0 10px;background:var(--paper);min-width:72px;text-align:right;}
+.an-r-amt.is-active{border-color:var(--ok);color:var(--ok);}
+.an-r-note{background:var(--wash-2);}
+.an-r-note.is-active{border-color:var(--ok);}
+.an-r-note .an-caret{background:var(--ok);}
+.an-r-btns{display:flex;gap:8px;margin-top:9px;}
+.an-r-b{display:inline-flex;align-items:center;justify-content:center;height:28px;padding:0 13px;border-radius:6px;font-size:11.5px;font-weight:600;border:1px solid var(--line);color:var(--ink-3);background:var(--paper);}
+.an-r-yes{border-color:rgba(14,124,87,.4);color:var(--ok);background:var(--ok-wash);}
+.an-r-no{border-color:rgba(179,53,44,.35);color:var(--bad);background:var(--bad-wash);}
+
+.an-cursor{position:absolute;z-index:30;top:0;left:0;z-index:30;pointer-events:none;transition:transform .19s cubic-bezier(.4,.05,.2,1);filter:drop-shadow(0 2px 4px rgba(0,0,0,.22));}
+.an-cursor::after{content:"";position:absolute;top:-9px;left:-9px;width:34px;height:34px;border-radius:50%;background:var(--accent);opacity:0;transform:scale(.3);}
+.an-cursor.is-click::after{animation:anTap .14s ease-out;}
+@keyframes anTap{0%{opacity:.3;transform:scale(.3)}100%{opacity:0;transform:scale(1)}}
+
+.an-foot{display:flex;align-items:center;gap:12px;margin-top:16px;flex-wrap:wrap;}
+.an-cap{flex:1;min-width:200px;font-family:var(--mono);font-size:11px;letter-spacing:.04em;color:var(--ink-3);}
+.an-btn{font-family:var(--mono);font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-3);border:1px solid var(--line);border-radius:99px;padding:6px 14px;background:var(--paper);}
+.an-btn:hover{border-color:#CBD2DE;color:var(--ink);}
+
+
+/* ---- stepper chrome ---- */
+.hiw-wrap{max-width:820px;margin:0 auto;display:flex;flex-direction:column;align-items:center;}
+.hiw-wrap > *{width:100%;}
+.hiw-wrap > .an-stage{width:-moz-fit-content;width:fit-content;}
+.an-body{min-height:400px;}
+.an-screen{display:none;}
+.an-screen.is-on{display:block;}
+
+.an-form-row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px;align-items:center;padding:11px 0;border-bottom:1px solid var(--line-2);}
+.an-form-row:last-of-type{border-bottom:0;}
+.an-fr-k{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-4);}
+.an-fr-s{font-size:12.5px;color:var(--ink-3);margin-top:3px;}
+.an-fr-v{display:inline-flex;align-items:center;justify-content:flex-end;height:28px;box-sizing:border-box;font-family:var(--mono);font-size:11.5px;letter-spacing:-.02em;font-weight:500;line-height:1;color:var(--ink);width:118px;flex:none;text-align:right;border:1px solid var(--line);border-radius:6px;padding:0 9px;background:var(--paper);}
+.an-fr-v.is-active{border-color:var(--accent);color:var(--accent);}
+.an-cta{display:inline-flex;align-items:center;justify-content:center;height:36px;padding:0 16px;border-radius:7px;background:var(--accent);color:#fff;font-size:12.5px;font-weight:600;margin-top:14px;}
+.an-cta--dark{background:var(--ink);}
+.an-cta--ghost{background:var(--paper);color:var(--ink);border:1px solid var(--line);}
+
+.an-up{border:1.5px dashed var(--accent-line);background:var(--accent-wash);border-radius:var(--r);padding:20px;text-align:center;margin-bottom:14px;}
+.an-up b{display:block;font-size:13.5px;color:var(--ink);}
+.an-up span{font-size:12px;color:var(--ink-3);}
+.an-file{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:12px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line-2);}
+.an-file-n{font-family:var(--mono);font-size:11.5px;color:var(--ink);}
+.an-bar2{height:3px;border-radius:99px;background:var(--line);overflow:hidden;margin-top:6px;}
+.an-bar2 i{display:block;height:100%;width:0;background:var(--ok);border-radius:99px;transition:width .5s ease;}
+.an-file.is-done .an-bar2 i{width:100%;}
+.an-tick{font-family:var(--mono);font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-4);}
+.an-file.is-done .an-tick{color:var(--ok);}
+
+.an-proc{display:grid;grid-template-columns:16px minmax(0,1fr) auto;gap:11px;align-items:center;padding:9px 0;border-bottom:1px solid var(--line-2);font-size:13px;color:var(--ink-3);opacity:.35;transition:opacity .3s;}
+.an-proc.is-done{opacity:1;}
+.an-proc i{width:14px;height:14px;border-radius:50%;border:1.5px solid var(--line);display:block;}
+.an-proc.is-done i{border-color:var(--ok);background:var(--ok);}
+.an-proc b{font-family:var(--mono);font-size:11.5px;color:var(--ink);font-weight:500;}
+
+.an-callout{margin-top:12px;padding:11px 13px;border-radius:var(--r-sm);background:var(--warn-wash);border:1px solid rgba(178,106,15,.25);font-size:12.5px;color:#7A4A0B;line-height:1.45;display:none;}
+.an-callout.is-on{display:block;}
+
+.an-audit{margin-top:12px;border-top:1px solid var(--line-2);padding-top:11px;}
+.an-audit-l{display:grid;grid-template-columns:56px minmax(0,1fr);gap:10px;font-family:var(--mono);font-size:10px;color:var(--ink-3);padding:3px 0;}
+.an-audit-l b{color:var(--ink-2);font-weight:500;}
+
+.hiw-nav{margin-top:26px;border-top:1px solid var(--line);padding-top:18px;}
+.seg{display:flex;gap:4px;}
+.segbtn{flex:1;padding:9px 0;}
+.segbtn i{display:block;height:4px;border-radius:99px;background:var(--line);transition:background .3s;}
+.segbtn:hover i{background:#CBD2DE;}
+.segbtn.is-done i{background:var(--accent-line);}
+.segbtn.is-on i{background:var(--accent);}
+.navrow{display:flex;align-items:flex-end;justify-content:space-between;gap:26px;margin-top:8px;flex-wrap:wrap;}
+.navmeta{flex:1;min-width:0;}
+.navcount{font-family:var(--mono);font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--accent);margin-bottom:7px;}
+.navmeta h3{font-size:20px;font-weight:700;letter-spacing:-.025em;}
+.navmeta p{font-size:14.5px;color:var(--ink-3);margin-top:5px;line-height:1.45;}
+.navbtns{display:flex;gap:10px;flex:none;}
+.navbtn{display:inline-flex;align-items:center;gap:8px;height:38px;padding:0 16px;font-size:13.5px;border-radius:var(--r-sm);font-size:14.5px;font-weight:600;border:1px solid var(--line);background:var(--paper);color:var(--ink);box-shadow:var(--shadow-sm);transition:border-color .16s,background .16s,opacity .16s;}
+.navbtn--primary{background:var(--accent);border-color:var(--accent);color:#fff;}
+.navbtn--primary:hover{background:var(--accent-hover);}
+.navbtn[disabled]{opacity:.35;cursor:default;box-shadow:none;}
+
+.recap{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:var(--r-lg);overflow:hidden;}
+.rc{background:var(--paper);padding:24px 24px 26px;}
+.rc-k{font-family:var(--mono);font-size:10px;letter-spacing:.11em;text-transform:uppercase;color:var(--accent);margin-bottom:11px;}
+.rc h3{font-size:16.5px;font-weight:600;letter-spacing:-.02em;margin-bottom:7px;}
+.rc p{font-size:14.5px;color:var(--ink-3);line-height:1.55;}
+
+.cta-box{background:var(--navy);border-radius:var(--r-xl);padding:60px 52px;position:relative;overflow:hidden;}
+.cta-box::before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(90deg,rgba(255,255,255,.035) 0 1px,transparent 1px 92px);}
+.cta-inner{position:relative;max-width:620px;}
+.cta-box h2{font-size:clamp(1.9rem,2.8vw,2.4rem);color:#fff;}
+.cta-box p{color:var(--navy-text);font-size:17.5px;margin-top:16px;line-height:1.6;}
+.cta-btns{display:flex;gap:14px;margin-top:30px;flex-wrap:wrap;}
+.site-foot{border-top:1px solid var(--line);padding-block:40px;}
+.foot-row{display:flex;gap:24px;align-items:center;flex-wrap:wrap;}
+.foot-row p{font-family:var(--mono);font-size:11.5px;color:var(--ink-4);}
+.foot-row p:last-child{margin-left:auto;}
+
+.dv{position:relative;}
+body.ids-off .dv::after{display:none;}
+.dv::after{content:"#" attr(id);position:absolute;top:3px;right:5px;z-index:40;font-family:var(--mono);font-size:9px;letter-spacing:.08em;color:rgba(15,18,22,.34);background:rgba(255,255,255,.72);border-radius:3px;padding:1px 4px;pointer-events:none;white-space:nowrap;}
+#idtoggle{position:fixed;right:16px;bottom:16px;z-index:200;font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:rgba(15,18,22,.4);background:rgba(255,255,255,.9);border:1px solid var(--line);border-radius:99px;padding:7px 13px;}
+
+@media (max-width:1080px){:root{--gutter:28px;} .nav{display:none;} .recap{grid-template-columns:1fr;} .cta-box{padding:46px 30px;}}
+@media (max-width:680px){
+  :root{--gutter:18px;} body{font-size:16px;} .band{padding-block:62px;}
+  .an-body{padding:14px 12px 18px;min-height:360px;}
+  .an-tx{margin:7px 6px;} .an-cursor{display:none;}
+  .navrow{flex-direction:column;align-items:stretch;gap:18px;}
+  .navbtns{width:100%;} .navbtn{flex:1;justify-content:center;}
+  .cta-box{padding:38px 22px;}
+}
+
+/* ================= borrower runs dark, broker runs light ================= */
+body:not(.is-idle) .an-stage:not(.is-broker) .ph-screen{
+  --paper:#12161F; --wash:#1B2130; --wash-2:#161B26;
+  --line:#2B3242; --line-2:#232A38;
+  --ink:#F1F4FA; --ink-2:#C4CBD9; --ink-3:#98A1B2; --ink-4:#727B8D;
+  --accent:#7D93FF; --accent-wash:#1A2140; --accent-line:#38427A;
+  --ok:#3DD68C; --ok-wash:#122C22;
+  --warn:#E0A44A; --warn-wash:#2E2413;
+  --bad:#F0796C; --bad-wash:#2E1A17;
+  background:#12161F;
+}
+body:not(.is-idle) .an-stage:not(.is-broker) .an-body{background:#12161F;}
+body:not(.is-idle) .an-stage:not(.is-broker) .ph-screen{border-top-color:#7D93FF;}
+body:not(.is-idle) .an-stage:not(.is-broker) .an-bar{background:#1A2140;border-bottom-color:#2B3242;}
+body:not(.is-idle) .an-stage:not(.is-broker) .an-who{background:#252F5C;color:#A8B8FF;}
+body:not(.is-idle) .an-stage:not(.is-broker) .fl.is-pending{background:#1A2140;}
+body:not(.is-idle) .an-stage:not(.is-broker) .fl.is-ok{background:#13291F;}
+body:not(.is-idle) .an-stage:not(.is-broker) .fl.is-part{background:#2A2214;}
+body:not(.is-idle) .an-stage:not(.is-broker) .fl.is-bad{background:#2B1A17;}
+body:not(.is-idle) .an-stage:not(.is-broker) .cx-bars .d1,
+body:not(.is-idle) .an-stage:not(.is-broker) .dcat-b .d1{background:#39415380;}
+body:not(.is-idle) .an-stage:not(.is-broker) .an-cta--dark,
+body:not(.is-idle) .an-stage:not(.is-broker) .tact--dark{background:#F1F4FA;color:#12161F;}
+body:not(.is-idle) .an-stage:not(.is-broker) .an-f-send{color:#0B0E14;}
+body:not(.is-idle) .an-stage:not(.is-broker) .scan-bar{background:#252F5C;}
+body:not(.is-idle) .an-stage:not(.is-broker) .turn--c{background:linear-gradient(165deg,#1D2547,#12161F);}
+body:not(.is-idle) .an-stage:not(.is-broker) .st-mark{background:#7D93FF;}
+body:not(.is-idle) .an-stage:not(.is-broker) .st-go{color:#0B0E14;box-shadow:0 6px 18px rgba(125,147,255,.24);}
+body:not(.is-idle) .an-stage:not(.is-broker) .bd-l li.is-done i::after{border-color:#0B0E14;}
+body:not(.is-idle) .an-stage:not(.is-broker) .an-r-b{color:#0B0E14;}
+
+/* the popup and its tooltip narrate the demo — always light */
+.pop{--paper:#FFFFFF;--ink:#0F1216;--ink-2:#3D4553;--ink-4:#9AA1AE;--line:#E3E7EE;--line-2:#EDF0F5;
+  background:#fff;color:#3D4553;border-color:#E3E7EE;}
+.pop-btn{background:#fff;color:#0F1216;border-color:#E3E7EE;}
+.pop-btn--go{background:#1F3BC4;border-color:#1F3BC4;color:#fff;}
+.hq-t{background:#0F1216;color:#fff;}
+.hq-t::after{border-top-color:#0F1216;}
+
+/* ================= MOBILE: fit the demo on one screen ================= */
+@media (max-width:680px){
+  /* the visitor is already holding a phone — drop the bezel and give the space to the screen */
+  .an-stage{
+    width:100%;max-width:100%;padding:0;border-radius:18px;
+    background:var(--paper);border:1px solid var(--line);
+    box-shadow:0 8px 24px rgba(15,18,22,.09);
+  }
+  .ph-notch,.ph-speaker,.ph-btn,.ph-status{display:none;}
+  .ph-screen{
+    width:100%;
+    height:calc(100vh - 236px);
+    height:calc(100dvh - 236px);
+    min-height:340px;max-height:640px;
+    border-radius:17px;
+  }
+  .an-cursor{display:block;}              /* the pointer is the point — keep it */
+
+  /* header stops eating 70px once you scroll */
+  .site-head{position:static;}
+
+  /* trim everything above the stage */
+  .page-hero{padding-top:14px;padding-bottom:4px;}
+  .page-hero h1{font-size:1.3rem;letter-spacing:-.03em;}
+  .step-head{margin:0 auto 10px;}
+  .step-head h3{font-size:15.5px;line-height:1.25;}
+  .prog-row{margin-top:9px;gap:8px;}
+  .prog-k{font-size:10px;}
+  .navbtn{height:36px;padding:0 13px;font-size:13px;}
+  .navbtn--big{height:44px;font-size:14.5px;}
+  #hiw-walkthrough{padding-bottom:32px !important;}
+  .an-body{padding:12px 11px 18px;}
+  .turn-t{font-size:27px;}
+}
+@media (max-width:680px) and (max-height:680px){
+  .page-hero{display:none;}               /* short screens: the nav already says where you are */
+  .ph-screen{height:calc(100dvh - 176px);}
+}
+
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto;}*,*::before,*::after{transition-duration:.001ms !important;animation-duration:.001ms !important;}}
+
+/* ---- device framing + 3-step chrome ---- */
+/* ---- handset ---- */
+.an-stage{
+  position:relative;width:-moz-fit-content;width:fit-content;margin-left:auto;margin-right:auto;
+  background:linear-gradient(160deg,#2B3140,#12161F 42%,#0B0E14);
+  border:0;border-radius:48px;padding:12px;
+  box-shadow:0 2px 3px rgba(15,18,22,.3),0 26px 60px rgba(15,18,22,.28),inset 0 0 0 2px rgba(255,255,255,.07);
+  overflow:visible;
+}
+.ph-screen{
+  position:relative;display:flex;flex-direction:column;
+  width:312px;height:645px;              /* fixed screen; bezel is padding around it */
+  background:var(--paper);border-radius:36px;overflow:hidden;
+  border-top:3px solid var(--accent);transition:border-color .35s;
+}
+.an-stage.is-broker .ph-screen{border-top-color:var(--accent);}
+.ph-notch{position:absolute;top:8px;left:50%;transform:translateX(-50%);width:94px;height:22px;background:#0B0E14;border-radius:99px;z-index:8;}
+.ph-speaker{position:absolute;top:18px;left:50%;transform:translateX(-50%);width:30px;height:4px;border-radius:99px;background:#242A3A;z-index:9;}
+.ph-status{flex:none;display:flex;align-items:center;justify-content:space-between;padding:10px 22px 4px;font-family:var(--mono);font-size:10px;color:var(--ink-2);}
+.ph-sig{width:38px;height:9px;border-radius:2px;background:linear-gradient(90deg,var(--ink-3) 0 6px,transparent 6px 9px,var(--ink-3) 9px 16px,transparent 16px 19px,var(--ink-3) 19px 30px,transparent 30px 33px,var(--ink-3) 33px 38px);opacity:.55;}
+.ph-btn{position:absolute;background:#20252F;border-radius:2px;}
+.ph-btn--v1{left:-2px;top:150px;width:3px;height:34px;}
+.ph-btn--v2{left:-2px;top:194px;width:3px;height:34px;}
+.ph-btn--pw{right:-2px;top:186px;width:3px;height:52px;}
+.an-bar{background:var(--accent-wash);transition:background .35s;border-bottom:1px solid var(--line-2);padding:10px 16px;}
+.an-brand{display:flex;align-items:center;gap:7px;font-family:var(--display);font-size:13px;font-weight:700;letter-spacing:-.03em;color:var(--ink);}
+.an-mark{width:16px;height:16px;border-radius:5px;background:var(--accent);flex:none;transition:background .35s;}
+.an-stage.is-broker .an-mark{background:var(--accent);}
+.an-who{margin-left:auto;}
+.an-stage.is-broker .an-bar{background:var(--accent-wash);}
+.an-url{display:none;}
+.an-cursor svg path{fill:#1F3BC4;transition:fill .35s;}
+.an-stage.is-broker .an-cursor svg path{fill:#1F3BC4;}
+.an-body{flex:1;min-height:0;overflow-y:auto;overflow-x:hidden;padding:12px 13px 22px;-webkit-overflow-scrolling:touch;}
+.an-body::-webkit-scrollbar{width:0;}
+.an-bar{flex:none;}
+
+.hiw-top{display:none;}
+.step-head{max-width:560px;margin:0 auto 16px;text-align:center;}
+.step-head h3{font-size:18px;font-weight:700;letter-spacing:-.028em;}
+.ai-block{display:none;}
+.ai-block.is-on{display:block;animation:aiIn .4s cubic-bezier(.22,.8,.3,1);}
+@keyframes aiIn{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
+.an-ask--ai{color:var(--accent);}
+.an-btns{display:none;gap:8px;flex-wrap:wrap;}
+.an-btns.is-on{display:flex;}
+.an-btns .an-cta{margin-top:10px;}
+.ctl{opacity:0;pointer-events:none;transition:opacity .28s ease,transform .28s cubic-bezier(.22,.8,.3,1);}
+.ctl--start{position:absolute;inset:0;text-align:center;transform:scale(1);}
+.ctl--run{transform:translateY(8px);}
+.ctl.is-on{opacity:1;pointer-events:auto;transform:none;}
+.ctl--start.is-out{opacity:0;transform:scale(.94);}
+.navbtn--big{height:48px;padding:0 26px;font-size:15px;border-radius:10px;box-shadow:0 6px 18px rgba(31,59,196,.22);}
+.navbtn--big svg{margin-left:2px;}
+
+.prog{height:5px;border-radius:99px;background:var(--line);overflow:hidden;}
+.prog-fill{display:block;height:100%;width:0;background:var(--accent);border-radius:99px;transition:width .45s cubic-bezier(.22,.8,.3,1);}
+.prog-row{display:flex;align-items:center;gap:10px;margin-top:11px;flex-wrap:wrap;}
+.prog-k{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-4);}
+.prog-k b{color:var(--accent);font-weight:600;}
+.prog-row .navbtn{margin-left:0;}
+.prog-row #prev{margin-left:auto;}
+.hiw-top .navbtn{height:42px;}
+
+/* AI suggestion list */
+.an-sug{border:1px solid var(--line);border-radius:10px;background:var(--paper);margin-bottom:8px;padding:10px 12px;}
+.an-sug-k{font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);background:var(--accent-wash);border-radius:4px;padding:2px 6px;display:inline-block;margin-bottom:6px;}
+.an-ask{font-family:var(--mono);font-size:9.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-4);margin:14px 0 8px;}
+
+/* requested total */
+.an-tot-req{color:var(--accent);}
+.an-tot-c.is-hid{display:none;}
+.an-tot-ar.is-hid{display:none;}
+
+/* formal assessment doc */
+.doc{border:1px solid var(--line);border-radius:var(--r);background:var(--paper);overflow:hidden;margin-top:12px;}
+.doc-hd{padding:14px 16px;border-bottom:1px solid var(--line-2);background:var(--wash-2);}
+.doc-t{font-family:var(--display);font-size:15px;font-weight:800;letter-spacing:-.03em;color:var(--ink);}
+.doc-m{font-family:var(--mono);font-size:9.5px;color:var(--ink-4);margin-top:4px;}
+.doc-sum{display:grid;grid-template-columns:repeat(3,1fr);border-bottom:1px solid var(--line-2);}
+.doc-s{padding:10px 9px;border-right:1px solid var(--line-2);}
+.doc-s:last-child{border-right:0;background:#F6FBF8;}
+.doc-s-k{font-family:var(--mono);font-size:8.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-4);}
+.doc-s-v{font-family:var(--display);font-size:15.5px;font-weight:700;letter-spacing:-.03em;color:var(--ink);margin-top:5px;font-variant-numeric:tabular-nums;}
+.doc-s:last-child .doc-s-v{color:var(--ok);}
+.doc-sec{font-family:var(--mono);font-size:9px;letter-spacing:.11em;text-transform:uppercase;color:var(--ink-4);padding:12px 14px 6px;}
+.dr{border-bottom:1px solid var(--line-2);}
+.dr-hd{display:grid;grid-template-columns:10px minmax(0,1fr) auto;gap:8px;row-gap:5px;align-items:center;padding:9px 12px;width:100%;text-align:left;}
+.dr-s{grid-column:2 / -1;justify-self:start;}
+.dr-hd:hover{background:var(--wash-2);}
+.dr-i{width:6px;height:6px;border-radius:50%;justify-self:center;}
+.dr--ok .dr-i{background:var(--ok);} .dr--part .dr-i{background:var(--warn);} .dr--bad .dr-i{background:var(--bad);}
+.dr-d{font-family:var(--mono);font-size:10.5px;color:var(--ink);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.dr-v{font-family:var(--mono);font-size:10.5px;font-variant-numeric:tabular-nums;white-space:nowrap;}
+.dr-v s{color:var(--ink-4);} .dr-v b{margin-left:4px;}
+.dr--ok .dr-v b{color:var(--ok);} .dr--part .dr-v b{color:var(--warn);} .dr--bad .dr-v b{color:var(--bad);}
+.dr-s{font-family:var(--mono);font-size:8.5px;letter-spacing:.07em;text-transform:uppercase;padding:2px 6px;border-radius:4px;}
+.dr--ok .dr-s{background:var(--ok-wash);color:var(--ok);}
+.dr--part .dr-s{background:var(--warn-wash);color:var(--warn);}
+.dr--bad .dr-s{background:var(--bad-wash);color:var(--bad);}
+.dr-bd{display:grid;grid-template-rows:0fr;transition:grid-template-rows .28s cubic-bezier(.22,.8,.3,1);}
+.dr[data-open="true"] .dr-bd{grid-template-rows:1fr;}
+.dr-bd>div{overflow:hidden;}
+.dr-in{padding:2px 12px 12px 22px;background:var(--wash-2);}
+.dm{padding:8px 0;border-bottom:1px dashed var(--line);}
+.dm:last-child{border-bottom:0;}
+.dm-w{font-family:var(--mono);font-size:8.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-4);margin-bottom:3px;}
+.dm-w i{width:5px;height:5px;border-radius:50%;display:inline-block;margin-right:5px;vertical-align:1px;}
+.dm--c .dm-w i{background:var(--accent);} .dm--b .dm-w i{background:var(--ok);}
+.dm p{font-size:11.5px;line-height:1.5;color:var(--ink-2);}
+.dm-f{display:inline-block;margin-top:5px;font-family:var(--mono);font-size:9.5px;color:var(--accent);background:var(--accent-wash);border-radius:4px;padding:2px 7px;}
+.dcat{border-bottom:1px solid var(--line-2);}
+.dcat-hd{display:flex;align-items:center;gap:9px;width:100%;padding:8px 14px;text-align:left;}
+.dcat-hd:hover{background:var(--wash-2);}
+.dcat-chev{width:0;height:0;border-left:4px solid var(--ink-4);border-top:3.5px solid transparent;border-bottom:3.5px solid transparent;flex:none;transition:transform .25s;}
+.dcat[data-open="true"] .dcat-chev{transform:rotate(90deg);}
+.dcat[data-open="true"] .dcat-hd{background:var(--wash-2);}
+.dcat-bd{display:grid;grid-template-rows:0fr;transition:grid-template-rows .26s cubic-bezier(.22,.8,.3,1);}
+.dcat[data-open="true"] .dcat-bd{grid-template-rows:1fr;}
+.dcat-bd>div{overflow:hidden;}
+.dcat-in{padding:2px 14px 10px 27px;background:var(--wash-2);}
+.dtx{display:flex;align-items:center;gap:8px;padding:5px 0;border-bottom:1px dashed var(--line);}
+.dtx-m{display:flex;flex-direction:column;gap:2px;min-width:0;}
+.dtx-t{font-family:var(--mono);font-size:8px;color:var(--ink-4);}
+.dtx:last-child{border-bottom:0;}
+.dtx-d{font-family:var(--mono);font-size:9.5px;color:var(--ink-3);min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.dtx-a{margin-left:auto;flex:none;font-family:var(--mono);font-size:9.5px;color:var(--ink-2);font-variant-numeric:tabular-nums;white-space:nowrap;}
+.dtx-a s{color:var(--ink-4);margin-right:4px;}
+.dtx--ok .dtx-a{color:var(--ok);font-weight:600;}
+.dtx--part .dtx-a{color:var(--warn);font-weight:600;}
+.dtx--bad .dtx-a{color:var(--bad);font-weight:600;}
+.dtx--ok .dtx-d,.dtx--part .dtx-d,.dtx--bad .dtx-d{color:var(--ink);}
+.dcat-n{font-size:11px;color:var(--ink-2);min-width:64px;}
+.dcat-b{position:relative;flex:1;height:6px;border-radius:99px;background:var(--wash);}
+.dcat-b i{position:absolute;top:0;left:0;height:100%;border-radius:99px;}
+.dcat-b .d1{background:#D8DDE8;} .dcat-b .d2{background:var(--ok);}
+.dcat-v{font-family:var(--mono);font-size:10px;color:var(--ink-3);white-space:nowrap;font-variant-numeric:tabular-nums;}
+.doc-ft{padding:10px 14px;background:var(--wash-2);font-family:var(--mono);font-size:9px;color:var(--ink-4);line-height:1.5;}
+
+/* ---- full category list ---- */
+.cl{display:flex;align-items:baseline;gap:10px;padding:9px 4px;border-bottom:1px solid var(--line-2);}
+.cl-n{font-size:12.5px;color:var(--ink-2);}
+.cl-v{margin-left:auto;font-family:var(--mono);font-size:12px;font-weight:600;color:var(--ink);font-variant-numeric:tabular-nums;}
+.cl--nil .cl-n,.cl--nil .cl-v{color:var(--ink-4);font-weight:400;}
+
+/* ---- flagged rows, one line each ---- */
+.fl-block{display:none;margin-bottom:6px;}
+.fl-block.is-on{display:block;}
+.fl-block .fl{opacity:0;transform:translateY(26px);}
+.fl-block .fl.is-in{opacity:1;transform:none;}
+.fl{border:1px solid var(--line);border-radius:9px;background:var(--paper);margin-bottom:6px;overflow:hidden;
+    transition:opacity .42s ease,transform .42s cubic-bezier(.22,.8,.3,1),border-color .3s,background .3s;}
+.fl.is-in{opacity:1;transform:none;}
+.fl.is-pending{border-color:var(--accent-line);background:var(--accent-wash);}
+.fl.is-ok{border-color:rgba(14,124,87,.4);background:#F6FBF8;}
+.fl.is-part{border-color:rgba(178,106,15,.4);background:#FEFAF3;}
+.fl.is-bad{border-color:rgba(179,53,44,.4);background:#FDF7F6;}
+.fl-hd{display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:9px;align-items:center;width:100%;padding:8px 11px;text-align:left;}
+.fl-m{display:flex;flex-direction:column;gap:2px;min-width:0;}
+.fl-t{font-family:var(--mono);font-size:9px;color:var(--ink-4);}
+.fl-d{font-family:var(--mono);font-size:11px;font-weight:500;color:var(--ink);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.fl-a{font-family:var(--mono);font-size:11.5px;font-weight:600;color:var(--ink);font-variant-numeric:tabular-nums;white-space:nowrap;}
+.fl-a small{font-size:9px;color:var(--ink-4);font-weight:400;margin-left:1px;}
+.fl-a s{color:var(--ink-4);font-weight:400;margin-right:4px;}
+.fl-c{font-family:var(--mono);font-size:9.5px;letter-spacing:.04em;color:var(--accent);background:var(--accent-wash);border-radius:4px;padding:2px 6px;white-space:nowrap;}
+.fl.is-ok .fl-c,.fl.is-part .fl-c,.fl.is-bad .fl-c{display:none;}
+.fl-bd{display:grid;grid-template-rows:0fr;transition:grid-template-rows .3s cubic-bezier(.22,.8,.3,1);}
+.fl[data-open="true"] .fl-bd{grid-template-rows:1fr;}
+.fl-bd>div{overflow:hidden;}
+.fl-in{padding:0 11px 11px;}
+.fl-why{font-size:11.5px;color:var(--ink-3);line-height:1.45;padding:2px 0 9px;border-top:1px dashed var(--line);margin-top:2px;padding-top:9px;}
+
+.an-cta.is-off{background:var(--line);color:var(--ink-4);pointer-events:none;}
+
+/* ---- handover ---- */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* ---- audit trail in the assessment ---- */
+.at{margin-top:8px;border-top:1px dashed var(--line);padding-top:8px;}
+.at-l{display:grid;grid-template-columns:64px minmax(0,1fr);gap:9px;padding:5px 0;}
+.at-t{font-family:var(--mono);font-size:8.5px;color:var(--ink-4);line-height:1.5;}
+.at-b{font-size:11px;line-height:1.5;color:var(--ink-2);}
+.at-b b{font-family:var(--mono);font-size:9px;letter-spacing:.07em;text-transform:uppercase;color:var(--ink-4);display:block;margin-bottom:2px;}
+.at-b i{font-style:normal;color:var(--ink);}
+
+/* ---- expandable categories with bars ---- */
+.cx{border-bottom:1px solid var(--line-2);}
+.cx--nil{opacity:.5;}
+.cx-hd{display:block;width:100%;text-align:left;padding:10px 4px;}
+.cx-hd:hover{background:var(--wash-2);}
+.cx-top{display:flex;align-items:baseline;gap:8px;}
+.cx-chev{width:0;height:0;border-left:5px solid var(--ink-4);border-top:4px solid transparent;border-bottom:4px solid transparent;flex:none;align-self:center;transition:transform .25s;}
+.cx[data-open="true"] .cx-chev{transform:rotate(90deg);}
+.cx-n{font-size:12.5px;color:var(--ink);min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.cx-f{margin-left:auto;font-family:var(--mono);font-size:11.5px;font-weight:600;color:var(--ink);font-variant-numeric:tabular-nums;white-space:nowrap;}
+.cx-f s{color:var(--ink-4);font-weight:400;}
+.cx-ar{color:var(--ok);margin:0 3px;}
+.cx-f em{font-style:normal;color:var(--ok);}
+.cx-bot{display:flex;align-items:center;gap:9px;margin-top:7px;}
+.cx-bars{position:relative;flex:1;height:6px;border-radius:99px;background:var(--wash);}
+.cx-bars i{position:absolute;top:0;left:0;height:100%;border-radius:99px;transition:width .5s cubic-bezier(.22,.8,.3,1);}
+.cx-bars .d1{background:#D8DDE8;} .cx-bars .d2{background:var(--ok);}
+.cx-p{flex:none;width:34px;text-align:right;font-family:var(--mono);font-size:9.5px;color:var(--ink-4);font-variant-numeric:tabular-nums;}
+.cx-bd{display:grid;grid-template-rows:0fr;transition:grid-template-rows .28s cubic-bezier(.22,.8,.3,1);}
+.cx[data-open="true"] .cx-bd{grid-template-rows:1fr;}
+.cx-bd>div{overflow:hidden;}
+.cx-in{padding:2px 0 10px 14px;}
+.px{display:flex;align-items:center;gap:9px;padding:6px 4px;border-bottom:1px dashed var(--line-2);}
+.px-m{display:flex;flex-direction:column;gap:2px;min-width:0;}
+.px-t{font-family:var(--mono);font-size:9px;color:var(--ink-4);letter-spacing:-.01em;}
+.px:last-child{border-bottom:0;}
+.px-d{font-size:11.5px;color:var(--ink-3);min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.px-a{margin-left:auto;flex:none;font-family:var(--mono);font-size:11px;color:var(--ink-2);font-variant-numeric:tabular-nums;}
+.cx-in .fl{margin:6px 0;}
+.fl-c--man{color:var(--ink-4);background:var(--wash);}
+
+/* ---- AI scan ---- */
+.scan{display:none;padding:14px 12px;border:1px solid var(--accent-line);background:var(--accent-wash);border-radius:10px;margin-bottom:10px;}
+.scan.is-on{display:block;}
+.scan-k{font-family:var(--mono);font-size:10px;letter-spacing:.09em;text-transform:uppercase;color:var(--accent);}
+.scan-bar{height:5px;border-radius:99px;background:rgba(31,59,196,.14);overflow:hidden;margin:9px 0 7px;}
+.scan-bar i{display:block;height:100%;width:0;background:var(--accent);border-radius:99px;transition:width .35s linear;}
+.scan-s{font-family:var(--mono);font-size:10px;color:var(--ink-3);}
+
+/* ---- breakdown build screen ---- */
+.bd-in{display:flex;flex-direction:column;align-items:center;text-align:center;padding:34px 8px 0;}
+.bd-ring{position:relative;width:60px;height:60px;margin-bottom:16px;}
+.bd-ring svg{display:block;}
+#bdArc{transition:stroke-dashoffset .5s cubic-bezier(.22,.8,.3,1);}
+.bd-pc{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:12px;font-weight:600;color:var(--accent);}
+.bd-t{font-family:var(--display);font-size:16px;font-weight:700;letter-spacing:-.028em;color:var(--ink);}
+.bd-l{width:100%;margin-top:20px;text-align:left;}
+.bd-l li{display:grid;grid-template-columns:15px minmax(0,1fr) auto;gap:9px;align-items:center;padding:9px 4px;border-bottom:1px solid var(--line-2);opacity:.32;transition:opacity .3s;}
+.bd-l li.is-done{opacity:1;}
+.bd-l li i{width:13px;height:13px;border-radius:50%;border:1.5px solid var(--line);display:block;position:relative;}
+.bd-l li.is-done i{background:var(--ok);border-color:var(--ok);}
+.bd-l li.is-done i::after{content:"";position:absolute;left:3.5px;top:1.5px;width:3px;height:6px;border:solid #fff;border-width:0 1.5px 1.5px 0;transform:rotate(45deg);}
+.bd-l li span{font-size:12.5px;color:var(--ink-2);}
+.bd-l li b{font-family:var(--mono);font-size:11px;color:var(--ink-4);font-weight:500;font-variant-numeric:tabular-nums;}
+.bd-l li.is-done b{color:var(--ink);}
+.bd-f{margin-top:16px;font-family:var(--mono);font-size:10px;color:var(--ink-4);line-height:1.5;}
+
+.an-cta--scan{display:flex;width:100%;gap:8px;background:var(--accent);margin:2px 0 12px;}
+.an-cta--scan.is-gone{display:none;}
+
+.an-ask{display:flex;align-items:baseline;gap:10px;}
+.min-all{margin-left:auto;font-family:var(--mono);font-size:9.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--accent);border-bottom:1px solid var(--accent-line);padding:0;}
+.min-all:hover{border-bottom-color:var(--accent);}
+
+.ign{display:none;border:1px dashed var(--line);border-radius:9px;margin:-2px 0 10px;overflow:hidden;}
+.ign.is-on{display:block;}
+.ign-hd{display:flex;align-items:center;gap:7px;width:100%;text-align:left;padding:8px 11px;font-size:11.5px;color:var(--ink-3);white-space:nowrap;}
+.ign-hd:hover{background:var(--wash-2);}
+.ign-hd b{font-family:var(--mono);color:var(--ink-2);}
+.ign-chev{margin-left:auto;width:0;height:0;border-left:5px solid var(--ink-4);border-top:4px solid transparent;border-bottom:4px solid transparent;transition:transform .25s;}
+.ign[data-open="true"] .ign-chev{transform:rotate(90deg);}
+.ign-bd{display:grid;grid-template-rows:0fr;transition:grid-template-rows .28s cubic-bezier(.22,.8,.3,1);}
+.ign[data-open="true"] .ign-bd{grid-template-rows:1fr;}
+.ign-bd>div{overflow:hidden;}
+.ign-in{padding:0 11px 10px;}
+.ig{display:flex;align-items:center;gap:8px;padding:6px 0;border-top:1px dashed var(--line);}
+.ig-m{display:flex;flex-direction:column;gap:2px;min-width:0;}
+.ig-t{font-family:var(--mono);font-size:8.5px;color:var(--ink-4);}
+.ig-d{font-family:var(--mono);font-size:10.5px;color:var(--ink-3);min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.ig-a{margin-left:auto;font-family:var(--mono);font-size:10.5px;color:var(--ink-3);}
+.ig-c{font-family:var(--mono);font-size:9px;color:var(--ink-4);background:var(--wash);border-radius:4px;padding:2px 5px;}
+.ig-f{margin-top:8px;font-family:var(--mono);font-size:9px;color:var(--ink-4);line-height:1.5;}
+
+.hh{border:1px solid var(--line);border-radius:10px;padding:12px 13px;margin-bottom:12px;background:var(--wash-2);}
+.hh-k{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-4);margin-bottom:9px;}
+.hh-row{display:flex;align-items:center;gap:10px;padding:6px 0;border-bottom:1px dashed var(--line);font-size:12.5px;color:var(--ink-2);}
+.hh-row:last-of-type{border-bottom:0;}
+.hh-v{margin-left:auto;display:inline-flex;align-items:center;justify-content:flex-end;height:26px;box-sizing:border-box;font-family:var(--mono);font-size:12px;font-weight:600;line-height:1;color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:0 10px;background:var(--paper);min-width:72px;text-align:right;}
+.hh-v.is-active{border-color:var(--accent);color:var(--accent);}
+.hh-f{margin-top:9px;font-family:var(--mono);font-size:9px;color:var(--ink-4);line-height:1.5;}
+
+.bm{margin:10px 14px 4px;border:1px solid var(--line);border-radius:8px;background:var(--wash-2);overflow:hidden;}
+.bm-hd{display:flex;align-items:center;gap:8px;width:100%;padding:10px 12px;text-align:left;}
+.bm-hd:hover{background:var(--line-2);}
+.bm-chev{margin-left:auto;width:0;height:0;border-left:5px solid var(--ink-4);border-top:4px solid transparent;border-bottom:4px solid transparent;transition:transform .25s;}
+.bm[data-open="true"] .bm-chev{transform:rotate(90deg);}
+.bm-bd{display:grid;grid-template-rows:0fr;transition:grid-template-rows .28s cubic-bezier(.22,.8,.3,1);}
+.bm[data-open="true"] .bm-bd{grid-template-rows:1fr;}
+.bm-bd>div{overflow:hidden;}
+.bm-in{padding:0 12px 11px;}
+.bm-k{font-family:var(--mono);font-size:8.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-4);}
+.bm-r{display:flex;align-items:baseline;gap:10px;font-size:11px;color:var(--ink-2);padding:4px 0;}
+.bm-r b{margin-left:auto;font-family:var(--mono);font-size:11.5px;color:var(--ink);font-variant-numeric:tabular-nums;}
+.bm-hi{color:var(--ok);}
+.bm-f{margin-top:7px;padding-top:7px;border-top:1px dashed var(--line);font-family:var(--mono);font-size:9px;color:var(--ink-4);line-height:1.5;}
+
+/* action row inside the totals block — always occupies its space */
+.an-tot{display:flex;align-items:flex-end;flex-wrap:wrap;gap:9px;}
+.an-tot .an-tot-c{display:flex;flex-direction:column;gap:5px;}
+.an-tot .an-tot-ar{align-self:center;margin:0 1px;}
+.an-tot .an-tot-c.is-hid,.an-tot .an-tot-ar.is-hid{display:none;}
+.tot-act{display:none;gap:6px;margin-left:auto;}
+.tot-act.is-on{display:flex;}
+.tact{display:none;align-items:center;justify-content:center;height:28px;padding:0 11px;border-radius:7px;
+  font-size:11px;font-weight:600;background:var(--accent);color:#fff;white-space:nowrap;}
+.tact.is-on{display:inline-flex;}
+.tact--ghost{background:var(--paper);color:var(--ink);border:1px solid var(--line);}
+.tact--dark{background:var(--ink);color:#fff;}
+
+/* whose turn it is */
+.an-body{background:#FBFCFF;transition:background .45s;}
+.an-stage.is-broker .an-body{background:#FAFBFF;}
+
+.turn{position:absolute;inset:0;z-index:26;display:none;align-items:center;justify-content:center;text-align:center;}
+.turn.is-on{display:flex;animation:turnIn .3s ease;}
+@keyframes turnIn{from{opacity:0}to{opacity:1}}
+.turn--c{background:linear-gradient(165deg,#EEF1FF,#DCE3FF);}
+.turn--b{background:linear-gradient(165deg,#EEF1FF,#DBE2FF);}
+.turn-in{padding:22px;}
+.turn-w{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;margin-bottom:12px;}
+.turn--c .turn-w{color:var(--accent);}
+.turn--b .turn-w{color:var(--accent);}
+.turn-t{font-family:var(--display);font-size:34px;font-weight:800;letter-spacing:-.04em;line-height:1.05;color:var(--ink);}
+.turn-s{font-family:var(--mono);font-size:10.5px;color:var(--ink-3);margin-top:14px;line-height:1.6;}
+.turn-in{animation:turnPop .42s cubic-bezier(.22,.8,.3,1);}
+@keyframes turnPop{from{opacity:0;transform:scale(.9)}to{opacity:1;transform:none}}
+
+.pop{position:absolute;z-index:34;width:226px;display:none;overflow:visible;background:var(--paper);
+  border:1px solid var(--line);border-radius:12px;box-shadow:0 8px 30px rgba(15,18,22,.22);padding:12px 13px;}
+.pop.is-on{display:block;animation:popIn .26s cubic-bezier(.22,.8,.3,1);}
+@keyframes popIn{from{opacity:0;transform:translateY(6px) scale(.97)}to{opacity:1;transform:none}}
+.pop-k{display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:9px;letter-spacing:.11em;text-transform:uppercase;color:var(--ink-4);margin-bottom:8px;}
+.pop-min{margin-left:auto;width:20px;height:20px;border-radius:6px;border:1px solid #E3E7EE;background:#fff;
+  color:#6E7684;font-size:14px;line-height:1;display:flex;align-items:center;justify-content:center;}
+.pop-min:hover{color:#0F1216;border-color:#CBD2DE;}
+.pop-tab{position:absolute;z-index:34;display:none;align-items:center;gap:7px;
+  padding:8px 13px;border-radius:99px;background:#1F3BC4;color:#fff;
+  font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;
+  box-shadow:0 6px 20px rgba(31,59,196,.35);}
+.pop-tab.is-on{display:flex;animation:popIn .24s cubic-bezier(.22,.8,.3,1);}
+.pop-d{display:grid;grid-template-columns:11px minmax(0,1fr);gap:7px;font-size:11.5px;line-height:1.45;color:var(--ink-2);padding:4px 0;}
+.pop-i{width:9px;height:9px;border-radius:50%;margin-top:4px;}
+.pop-i--ok{background:var(--ok);}
+.pop-i--next{background:var(--accent);}
+.pop-l{display:block;font-family:var(--mono);font-size:8.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-4);margin-bottom:3px;font-weight:500;}
+.pop-b{display:flex;gap:6px;margin-top:11px;padding-top:10px;border-top:1px solid var(--line-2);}
+.pop-btn{flex:1;height:30px;border-radius:7px;border:1px solid var(--line);background:var(--paper);font-size:11.5px;font-weight:600;color:var(--ink);}
+.pop-btn--go{background:var(--accent);border-color:var(--accent);color:#fff;flex:1.5;}
+.pop-btn[disabled]{opacity:.4;}
+.pop-replay{display:block;width:100%;margin-top:8px;font-family:var(--mono);font-size:9.5px;
+  letter-spacing:.06em;color:#6E7684;padding:2px 0;}
+.pop-replay:hover{color:#1F3BC4;}
+
+/* in-phone start screen */
+#scStart.is-on{display:flex;align-items:center;justify-content:center;height:100%;}
+.st-in{display:flex;flex-direction:column;align-items:center;text-align:center;padding:0 18px;}
+.st-mark{width:46px;height:46px;border-radius:14px;background:var(--accent);position:relative;margin-bottom:16px;}
+.st-mark::before,.st-mark::after{content:"";position:absolute;left:11px;height:2.5px;background:rgba(255,255,255,.94);border-radius:2px;}
+.st-mark::before{top:17px;width:24px;} .st-mark::after{top:26px;width:14px;}
+.st-name{font-family:var(--display);font-size:23px;font-weight:800;letter-spacing:-.04em;color:var(--ink);}
+.st-sub{font-family:var(--mono);font-size:9.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-4);margin-top:7px;}
+.st-go{display:inline-flex;align-items:center;gap:8px;margin-top:26px;height:42px;padding:0 22px;border-radius:10px;
+  background:var(--accent);color:#fff;font-size:14px;font-weight:700;box-shadow:0 6px 18px rgba(31,59,196,.24);}
+.st-go:hover{background:var(--accent-hover);}
+.is-idle .an-bar{opacity:.45;}
+.is-idle #step-head{visibility:hidden;}
+
+/* HEM helper */
+.hq{display:inline-flex;align-items:center;justify-content:center;width:13px;height:13px;border-radius:50%;
+  border:1px solid var(--accent-line);background:var(--accent-wash);color:var(--accent);
+  font-family:var(--mono);font-size:8.5px;font-weight:600;margin-left:3px;position:relative;cursor:help;vertical-align:1px;}
+.hq-t{position:absolute;bottom:150%;left:50%;transform:translateX(-50%);width:172px;display:none;
+  background:var(--ink);color:#fff;border-radius:8px;padding:9px 10px;
+  font-family:var(--sans);font-size:10.5px;font-weight:400;line-height:1.5;letter-spacing:0;
+  text-align:left;z-index:40;box-shadow:0 6px 18px rgba(15,18,22,.3);}
+.hq:hover .hq-t,.hq:focus .hq-t{display:block;}
+.hq-t::after{content:"";position:absolute;top:100%;left:50%;transform:translateX(-50%);border:5px solid transparent;border-top-color:var(--ink);}
+
+.opt{font-family:var(--mono);font-size:8px;letter-spacing:.09em;text-transform:uppercase;
+  color:var(--ink-4);border:1px solid var(--line);border-radius:4px;padding:1px 5px;margin-left:5px;
+  vertical-align:1px;letter-spacing:.08em;}
+
+.scr-h{display:flex;align-items:center;gap:9px;flex:none;padding:9px 16px;
+  border-bottom:1px solid var(--line-2);background:var(--paper);
+  font-family:var(--display);font-size:13.5px;font-weight:700;letter-spacing:-.02em;color:var(--ink);}
+.scr-n{display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;border-radius:50%;
+  background:var(--accent);color:#fff;font-family:var(--mono);font-size:9.5px;font-weight:600;flex:none;}
+.an-stage.is-broker .scr-n{background:var(--accent);}
+.is-idle .scr-h{display:none;}
+
+/* drag-and-drop upload */
+.an-up{transition:border-color .25s,background .25s,transform .25s;}
+.an-up.is-over{border-color:var(--accent);background:var(--accent-wash);transform:scale(1.02);}
+.up-list{display:block;margin-top:12px;min-height:150px;}
+.an-file{opacity:0;transform:translateY(6px);transition:opacity .3s,transform .3s;}
+.an-file.is-in{opacity:1;transform:none;}
+.up-gen{display:none;align-items:center;justify-content:center;height:38px;border-radius:9px;background:var(--accent);color:#fff;font-size:13px;font-weight:600;margin-top:12px;}
+.up-gen.is-on{display:flex;}
+.up-ok{display:flex;visibility:hidden;align-items:center;gap:7px;margin-top:12px;padding:9px 11px;border-radius:8px;
+  background:var(--ok-wash);color:var(--ok);font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;}
+.up-ok.is-on{visibility:visible;animation:popIn .3s cubic-bezier(.22,.8,.3,1);}
+.drag{position:absolute;left:0;top:0;z-index:28;display:flex;align-items:center;gap:7px;
+  padding:7px 11px;border-radius:9px;background:var(--paper);border:1px solid var(--line);
+  box-shadow:0 8px 22px rgba(15,18,22,.22);font-family:var(--mono);font-size:10px;color:var(--ink);
+  opacity:0;pointer-events:none;transform:translate(-50%,-50%) scale(.94);
+  transition:transform .55s cubic-bezier(.4,.05,.2,1),opacity .3s;}
+.drag.is-in{opacity:1;}
+.dg-i{width:12px;height:15px;border-radius:2px;background:var(--accent);flex:none;position:relative;}
+.dg-i::after{content:"";position:absolute;right:0;top:0;border:4px solid transparent;border-right-color:var(--paper);border-top-color:var(--paper);}
+
+.hl{background:transparent;color:inherit;border-radius:3px;padding:0 2px;
+  background-image:linear-gradient(var(--warn-wash),var(--warn-wash));
+  background-repeat:no-repeat;background-size:0 100%;background-position:0 0;
+  transition:background-size .5s cubic-bezier(.22,.8,.3,1);}
+.ign.is-lit .hl{background-size:100% 100%;color:var(--warn);}
+
+.rd{width:100%;margin:16px 0 4px;padding:12px 13px;border:1px solid var(--accent-line);
+  background:var(--accent-wash);border-radius:10px;text-align:left;}
+.rd-k{display:flex;align-items:center;gap:6px;font-family:var(--mono);font-size:9.5px;letter-spacing:.09em;
+  text-transform:uppercase;color:var(--accent);margin-bottom:10px;}
+.rd-bar{height:5px;border-radius:99px;background:rgba(31,59,196,.16);overflow:hidden;margin-bottom:7px;}
+.rd-bar i{display:block;height:100%;width:0;background:var(--accent);border-radius:99px;transition:width .45s cubic-bezier(.22,.8,.3,1);}
+.rd-c{font-family:var(--mono);font-size:9.5px;color:var(--accent);margin-bottom:9px;}
+.rd-l{display:flex;align-items:center;gap:10px;padding:5px 0;font-size:11.5px;color:var(--ink-3);}
+.rd-v{margin-left:auto;font-family:var(--mono);font-size:10.5px;color:var(--ink);
+  padding:1px 5px;border-radius:3px;transition:background .3s ease,color .3s ease;}
+.rd-v.is-red{color:transparent;background:var(--ink-3);}
+.rd-f{margin-top:9px;padding-top:9px;border-top:1px dashed var(--accent-line);
+  font-size:10.5px;line-height:1.5;color:var(--ink-3);}
+</style>
+</head>
+<body>
+<header class="site-head dv" id="site-header">
+  <div class="wrap head-row">
+    <a href="trueline-landing.html" class="brand"><span class="brand-mark"></span><span class="brand-name">Trueline</span></a>
+    <nav class="nav">
+      <a href="trueline-landing.html#assessment">The assessment</a>
+      <a href="trueline-landing.html#helps">What changes</a>
+      <a href="#" class="is-here">How it works</a>
+    </nav>
+    <div class="head-actions"><a href="#hiw-cta" class="btn btn--primary btn--sm">Book a demo</a></div>
+  </div>
+</header>
+
+<main>
+<section class="wrap page-hero dv" id="hiw-hero">
+  <h1>One discussion. One file note.</h1>
+</section>
+
+<section class="wrap dv" id="hiw-walkthrough" style="padding-bottom:48px">
+  <div class="hiw-wrap">
+
+    <div class="step-head dv" id="step-head">
+      <h3 id="sTitle">Broker sends a secure link</h3>
+    </div>
+
+    <div class="hiw-top dv" id="hiw-nav">
+      <div class="ctl ctl--run" id="ctlRun">
+        <div class="prog"><span class="prog-fill" id="progFill"></span></div>
+        <div class="prog-row">
+          <span class="prog-k">Step <b id="pNum">1</b> of 7</span>
+          <button class="navbtn" id="prev" disabled>&larr; Back</button>
+          <button class="navbtn navbtn--primary" id="next">Play step &rarr;</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="an-stage" id="anStage">
+      <span class="ph-speaker"></span>
+      <span class="ph-btn ph-btn--v1"></span><span class="ph-btn ph-btn--v2"></span><span class="ph-btn ph-btn--pw"></span>
+      <div class="ph-screen">
+        <div class="ph-notch"></div>
+        <div class="ph-status"><span>9:41</span><span class="ph-sig"></span></div>
+      <div class="an-bar">
+        <span class="an-brand"><span class="an-mark"></span>Trueline</span>
+        <span class="an-url" id="anUrl">app.trueline.com.au / assessments / 4417</span>
+        <span class="an-who" id="anWho">Broker</span>
+      </div>
+
+      <div class="scr-h" id="scrH"><span class="scr-n">1</span><span id="scrT">Create scenario</span></div>
+
+      <div class="an-body">
+
+        <!-- 1a broker sends -->
+        <div class="an-screen is-on" id="scStart">
+          <div class="st-in">
+            <span class="st-mark"></span>
+            <div class="st-name">Trueline</div>
+            <div class="st-sub">Living expense verification</div>
+            <button class="st-go" id="startBtn">
+              <svg width="13" height="13" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 3.2l8 4.8-8 4.8V3.2Z" fill="currentColor"/></svg>
+              Start demo
+            </button>
+          </div>
+        </div>
+
+        <div class="an-screen" id="scSetup">
+          <div class="an-form-row"><div><div class="an-fr-k">Borrower</div><div class="an-fr-s">Name on the application</div></div><span class="an-fr-v" id="setName">&mdash;</span></div>
+          <div class="an-form-row"><div><div class="an-fr-k">Deliver to</div><div class="an-fr-s">SMS or copy the link into an email</div></div><span class="an-fr-v" id="setTo">&mdash;</span></div>
+          <div class="an-form-row"><div><div class="an-fr-k">Declared expenses <span class="opt">Optional</span></div><div class="an-fr-s">For your own comparison &mdash; the borrower never sees it</div></div><span class="an-fr-v" id="setDec">&mdash;</span></div>
+          <div class="an-btns is-on" style="margin-top:2px">
+            <span class="an-cta" id="setSend">Send by SMS</span>
+            <span class="an-cta an-cta--ghost" id="setCopy">
+              <svg width="13" height="13" viewBox="0 0 16 16" fill="none" aria-hidden="true"><rect x="5.4" y="5.4" width="8" height="8" rx="2" stroke="currentColor" stroke-width="1.4"/><path d="M10.6 5.4V4.2a1.8 1.8 0 0 0-1.8-1.8H4.2a1.8 1.8 0 0 0-1.8 1.8v4.6a1.8 1.8 0 0 0 1.8 1.8h1.2" stroke="currentColor" stroke-width="1.4"/></svg>
+              Copy link
+            </span>
+          </div>
+          <div class="an-callout" id="setDone" style="background:var(--ok-wash);border-color:rgba(14,124,87,.25);color:#0B5C41">Link copied. Paste it into an email, or send it by SMS &mdash; it opens on any device with no app, account or password.</div>
+        </div>
+
+        <!-- 1b borrower uploads -->
+        <div class="an-screen" id="scUpload">
+          <div class="hh">
+            <div class="hh-k">Your household</div>
+            <div class="hh-row"><span>Adults</span><span class="hh-v" id="hhA">&mdash;</span></div>
+            <div class="hh-row"><span>Dependants</span><span class="hh-v" id="hhD">&mdash;</span></div>
+            <div class="hh-row"><span>Postcode</span><span class="hh-v" id="hhP">&mdash;</span></div>
+            <div class="hh-row"><span>Applicant 1 income</span><span class="hh-v" id="hhI1">&mdash;</span></div>
+            <div class="hh-row"><span>Applicant 2 income</span><span class="hh-v" id="hhI2">&mdash;</span></div>
+            <p class="hh-f">Household size, location and income all move the benchmark your broker compares the final figure against.</p>
+          </div>
+
+          <div class="an-up" id="upZone">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 16V4m0 0L7.5 8.5M12 4l4.5 4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M4 15v3.5A1.5 1.5 0 0 0 5.5 20h13a1.5 1.5 0 0 0 1.5-1.5V15" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+            <b>Drop your statements here</b><span>PDF, CSV or Excel &middot; six months, every account</span>
+          </div>
+
+          <div class="up-list" id="upList">
+            <div class="an-file" id="f1"><div><div class="an-file-n">everyday-xx9775.pdf</div><div class="an-bar2"><i></i></div></div><span class="an-tick">0%</span></div>
+            <div class="an-file" id="f2"><div><div class="an-file-n">savings-xx3713.pdf</div><div class="an-bar2"><i></i></div></div><span class="an-tick">0%</span></div>
+            <div class="an-file" id="f3"><div><div class="an-file-n">offset-xx2204.pdf</div><div class="an-bar2"><i></i></div></div><span class="an-tick">0%</span></div>
+          </div>
+          <div class="up-gen" id="upGen">Generate assessment</div>
+          <div class="up-ok" id="upOk">
+            <svg width="13" height="13" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="m3.4 8.4 3 3 6.2-6.8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            3 files uploaded successfully
+          </div>
+        </div>
+
+        <div class="an-screen" id="scBuild">
+          <div class="bd-in">
+            <div class="bd-ring"><svg viewBox="0 0 60 60" width="60" height="60"><circle cx="30" cy="30" r="26" stroke="var(--line)" stroke-width="4" fill="none"/><circle id="bdArc" cx="30" cy="30" r="26" stroke="var(--accent)" stroke-width="4" fill="none" stroke-linecap="round" stroke-dasharray="163" stroke-dashoffset="163" transform="rotate(-90 30 30)"/></svg><span class="bd-pc" id="bdPc">0%</span></div>
+            <div class="bd-t">Preparing your statements</div>
+
+            <div class="rd" id="rd">
+              <div class="rd-k">
+                <svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true"><rect x="3.2" y="7" width="9.6" height="6.4" rx="1.6" stroke="currentColor" stroke-width="1.4"/><path d="M5.6 7V5.2a2.4 2.4 0 0 1 4.8 0V7" stroke="currentColor" stroke-width="1.4"/></svg>
+                Removing personal details first
+              </div>
+              <div class="rd-bar"><i id="rdFill"></i></div>
+              <div class="rd-c"><span id="rdN">0</span> of 3 identifiers removed</div>
+              <div class="rd-l"><span>Account holder</span><b class="rd-v" id="rd1">A. Sample</b></div>
+              <div class="rd-l"><span>BSB and account</span><b class="rd-v" id="rd2">063-155 4471 0286</b></div>
+              <div class="rd-l"><span>Address on statement</span><b class="rd-v" id="rd3">14 Bendigo St, Richmond</b></div>
+              <p class="rd-f">Only the date, amount and merchant text are used. Nothing that identifies you is sent for analysis.</p>
+            </div>
+
+            <ul class="bd-l">
+              <li id="bd1"><i></i><span>Statements read</span><b>1,184</b></li>
+              <li id="bd2"><i></i><span>Personal details redacted</span><b>Done</b></li>
+              <li id="bd3"><i></i><span>Merchants identified</span><b>1,130</b></li>
+              <li id="bd4"><i></i><span>Sorted into categories</span><b>12</b></li>
+            </ul>
+            <p class="bd-f">Your statement files are deleted once this is done.</p>
+          </div>
+        </div>
+
+        <div class="an-screen" id="scReview">
+          <div class="an-tot">
+            <span class="an-tot-c"><span class="an-tot-k">Documented</span><span class="an-tot-v">$5,890</span></span>
+            <span class="an-tot-ar is-hid" id="anArrow">&rarr;</span>
+            <span class="an-tot-c is-hid" id="anNowWrap"><span class="an-tot-k an-tot-k--now" id="anNowK">Requested</span><span class="an-tot-v an-tot-req" id="anNow">$5,890</span></span>
+            <span class="tot-act" id="totAct">
+              <span class="tact" id="topSend">Submit to broker</span>
+              <span class="tact tact--ghost" id="topReply">Respond</span>
+              <span class="tact tact--dark" id="topGen">Finalise</span>
+            </span>
+          </div>
+
+          <div class="an-cta an-cta--scan" id="scanBtn">
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><circle cx="7" cy="7" r="4.6" stroke="currentColor" stroke-width="1.6"/><path d="m10.6 10.6 3 3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+            Let AI highlight potential reductions
+          </div>
+
+          <div class="scan" id="scan">
+            <div class="scan-k">Analysing 1,184 transactions</div>
+            <div class="scan-bar"><i id="scanFill"></i></div>
+            <div class="scan-s" id="scanS">Reading merchants&hellip;</div>
+          </div>
+
+          <div class="fl-block" id="aiBlock">
+            <div class="an-ask an-ask--ai">Flagged for review &middot; most likely first</div>
+              <div class="fl" id="flWed" data-was="700">
+                <button class="fl-hd"><span class="fl-m"><span class="fl-d">PARKVIEW ESTATE</span><span class="fl-t">7 Mar &middot; 1:19pm</span></span><span class="fl-a">$700<small>/mo</small></span><span class="fl-c">96%</span></button>
+                <div class="fl-bd"><div><div class="fl-in">
+                  <div class="fl-why">$4,200 in one payment on 7 Mar. Nothing comparable in six months.</div>
+                  <div class="an-f-row"><span class="an-f-k">What should it be?</span><span class="an-f-amt">$<span class="an-f-num">700</span><span class="an-caret"></span></span></div>
+                  <div class="an-f-note"><span class="an-f-txt"></span><span class="an-caret"></span></div>
+                  <div class="an-f-send">Save</div>
+                  <div class="an-review">
+                    <div class="an-r-row"><span class="an-f-k">Broker amount</span><span class="an-r-amt">$<span class="an-r-num">700</span><span class="an-caret"></span></span></div>
+                    <div class="an-f-note an-r-note"><span class="an-r-txt"></span><span class="an-caret"></span></div>
+                    <div class="an-r-btns"><span class="an-r-b an-r-yes">Approve</span><span class="an-r-b an-r-no">Decline</span></div>
+                  </div>
+                </div></div></div>
+                <div class="an-verdict"></div>
+              </div>
+              <div class="fl" id="flAami" data-was="300">
+                <button class="fl-hd"><span class="fl-m"><span class="fl-d">AAMI MOTOR PREMIUM</span><span class="fl-t">15 Apr &middot; 8:04am</span></span><span class="fl-a">$300<small>/mo</small></span><span class="fl-c">81%</span></button>
+                <div class="fl-bd"><div><div class="fl-in">
+                  <div class="fl-why">Charged once a year. Sitting in the figure as if it were monthly.</div>
+                  <div class="an-f-row"><span class="an-f-k">What should it be?</span><span class="an-f-amt">$<span class="an-f-num">300</span><span class="an-caret"></span></span></div>
+                  <div class="an-f-note"><span class="an-f-txt"></span><span class="an-caret"></span></div>
+                  <div class="an-f-send">Save</div>
+                  <div class="an-review">
+                    <div class="an-r-row"><span class="an-f-k">Broker amount</span><span class="an-r-amt">$<span class="an-r-num">300</span><span class="an-caret"></span></span></div>
+                    <div class="an-f-note an-r-note"><span class="an-r-txt"></span><span class="an-caret"></span></div>
+                    <div class="an-r-btns"><span class="an-r-b an-r-yes">Approve</span><span class="an-r-b an-r-no">Decline</span></div>
+                  </div>
+                </div></div></div>
+                <div class="an-verdict"></div>
+              </div>
+          </div>
+            <div class="ign" id="ign" data-open="false">
+              <button class="ign-hd"><mark class="hl">+5 transactions</mark> left as ongoing
+                <span class="ign-chev"></span>
+              </button>
+              <div class="ign-bd"><div><div class="ign-in">
+                <div class="ig"><span class="ig-m"><span class="ig-d">OWNERS CORPORATION LEVY</span><span class="ig-t">1 Jul &middot; 8:04am</span></span><span class="ig-a">$392</span><span class="ig-c">9%</span></div>
+                <div class="ig"><span class="ig-m"><span class="ig-d">COLES BURNLEY</span><span class="ig-t">6 Aug &middot; 6:38pm</span></span><span class="ig-a">$326</span><span class="ig-c">6%</span></div>
+                <div class="ig"><span class="ig-m"><span class="ig-d">BUPA HEALTH INSURANCE</span><span class="ig-t">3 Aug &middot; 8:04am</span></span><span class="ig-a">$275</span><span class="ig-c">11%</span></div>
+                <div class="ig"><span class="ig-m"><span class="ig-d">LINKT MELBOURNE</span><span class="ig-t">1 Aug &middot; 12:33pm</span></span><span class="ig-a">$96</span><span class="ig-c">12%</span></div>
+                <div class="ig"><span class="ig-m"><span class="ig-d">TELSTRA MOBILE X2</span><span class="ig-t">2 Aug &middot; 8:04am</span></span><span class="ig-a">$95</span><span class="ig-c">7%</span></div>
+                <p class="ig-f">Low likelihood of being one-off. Left in the figure as ongoing spending.</p>
+              </div></div></div>
+            </div>
+
+          <div class="an-ask">Your monthly expenses<button class="min-all" id="minAll">Minimise all</button></div>
+          <div class="cx" id="cxGro" data-open="false">
+            <button class="cx-hd">
+              <span class="cx-top"><span class="cx-chev"></span><span class="cx-n">Groceries</span><span class="cx-f">$1,060</span></span>
+              <span class="cx-bot"><span class="cx-bars"><i class="d1" style="width:71.6%"></i><i class="d2" style="width:71.6%"></i></span><span class="cx-p">21.0%</span></span>
+            </button>
+            <div class="cx-bd"><div><div class="cx-in">
+              <div class="px"><span class="px-m"><span class="px-d">WOOLWORTHS METRO RICHMOND</span><span class="px-t">8 Jul &middot; 9:26am</span></span><span class="px-a">$486</span></div>
+              <div class="px"><span class="px-m"><span class="px-d">COLES BURNLEY</span><span class="px-t">14 Jul &middot; 6:38pm</span></span><span class="px-a">$326</span></div>
+              <div class="px"><span class="px-m"><span class="px-d">ALDI HAWTHORN</span><span class="px-t">2 Jun &middot; 8:04am</span></span><span class="px-a">$118</span></div>
+              <div class="px"><span class="px-m"><span class="px-d">RICHMOND HILL FRUIT MARKET</span><span class="px-t">28 Jul &middot; 8:04am</span></span><span class="px-a">$74</span></div>
+              <div class="px"><span class="px-m"><span class="px-d">GARDINER'S BUTCHERY</span><span class="px-t">8 Jul &middot; 5:22pm</span></span><span class="px-a">$56</span></div>
+            </div></div></div>
+          </div>
+          <div class="cx" id="cxRec" data-open="false" data-doc="1,480" data-adj="780" data-dw="100.0" data-aw="52.7">
+            <button class="cx-hd">
+              <span class="cx-top"><span class="cx-chev"></span><span class="cx-n">Recreation and Entertainment</span><span class="cx-f">$1,480</span>
+            </span>
+              <span class="cx-bot"><span class="cx-bars"><i class="d1" style="width:100.0%"></i><i class="d2" style="width:100.0%"></i></span><span class="cx-p">15.5%</span></span>
+            </button>
+            <div class="cx-bd"><div><div class="cx-in" id="flHotelHome">
+              <div class="px"><span class="px-m"><span class="px-d">PARKVIEW ESTATE &middot; moved to review</span><span class="px-t">2 Jun &middot; 3:47pm</span></span><span class="px-a">$700</span></div>
+              <div class="fl" id="flHotel" data-was="400">
+                <button class="fl-hd"><span class="fl-m"><span class="fl-d">ROYAL HOTEL SORRENTO</span><span class="fl-t">2 May &middot; 3:47pm</span></span><span class="fl-a">$400<small>/mo</small></span><span class="fl-c fl-c--man">Edit</span></button>
+                <div class="fl-bd"><div><div class="fl-in">
+                  <div class="fl-why">$2,400 in one payment on 2 May. No other travel in the period.</div>
+                  <div class="an-f-row"><span class="an-f-k">What should it be?</span><span class="an-f-amt">$<span class="an-f-num">400</span><span class="an-caret"></span></span></div>
+                  <div class="an-f-note"><span class="an-f-txt"></span><span class="an-caret"></span></div>
+                  <div class="an-f-send">Save</div>
+                  <div class="an-review">
+                    <div class="an-r-row"><span class="an-f-k">Broker amount</span><span class="an-r-amt">$<span class="an-r-num">400</span><span class="an-caret"></span></span></div>
+                    <div class="an-f-note an-r-note"><span class="an-r-txt"></span><span class="an-caret"></span></div>
+                    <div class="an-r-btns"><span class="an-r-b an-r-yes">Approve</span><span class="an-r-b an-r-no">Decline</span></div>
+                  </div>
+                  <div class="an-verdict"></div>
+                  <div class="px"><span class="px-m"><span class="px-d">SQ *PROUD MARY COFFEE</span><span class="px-t">24 Jun &middot; 7:12am</span></span><span class="px-a">$96</span></div>
+              <div class="px"><span class="px-m"><span class="px-d">TOP PADDOCK RICHMOND</span><span class="px-t">9 Jun &middot; 1:19pm</span></span><span class="px-a">$118</span></div>
+              <div class="px"><span class="px-m"><span class="px-d">UBER EATS</span><span class="px-t">14 Jul &middot; 8:04am</span></span><span class="px-a">$92</span></div>
+              <div class="px"><span class="px-m"><span class="px-d">DAN MURPHY'S BURNLEY</span><span class="px-t">24 Jun &middot; 8:04am</span></span><span class="px-a">$74</span></div>
+            </div></div></div>
+              </div>
+              <div class="px"><span class="px-m"><span class="px-d">Dining out and cafes</span><span class="px-t">28 Jul &middot; 1:19pm</span></span><span class="px-a">$214</span></div>
+              <div class="px"><span class="px-m"><span class="px-d">Takeaway and delivery</span><span class="px-t">2 Jun &middot; 5:22pm</span></span><span class="px-a">$166</span></div>
+            </div></div></div>
+          </div>
+          <div class="cx" id="cxRes" data-open="false">
+            <button class="cx-hd">
+              <span class="cx-top"><span class="cx-chev"></span><span class="cx-n">Primary Residence</span><span class="cx-f">$1,150</span></span>
+              <span class="cx-bot"><span class="cx-bars"><i class="d1" style="width:77.7%"></i><i class="d2" style="width:77.7%"></i></span><span class="cx-p">22.8%</span></span>
+            </button>
+            <div class="cx-bd"><div><div class="cx-in">
+              <div class="px"><span class="px-m"><span class="px-d">OWNERS CORPORATION LEVY</span><span class="px-t">9 Jun &middot; 10:41am</span></span><span class="px-a">$392</span></div>
+              <div class="px"><span class="px-m"><span class="px-d">CITY OF YARRA RATES</span><span class="px-t">6 Aug &middot; 6:38pm</span></span><span class="px-a">$310</span></div>
+              <div class="px"><span class="px-m"><span class="px-d">AGL ELECTRICITY</span><span class="px-t">3 Aug &middot; 7:12am</span></span><span class="px-a">$186</span></div>
+              <div class="px"><span class="px-m"><span class="px-d">AGL GAS</span><span class="px-t">3 Aug &middot; 5:22pm</span></span><span class="px-a">$94</span></div>
+              <div class="px"><span class="px-m"><span class="px-d">YARRA VALLEY WATER</span><span class="px-t">14 Jul &middot; 7:12am</span></span><span class="px-a">$78</span></div>
+              <div class="px"><span class="px-m"><span class="px-d">BUNNINGS RICHMOND</span><span class="px-t">24 Jun &middot; 7:12am</span></span><span class="px-a">$56</span></div>
+              <div class="px"><span class="px-m"><span class="px-d">ALLIANZ HOME &amp; CONTENTS</span><span class="px-t">28 Jul &middot; 9:26am</span></span><span class="px-a">$34</span></div>
+            </div></div></div>
+          </div>
+          <div class="cx" id="cxTra" data-open="false">
+            <button class="cx-hd">
+              <span class="cx-top"><span class="cx-chev"></span><span class="cx-n">Transport</span><span class="cx-f">$680</span></span>
+              <span class="cx-bot"><span class="cx-bars"><i class="d1" style="width:45.9%"></i><i class="d2" style="width:45.9%"></i></span><span class="cx-p">13.5%</span></span>
+            </button>
+            <div class="cx-bd"><div><div class="cx-in">
+              <div class="px"><span class="px-m"><span class="px-d">BP CONNECT BURNLEY</span><span class="px-t">1 Jul &middot; 1:19pm</span></span><span class="px-a">$268</span></div>
+              <div class="px"><span class="px-m"><span class="px-d">LINKT MELBOURNE</span><span class="px-t">17 Jun &middot; 3:47pm</span></span><span class="px-a">$96</span></div>
+              <div class="px"><span class="px-m"><span class="px-d">ULTRA TUNE RICHMOND</span><span class="px-t">9 Jun &middot; 5:22pm</span></span><span class="px-a">$92</span></div>
+              <div class="px"><span class="px-m"><span class="px-d">WILSON PARKING</span><span class="px-t">1 Jul &middot; 3:47pm</span></span><span class="px-a">$88</span></div>
+              <div class="px"><span class="px-m"><span class="px-d">VICROADS REGISTRATION</span><span class="px-t">6 Aug &middot; 9:26am</span></span><span class="px-a">$74</span></div>
+              <div class="px"><span class="px-m"><span class="px-d">PTV MYKI TOPUP</span><span class="px-t">9 Jun &middot; 5:22pm</span></span><span class="px-a">$62</span></div>
+            </div></div></div>
+          </div>
+          <div class="cx" id="cxIns" data-open="false" data-doc="575" data-adj="425" data-dw="38.9" data-aw="28.7">
+            <button class="cx-hd">
+              <span class="cx-top"><span class="cx-chev"></span><span class="cx-n">Insurance</span><span class="cx-f">$575</span>
+            </span>
+              <span class="cx-bot"><span class="cx-bars"><i class="d1" style="width:38.9%"></i><i class="d2" style="width:38.9%"></i></span><span class="cx-p">8.4%</span></span>
+            </button>
+            <div class="cx-bd"><div><div class="cx-in">
+              <div class="px"><span class="px-m"><span class="px-d">AAMI MOTOR PREMIUM &middot; moved to review</span><span class="px-t">3 Aug &middot; 6:38pm</span></span><span class="px-a">$300</span></div>
+              <div class="px"><span class="px-m"><span class="px-d">BUPA HEALTH INSURANCE</span><span class="px-t">24 Jun &middot; 12:33pm</span></span><span class="px-a">$275</span></div>
+            </div></div></div>
+          </div>
+          <div class="cx" id="cxClo" data-open="false">
+            <button class="cx-hd">
+              <span class="cx-top"><span class="cx-chev"></span><span class="cx-n">Clothing and Personal Care</span><span class="cx-f">$310</span></span>
+              <span class="cx-bot"><span class="cx-bars"><i class="d1" style="width:20.9%"></i><i class="d2" style="width:20.9%"></i></span><span class="cx-p">6.2%</span></span>
+            </button>
+            <div class="cx-bd"><div><div class="cx-in">
+              <div class="px"><span class="px-m"><span class="px-d">UNIQLO EMPORIUM</span><span class="px-t">9 Jun &middot; 3:47pm</span></span><span class="px-a">$96</span></div>
+              <div class="px"><span class="px-m"><span class="px-d">COUNTRY ROAD CHADSTONE</span><span class="px-t">11 Aug &middot; 8:04am</span></span><span class="px-a">$68</span></div>
+              <div class="px"><span class="px-m"><span class="px-d">HAIR BY JOSH</span><span class="px-t">3 Aug &middot; 7:12am</span></span><span class="px-a">$68</span></div>
+              <div class="px"><span class="px-m"><span class="px-d">MECCA COSMETICA</span><span class="px-t">3 Aug &middot; 10:41am</span></span><span class="px-a">$42</span></div>
+              <div class="px"><span class="px-m"><span class="px-d">CHEMIST WAREHOUSE</span><span class="px-t">21 Jul &middot; 6:38pm</span></span><span class="px-a">$36</span></div>
+            </div></div></div>
+          </div>
+          <div class="cx" id="cxMed" data-open="false">
+            <button class="cx-hd">
+              <span class="cx-top"><span class="cx-chev"></span><span class="cx-n">Medical and Health</span><span class="cx-f">$240</span></span>
+              <span class="cx-bot"><span class="cx-bars"><i class="d1" style="width:16.2%"></i><i class="d2" style="width:16.2%"></i></span><span class="cx-p">4.8%</span></span>
+            </button>
+            <div class="cx-bd"><div><div class="cx-in">
+              <div class="px"><span class="px-m"><span class="px-d">SMILE DENTAL RICHMOND</span><span class="px-t">28 Jul &middot; 1:19pm</span></span><span class="px-a">$78</span></div>
+              <div class="px"><span class="px-m"><span class="px-d">PRICELINE PHARMACY</span><span class="px-t">8 Jul &middot; 2:10pm</span></span><span class="px-a">$64</span></div>
+              <div class="px"><span class="px-m"><span class="px-d">RICHMOND MEDICAL CENTRE</span><span class="px-t">3 Aug &middot; 2:10pm</span></span><span class="px-a">$52</span></div>
+              <div class="px"><span class="px-m"><span class="px-d">MOVE PHYSIO</span><span class="px-t">8 Jul &middot; 11:58am</span></span><span class="px-a">$46</span></div>
+            </div></div></div>
+          </div>
+          <div class="cx" id="cxTel" data-open="false">
+            <button class="cx-hd">
+              <span class="cx-top"><span class="cx-chev"></span><span class="cx-n">Telephone, internet and media</span><span class="cx-f">$200</span></span>
+              <span class="cx-bot"><span class="cx-bars"><i class="d1" style="width:13.5%"></i><i class="d2" style="width:13.5%"></i></span><span class="cx-p">4.0%</span></span>
+            </button>
+            <div class="cx-bd"><div><div class="cx-in">
+              <div class="px"><span class="px-m"><span class="px-d">TELSTRA MOBILE X2</span><span class="px-t">24 Jun &middot; 9:26am</span></span><span class="px-a">$95</span></div>
+              <div class="px"><span class="px-m"><span class="px-d">SUPERLOOP NBN</span><span class="px-t">11 Aug &middot; 10:41am</span></span><span class="px-a">$79</span></div>
+              <div class="px"><span class="px-m"><span class="px-d">NETFLIX &middot; SPOTIFY</span><span class="px-t">9 Jun &middot; 5:22pm</span></span><span class="px-a">$26</span></div>
+            </div></div></div>
+          </div>
+          <div class="cx" id="cxOth" data-open="false">
+            <button class="cx-hd">
+              <span class="cx-top"><span class="cx-chev"></span><span class="cx-n">Other Expenses</span><span class="cx-f">$195</span></span>
+              <span class="cx-bot"><span class="cx-bars"><i class="d1" style="width:13.2%"></i><i class="d2" style="width:13.2%"></i></span><span class="cx-p">3.9%</span></span>
+            </button>
+            <div class="cx-bd"><div><div class="cx-in">
+              <div class="px"><span class="px-m"><span class="px-d">PETBARN RICHMOND</span><span class="px-t">1 Jul &middot; 3:47pm</span></span><span class="px-a">$95</span></div>
+              <div class="px"><span class="px-m"><span class="px-d">AUSTRALIAN RED CROSS</span><span class="px-t">21 Jul &middot; 12:33pm</span></span><span class="px-a">$54</span></div>
+              <div class="px"><span class="px-m"><span class="px-d">AUSTRALIA POST</span><span class="px-t">11 Aug &middot; 2:10pm</span></span><span class="px-a">$28</span></div>
+              <div class="px"><span class="px-m"><span class="px-d">CBA ACCOUNT FEE</span><span class="px-t">1 Jul &middot; 5:22pm</span></span><span class="px-a">$18</span></div>
+            </div></div></div>
+          </div>
+          <div class="cx cx--nil" id="cxChi" data-open="false">
+            <button class="cx-hd">
+              <span class="cx-top"><span class="cx-chev"></span><span class="cx-n">Childcare and Maintenance</span><span class="cx-f">$0</span></span>
+              <span class="cx-bot"><span class="cx-bars"><i class="d1" style="width:0.0%"></i><i class="d2" style="width:0.0%"></i></span><span class="cx-p">0.0%</span></span>
+            </button>
+            <div class="cx-bd"><div><div class="cx-in">
+              <div class="px"><span class="px-m"><span class="px-d">Nothing matched</span><span class="px-t">9 Jun &middot; 8:04am</span></span><span class="px-a">$0</span></div>
+            </div></div></div>
+          </div>
+          <div class="cx cx--nil" id="cxEdu" data-open="false">
+            <button class="cx-hd">
+              <span class="cx-top"><span class="cx-chev"></span><span class="cx-n">Education</span><span class="cx-f">$0</span></span>
+              <span class="cx-bot"><span class="cx-bars"><i class="d1" style="width:0.0%"></i><i class="d2" style="width:0.0%"></i></span><span class="cx-p">0.0%</span></span>
+            </button>
+            <div class="cx-bd"><div><div class="cx-in">
+              <div class="px"><span class="px-m"><span class="px-d">Nothing matched</span><span class="px-t">28 Jul &middot; 1:19pm</span></span><span class="px-a">$0</span></div>
+            </div></div></div>
+          </div>
+          <div class="cx cx--nil" id="cxRen" data-open="false">
+            <button class="cx-hd">
+              <span class="cx-top"><span class="cx-chev"></span><span class="cx-n">Rent Expense</span><span class="cx-f">$0</span></span>
+              <span class="cx-bot"><span class="cx-bars"><i class="d1" style="width:0.0%"></i><i class="d2" style="width:0.0%"></i></span><span class="cx-p">0.0%</span></span>
+            </button>
+            <div class="cx-bd"><div><div class="cx-in">
+              <div class="px"><span class="px-m"><span class="px-d">Owner-occupier</span><span class="px-t">17 Jun &middot; 12:33pm</span></span><span class="px-a">$0</span></div>
+            </div></div></div>
+          </div>
+
+          <div class="an-callout" id="queueNote">Three requests with reasons. Nothing has changed &mdash; your broker decides each one.</div>
+        </div>
+
+        <div class="an-screen" id="scDoc"><div id="docWrap"></div></div>
+
+        <div class="turn" id="turn">
+          <div class="turn-in">
+            <div class="turn-w" id="turnW">Borrower</div>
+            <div class="turn-t" id="turnT">Your turn</div>
+            <div class="turn-s" id="turnS">&nbsp;</div>
+          </div>
+        </div>
+
+
+      </div>
+      <div class="drag" id="dg1"><span class="dg-i"></span>everyday-xx9775.pdf</div>
+      <div class="drag" id="dg2"><span class="dg-i"></span>savings-xx3713.pdf</div>
+      <div class="drag" id="dg3"><span class="dg-i"></span>offset-xx2204.pdf</div>
+
+      </div>
+
+      <div class="pop" id="pop">
+        <div class="pop-k"><span id="popK">Step complete</span><button class="pop-min" id="popMin" aria-label="Hide this card">&minus;</button></div>
+        <div class="pop-d"><span class="pop-i pop-i--ok"></span><span><b class="pop-l">This step</b><span id="popDone"></span></span></div>
+        <div class="pop-d"><span class="pop-i pop-i--next"></span><span><b class="pop-l">Next step</b><span id="popNext"></span></span></div>
+        <div class="pop-b">
+            <button class="pop-btn" id="popPrev">Back</button>
+            <button class="pop-btn pop-btn--go" id="popGo">Next step &rarr;</button>
+          </div>
+          <button class="pop-replay" id="popReplay">&#8635; Replay this step</button>
+        </div>
+
+        <button class="pop-tab" id="popTab">Steps</button>
+
+      <div class="an-cursor" id="anCursor">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M3 2l6.5 15 2.2-6.3 6.3-2.2z" fill="#1F3BC4" stroke="#fff" stroke-width="1.4" stroke-linejoin="round"/></svg>
+      </div>
+    </div>
+
+
+  </div>
+</section>
+
+<section class="band band--wash dv" id="hiw-recap">
+  <div class="wrap">
+    <p class="eyebrow">What each side controls</p>
+    <h2 style="font-size:clamp(1.8rem,2.8vw,2.4rem);max-width:22ch;margin-bottom:40px">The borrower supplies reasons. You supply the decision.</h2>
+    <div class="recap dv" id="hiw-recap-cards">
+      <div class="rc"><div class="rc-k">Steps 1&ndash;2 &middot; setup</div><h3>One link, no accounts</h3><p>You enter the borrower and send. They upload on their phone. Statements are read once and removed, and only the transaction list is kept.</p></div>
+      <div class="rc"><div class="rc-k">Steps 3&ndash;4 &middot; borrower</div><h3>AI does the finding, they do the explaining</h3><p>The transactions that may not be ongoing are surfaced with a reason. The borrower sets what each should be and says why, and can open any category to raise one AI missed.</p></div>
+      <div class="rc"><div class="rc-k">Step 5 &middot; broker</div><h3>Nothing moves until you act</h3><p>Requests arrive as proposals. You set the final amount, write your own note, and approve, reduce or decline. Refusals are recorded exactly like approvals.</p></div>
+      <div class="rc"><div class="rc-k">Step 6 &middot; the file</div><h3>The assessment writes itself</h3><p>Documented against assessed, every adjustment with both notes and any evidence attached, a category breakdown, and an audit entry for each action.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="band dv" id="hiw-cta">
+  <div class="wrap">
+    <div class="cta-box">
+      <div class="cta-inner">
+        <h2>See it with your own file.</h2>
+        <p>We&rsquo;ll run a demo assessment against a real statement set and show you what needs a reason and what the file note looks like at the end.</p>
+        <div class="cta-btns">
+          <a href="#" class="btn btn--onDark">Book a demo</a>
+          <a href="trueline-landing.html" class="btn btn--outlineDark">Back to overview</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="site-foot dv" id="site-footer">
+  <div class="wrap foot-row">
+    <p>&copy; 2026 Trueline Pty Ltd &middot; Melbourne, Australia</p>
+    <p>Trueline is a documentation tool. Credit assessment decisions remain with the broker and the lender.</p>
+  </div>
+</footer>
+<button id="idtoggle">IDs on</button>
+<script>
+(function(){"use strict";
+  var head=document.getElementById("site-header");
+  var f=function(){ head.classList.toggle("is-stuck",window.scrollY>8); }; f();
+  window.addEventListener("scroll",f,{passive:true});
+  var idt=document.getElementById("idtoggle");
+  idt.addEventListener("click",function(){ var o=document.body.classList.toggle("ids-off"); idt.textContent=o?"IDs off":"IDs on"; });
+})();
+
+(function(){
+"use strict";
+var stage=document.getElementById("anStage"); if(!stage) return;
+var cur=document.getElementById("anCursor"), who=document.getElementById("anWho"), url=document.getElementById("anUrl"),
+    nowEl=document.getElementById("anNow"), nowK=document.getElementById("anNowK"),
+    arrow=document.getElementById("anArrow"), nowWrap=document.getElementById("anNowWrap"),
+    docWrap=document.getElementById("docWrap"),
+    queueNote=document.getElementById("queueNote"),
+    progFill=document.getElementById("progFill"), pNum=document.getElementById("pNum"),
+    prev=document.getElementById("prev"), next=document.getElementById("next"),
+    sTitle=document.getElementById("sTitle");
+var timers=[], busy=false, i=0, played=[false,false,false,false,false,false,false];
+var reduce=window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+var RATE=1.2;                       /* one dial for the whole animation */
+function wait(ms,fn){ timers.push(setTimeout(fn,Math.round(ms*RATE))); }
+function clearAll(){ timers.forEach(clearTimeout); timers=[]; }
+function $(s,r){ return (r||document).querySelector(s); }
+function screen(id){ stage.querySelectorAll(".an-screen").forEach(function(s){ s.classList.toggle("is-on",s.id===id); }); }
+function role(r){
+  who.textContent = r==="b" ? "Broker" : "Borrower";
+  who.classList.toggle("is-broker", r==="b");
+  stage.classList.toggle("is-broker", r==="b");
+  url.textContent = r==="b" ? "app.trueline.com.au / assessments / 4417" : "trueline.com.au / review";
+}
+function point(el,cb){
+  var a=stage.getBoundingClientRect(), b=el.getBoundingClientRect();
+  var x=b.left-a.left+b.width*.5, y=b.top-a.top+b.height*.5;
+  x=Math.max(18,Math.min(a.width-18,x));
+  y=Math.max(30,Math.min(a.height-24,y));          /* keep the pointer on the phone */
+  lastX=x; lastY=y;
+  cur.style.transform="translate("+x+"px,"+y+"px)";
+  wait(273,cb||function(){});
+}
+var lastX=60,lastY=90;
+function showPop(){
+  var pop=document.getElementById("pop"), st=S[i];
+  document.getElementById("popK").textContent=(i===S.length-1)?"Demo complete":"Step "+(i+1)+" of "+S.length+" complete";
+  document.getElementById("popDone").innerHTML=st.done||"";
+  document.getElementById("popNext").innerHTML=(i<S.length-1)?(st.nxt||""):"Have a look around \u2014 open any adjustment for its audit trail, or any category for the transactions behind it. Hide this card with the &minus; to get it out of the way.";
+  document.getElementById("popGo").textContent=(i<S.length-1)?"Next step \u2192":"Replay demo \u21bb";
+  document.getElementById("popPrev").disabled=(i===0);
+  document.getElementById("popPrev").textContent=(i===0)?"Back":"\u2190 Step "+i;
+  document.getElementById("popTab").classList.remove("is-on");
+  pop.classList.add("is-on");
+  var pad=parseFloat(getComputedStyle(stage).paddingLeft)||0;
+  var w=pop.offsetWidth||226, h=pop.offsetHeight||150;
+  var sw=stage.offsetWidth, sh=stage.offsetHeight, m=pad+8;
+  var x=Math.max(m,Math.min(sw-w-m,lastX-w/2));
+  var y=lastY+24;
+  if(y+h>sh-m) y=lastY-h-24;                 /* flip above */
+  if(y<m) y=Math.max(m,(sh-h)/2);            /* still no room — centre it */
+  pop.style.left=x+"px"; pop.style.top=y+"px";
+}
+function hidePop(){
+  document.getElementById("pop").classList.remove("is-on");
+  document.getElementById("popTab").classList.remove("is-on");
+}
+function minPop(){
+  var pop=document.getElementById("pop"), tab=document.getElementById("popTab");
+  pop.classList.remove("is-on");
+  tab.classList.add("is-on");
+  var sw=stage.offsetWidth, sh=stage.offsetHeight;
+  var pad=parseFloat(getComputedStyle(stage).paddingLeft)||0;
+  tab.style.left=(sw-tab.offsetWidth-pad-10)+"px";
+  tab.style.top=(sh-tab.offsetHeight-pad-12)+"px";
+}
+
+function tap(cb){ cur.classList.add("is-click"); wait(143,function(){ cur.classList.remove("is-click"); if(cb)cb(); }); }
+function go(el,cb){ point(el,function(){ tap(cb); }); }
+function type(host,el,txt,cb){ host.classList.add("is-active"); var n=0;
+  (function s(){ if(n<=txt.length){ el.textContent=txt.slice(0,n++); wait(7,s); } else wait(120,function(){ host.classList.remove("is-active"); if(cb)cb(); }); })(); }
+function showTot(kind,v){ arrow.classList.remove("is-hid"); nowWrap.classList.remove("is-hid");
+  nowK.textContent=kind; nowEl.className="an-tot-v "+(kind==="Requested"?"an-tot-req":"an-tot-now");
+  nowEl.textContent=v; nowEl.classList.remove("is-bump"); void nowEl.offsetWidth; nowEl.classList.add("is-bump"); }
+
+function request(id,amt,note,total,cb){
+  var tx=document.getElementById(id);
+  go($(".an-tx-hd",tx),function(){ tx.classList.add("is-sel");
+    wait(130,function(){ tx.classList.add("is-form");
+      wait(208,function(){ var box=$(".an-f-amt",tx);
+        go(box,function(){ type(box,$(".an-f-num",tx),amt,function(){
+          var nb=$(".an-f-note",tx);
+          go(nb,function(){ type(nb,$(".an-f-txt",tx),note,function(){
+            go($(".an-f-send",tx),function(){
+              tx.classList.remove("is-form","is-sel"); tx.classList.add("is-pending");
+              showTot("Requested",total); wait(260,cb);
+            }); }); }); }); }); }); }); });
+}
+function review(o){
+  var tx=document.getElementById(o.tx);
+  go($(".an-tx-hd",tx),function(){ tx.classList.remove("is-pending"); tx.classList.add("is-review");
+    wait(208,function(){
+      function note(){ var nb=$(".an-r-note",tx);
+        go(nb,function(){ type(nb,$(".an-r-txt",tx),o.note,function(){
+          go($(o.approve?".an-r-yes":".an-r-no",tx),function(){
+            tx.classList.remove("is-review");
+            var v=$(".an-verdict",tx); v.className="an-verdict an-v-"+o.kind;
+            v.innerHTML="<b>"+o.label+"</b>"+o.note;
+            tx.classList.add("is-verdict","is-"+o.kind);
+            $(".an-tx-v",tx).innerHTML=o.val;
+            showTot("Assessed",o.total);
+            wait(500,o.cb); }); }); }); }
+      if(o.amt){ var ab=$(".an-r-amt",tx); go(ab,function(){ $(".an-r-num",tx).textContent=""; type(ab,$(".an-r-num",tx),o.amt,note); }); }
+      else note();
+    }); });
+}
+
+var DOC = '<div class="doc"><div class="doc-hd"><div class="doc-t">Living expense assessment</div>'
+ + '<div class="doc-m">Ref 4417 &middot; A. Sample &middot; 6 months to 12 Aug 2026 &middot; 2 accounts &middot; 1,184 transactions</div></div>'
+ + '<div class="doc-sum">'
+ + '<div class="doc-s"><div class="doc-s-k">Declared</div><div class="doc-s-v">$2,860</div></div>'
+ + '<div class="doc-s"><div class="doc-s-k">Documented</div><div class="doc-s-v">$5,890</div></div>'
+ + '<div class="doc-s"><div class="doc-s-k">Assessed</div><div class="doc-s-v">$5,040</div></div></div>'
+ + '<div class="bm" id="bmBlock" data-open="false"><button class="bm-hd"><span class="bm-k">Benchmark comparison &middot; broker only</span><span class="bm-chev"></span></button>'
+ + '<div class="bm-bd"><div><div class="bm-in">'
+ + '<div class="bm-r"><span>Household benchmark &mdash; 2 adults, 1 dependant, 3121</span><b>$4,180</b></div>'
+ + '<div class="bm-r"><span>Assessed living expenses</span><b class="bm-hi">$5,040</b></div>'
+ + '<div class="bm-f">Assessed sits $860 above the benchmark. The higher figure is used.</div>'
+ + '</div></div></div></div>'
+ + '<div class="doc-sec">Adjustments to declared living expenses &middot; open a line for the full record</div>'
+ + drow("ok","PARKVIEW ESTATE &mdash; wedding venue deposit","$700","$0","Approved",
+     "One-off \u2014 our wedding venue deposit.","Single payment, nothing comparable across six months. Removed in full.","venue-invoice.pdf",
+     [["15 Aug<br>08:41","Imported","$4,200 debit dated 7 Mar \u2014 $700 per month across the period"],
+      ["15 Aug<br>08:41","Identified for review","Single payment; no comparable transaction across six months of statements"],
+      ["15 Aug<br>19:07","Borrower explanation","Submitted in writing, requesting $700 \u2192 $0"],
+      ["15 Aug<br>19:09","Evidence provided","venue-invoice.pdf \u2014 dated, itemised, matches the debit"],
+      ["16 Aug<br>09:12","Broker determination","Accepted as non-recurring on the evidence. Excluded, $0 per month"]])
+ + drow("part","AAMI MOTOR PREMIUM &mdash; annual cover","$300","$150","Reduced",
+     "This is a yearly premium, not a monthly cost.","Correct that it isn\u2019t monthly, but the cover continues. Spread across the year at $150.","renewal-notice.pdf",
+     [["15 Aug<br>08:41","Imported","$1,800 debit dated 15 Apr \u2014 $300 per month across the period"],
+      ["15 Aug<br>08:41","Identified for review","Charged annually; no monthly instalment pattern in the statements"],
+      ["15 Aug<br>19:14","Borrower explanation","Submitted in writing, requesting $300 \u2192 $0"],
+      ["15 Aug<br>19:16","Evidence provided","renewal-notice.pdf \u2014 12-month policy term, cover continuing"],
+      ["16 Aug<br>09:18","Broker determination","Request not accepted in full. Cover continues, so annualised to $150 per month"]])
+ + drow("bad","ROYAL HOTEL SORRENTO &mdash; accommodation","$400","$400","Declined",
+     "We won\u2019t be going on a holiday again.","Holidays recur for most households and nothing evidences that this one stops. Retained in full.",null,
+     [["15 Aug<br>08:41","Imported","$2,400 debit dated 2 May \u2014 $400 per month across the period"],
+      ["15 Aug<br>08:41","Identified for review","No comparable travel elsewhere in the statement period"],
+      ["15 Aug<br>19:11","Borrower explanation","Submitted in writing, requesting $400 \u2192 $0"],
+      ["16 Aug<br>09:14","Broker enquiry","Asked whether any further travel is planned or booked"],
+      ["16 Aug<br>09:15","Broker determination","Declined. No evidence that travel ceases; retained at $400 per month"]])
+ + '<div class="doc-sec">Category breakdown</div>'
+ + dcat("Groceries",1060,1060,[["WOOLWORTHS METRO RICHMOND","486",null,null,"11 Aug &middot; 5:22pm"],["COLES BURNLEY","326",null,null,"6 Aug &middot; 6:38pm"],["ALDI HAWTHORN","118",null,null,"28 Jul &middot; 10:41am"],["RICHMOND HILL FRUIT MARKET","74",null,null,"3 Aug &middot; 9:26am"],["GARDINER&rsquo;S BUTCHERY","56",null,null,"21 Jul &middot; 11:58am"]])
+ + dcat("Recreation and Entertainment",1480,780,[["PARKVIEW ESTATE","700","ok","0","7 Mar &middot; 1:19pm"],["ROYAL HOTEL SORRENTO","400","bad",null,"2 May &middot; 3:47pm"],["TOP PADDOCK RICHMOND","118",null,null,"9 Aug &middot; 12:33pm"],["SQ *PROUD MARY COFFEE","96",null,null,"11 Aug &middot; 7:12am"],["UBER EATS","92",null,null,"8 Aug &middot; 7:51pm"],["DAN MURPHY&rsquo;S BURNLEY","74",null,null,"1 Aug &middot; 6:38pm"]])
+ + dcat("Primary Residence",1150,1150,[["OWNERS CORPORATION LEVY","392",null,null,"1 Jul &middot; 8:04am"],["CITY OF YARRA RATES","310",null,null,"18 Jul &middot; 8:04am"],["AGL ELECTRICITY","186",null,null,"14 Jul &middot; 2:10pm"],["AGL GAS","94",null,null,"14 Jul &middot; 2:11pm"],["YARRA VALLEY WATER","78",null,null,"24 Jun &middot; 9:26am"],["BUNNINGS RICHMOND","56",null,null,"3 Aug &middot; 10:41am"],["ALLIANZ HOME &amp; CONTENTS","34",null,null,"1 Aug &middot; 7:12am"]])
+ + dcat("Transport",680,680,[["BP CONNECT BURNLEY","268",null,null,"10 Aug &middot; 7:12am"],["LINKT MELBOURNE","96",null,null,"1 Aug &middot; 12:33pm"],["ULTRA TUNE RICHMOND","92",null,null,"17 Jun &middot; 11:58am"],["WILSON PARKING","88",null,null,"7 Aug &middot; 5:22pm"],["VICROADS REGISTRATION","74",null,null,"9 Jun &middot; 8:04am"],["PTV MYKI TOPUP","62",null,null,"5 Aug &middot; 7:51am"]])
+ + dcat("Insurance",575,425,[["AAMI MOTOR PREMIUM","300","part","150","15 Apr &middot; 8:04am"],["BUPA HEALTH INSURANCE","275",null,null,"3 Aug &middot; 8:04am"]])
+ + dcat("Clothing and Personal Care",310,310,[["UNIQLO EMPORIUM","96",null,null,"26 Jul &middot; 1:19pm"],["COUNTRY ROAD CHADSTONE","68",null,null,"12 Jul &middot; 3:47pm"],["HAIR BY JOSH","68",null,null,"6 Aug &middot; 10:41am"],["MECCA COSMETICA","42",null,null,"26 Jul &middot; 2:10pm"],["CHEMIST WAREHOUSE","36",null,null,"4 Aug &middot; 6:38pm"]])
+ + dcat("Medical and Health",240,240,[["SMILE DENTAL RICHMOND","78",null,null,"22 Jul &middot; 9:26am"],["PRICELINE PHARMACY","64",null,null,"9 Aug &middot; 12:33pm"],["RICHMOND MEDICAL CENTRE","52",null,null,"30 Jul &middot; 11:58am"],["MOVE PHYSIO","46",null,null,"5 Aug &middot; 5:22pm"]])
+ + dcat("Telephone, internet and media",200,200,[["TELSTRA MOBILE X2","95",null,null,"2 Aug &middot; 8:04am"],["SUPERLOOP NBN","79",null,null,"8 Aug &middot; 8:04am"],["NETFLIX &middot; SPOTIFY","26",null,null,"4 Aug &middot; 8:04am"]])
+ + dcat("Other Expenses",195,195,[["PETBARN RICHMOND","95",null,null,"27 Jul &middot; 3:47pm"],["AUSTRALIAN RED CROSS","54",null,null,"1 Aug &middot; 7:51pm"],["AUSTRALIA POST","28",null,null,"29 Jul &middot; 1:19pm"],["CBA ACCOUNT FEE","18",null,null,"31 Jul &middot; 8:04am"]])
+ + '<div class="doc-ft">Every adjustment above was determined by the broker on the evidence recorded against it. Original transaction records are unaltered; only their treatment differs, and each change is time-stamped and attributed. Retained in full for the credit file. The credit decision remains with the broker and the lender.</div></div>';
+
+function drow(k,name,was,now,status,bnote,knote,file,trail){
+  var t=trail.map(function(e){
+    return '<div class="at-l"><div class="at-t">'+e[0]+'</div><div class="at-b"><b>'+e[1]+'</b><i>'+e[2]+'</i></div></div>';
+  }).join("");
+  return '<div class="dr dr--'+k+'" data-open="false"><button class="dr-hd">'
+    +'<span class="dr-i"></span><span class="dr-d">'+name+'</span>'
+    +'<span class="dr-v"><s>'+was+'</s><b>'+now+'</b></span><span class="dr-s">'+status+'</span></button>'
+    +'<div class="dr-bd"><div><div class="dr-in">'
+    +'<div class="dm dm--c"><div class="dm-w"><i></i>Borrower</div><p>'+bnote+'</p>'
+    +(file?'<span class="dm-f">'+file+'</span>':'')+'</div>'
+    +'<div class="dm dm--b"><div class="dm-w"><i></i>Broker</div><p>'+knote+'</p></div>'
+    +'<div class="at"><div class="dm-w" style="margin-bottom:5px">Audit trail</div>'+t+'</div>'
+    +'</div></div></div></div>';
+}
+function dcat(n,a,b,rows){
+  var m=1480;
+  var body=(rows||[]).map(function(r){
+    var k=r[2]?" dtx--"+r[2]:"";
+    var amt=r[3]!=null ? '<s>$'+r[1]+'</s>$'+r[3] : '$'+r[1];
+    return '<div class="dtx'+k+'"><span class="dtx-m"><span class="dtx-d">'+r[0]+'</span><span class="dtx-t">'+(r[4]||"")+'</span></span><span class="dtx-a">'+amt+'</span></div>';
+  }).join("");
+  return '<div class="dcat" data-open="false"><button class="dcat-hd">'
+    +'<span class="dcat-chev"></span><span class="dcat-n">'+n+'</span>'
+    +'<span class="dcat-b"><i class="d1" style="width:'+(a/m*100).toFixed(1)+'%"></i><i class="d2" style="width:'+(b/m*100).toFixed(1)+'%"></i></span>'
+    +'<span class="dcat-v">$'+a.toLocaleString()+(a!==b?' \u2192 $'+b.toLocaleString():'')+'</span></button>'
+    +'<div class="dcat-bd"><div><div class="dcat-in">'+body+'</div></div></div></div>';
+}
+function wireDoc(){
+  docWrap.querySelectorAll(".dr-hd").forEach(function(b){
+    b.addEventListener("click",function(){
+      var r=b.closest(".dr"); r.setAttribute("data-open", r.getAttribute("data-open")==="true"?"false":"true");
+    });
+  });
+}
+
+function bring(el,cb){
+  var body=stage.querySelector(".an-body");
+  var br=body.getBoundingClientRect(), er=el.getBoundingClientRect();
+  var pad=28, want=null;
+  if(er.top < br.top+pad)        want = body.scrollTop + (er.top-br.top) - pad;          /* above view */
+  else if(er.bottom > br.bottom-pad) want = body.scrollTop + (er.bottom-br.bottom) + pad; /* below view */
+  if(want===null){ cb(); return; }                       /* already visible — stay put */
+  want=Math.max(0,Math.min(body.scrollHeight-br.height,want));
+  if(Math.abs(want-body.scrollTop)<8){ cb(); return; }
+  body.scrollTo({top:want,behavior:"smooth"});
+  wait(430,cb);
+}
+function goS(el,cb){ bring(el,function(){ go(el,cb); }); }
+function openIt(el){
+  el.setAttribute("data-open","true");
+  wait(330,function(){
+    var body=stage.querySelector(".an-body");
+    var br=body.getBoundingClientRect(), er=el.getBoundingClientRect();
+    if(er.bottom > br.bottom-16){
+      var want=body.scrollTop + Math.min(er.bottom-br.bottom+24, Math.max(0,er.top-br.top-16));
+      want=Math.max(0,Math.min(body.scrollHeight-br.height,want));
+      body.scrollTo({top:want,behavior:"smooth"});
+    }
+  });
+}
+
+function amend(id,amt,note,total,cb){
+  var fl=document.getElementById(id);
+  goS(fl.querySelector(".fl-hd"),function(){
+    openIt(fl);
+    wait(240,function(){
+      var box=fl.querySelector(".an-f-amt");
+      goS(box,function(){ fl.querySelector(".an-f-num").textContent="";
+        type(box,fl.querySelector(".an-f-num"),amt,function(){
+        var nb=fl.querySelector(".an-f-note");
+        goS(nb,function(){ type(nb,fl.querySelector(".an-f-txt"),note,function(){
+          goS(fl.querySelector(".an-f-send"),function(){
+            fl.setAttribute("data-open","false"); fl.classList.add("is-pending");
+            fl.querySelector(".fl-a").innerHTML='<s>$'+fl.dataset.was+'</s>$'+amt+'<small>/mo</small>';
+            showTot("Requested",total); wait(300,cb);
+          });
+        }); });
+      }); });
+    });
+  });
+}
+function decide(o){
+  var fl=document.getElementById(o.id);
+  goS(fl.querySelector(".fl-hd"),function(){
+    openIt(fl); fl.classList.remove("is-pending"); fl.classList.add("is-review");
+    wait(460,function(){
+      function note(){
+        var nb=fl.querySelector(".an-r-note");
+        goS(nb,function(){ type(nb,fl.querySelector(".an-r-txt"),o.note,function(){
+          goS(fl.querySelector(o.approve?".an-r-yes":".an-r-no"),function(){
+            fl.classList.remove("is-review");
+            fl.classList.add("is-"+o.kind);
+            fl.querySelector(".fl-a").innerHTML=o.val;
+            var v=fl.querySelector(".an-verdict"); v.className="an-verdict an-v-"+o.kind;
+            v.innerHTML="<b>"+o.label+"</b>"+o.note;
+            showTot("Assessed",o.total);
+            wait(900,function(){ fl.setAttribute("data-open","false"); wait(420,o.cb); });
+          });
+        }); });
+      }
+      if(o.amt){ var ab=fl.querySelector(".an-r-amt"); goS(ab,function(){ fl.querySelector(".an-r-num").textContent=""; type(ab,fl.querySelector(".an-r-num"),o.amt,note); }); }
+      else note();
+    });
+  });
+}
+function flIn(cb){
+  var ids=["flWed","flAami"], n=0;
+  (function step(){
+    if(n<ids.length){ document.getElementById(ids[n++]).classList.add("is-in"); wait(150,step); }
+    else if(cb) wait(120,cb);
+  })();
+}
+function catAssess(id){
+  var c=document.getElementById(id); if(!c||!c.dataset.adj) return;
+  c.querySelector(".cx-f").innerHTML='<s>$'+c.dataset.doc+'</s><span class="cx-ar">&rarr;</span><em>$'+c.dataset.adj+'</em>';
+  c.querySelector(".d2").style.width=c.dataset.aw+"%";
+}
+function catReset(id){
+  var c=document.getElementById(id); if(!c||!c.dataset.adj) return;
+  c.querySelector(".cx-f").innerHTML="$"+c.dataset.doc;
+  c.querySelector(".d2").style.width=c.dataset.dw+"%";
+}
+function flSet(id,cls,val,label,note){
+  var fl=document.getElementById(id);
+  fl.classList.add("is-in",cls); fl.querySelector(".fl-a").innerHTML=val;
+  var v=fl.querySelector(".an-verdict"); v.className="an-verdict an-v-"+cls.replace("is-","");
+  if(label) v.innerHTML="<b>"+label+"</b>"+note;
+}
+
+function dropFiles(cb){
+  var scr=stage.querySelector(".ph-screen"), zone=$("#upZone");
+  var pr=scr.getBoundingClientRect(), zr=zone.getBoundingClientRect();
+  var zx=zr.left-pr.left+zr.width/2, zy=zr.top-pr.top+zr.height/2;
+  var startY=pr.height-64, ids=["dg1","dg2","dg3"], files=["f1","f2","f3"];
+  ids.forEach(function(id,n){
+    var g=document.getElementById(id);
+    g.style.transform="translate("+(pr.width*0.5+(n-1)*66)+"px,"+startY+"px) translate(-50%,-50%) scale(.94)";
+  });
+  var n=0;
+  (function step(){
+    if(n>=ids.length){
+      wait(260,function(){
+        $("#upOk").classList.add("is-on"); $("#upGen").classList.add("is-on");
+        wait(420,function(){
+          $("#upGen").classList.add("is-on");
+          wait(260,function(){ point($("#upGen"),function(){ wait(420,cb); }); });
+        });
+      });
+      return;
+    }
+    var g=document.getElementById(ids[n]), f=document.getElementById(files[n]), k=n;
+    g.classList.add("is-in");
+    wait(140,function(){
+      zone.classList.add("is-over");
+      g.style.transform="translate("+zx+"px,"+zy+"px) translate(-50%,-50%) scale(1.02)";
+      lastX=zx; lastY=zy; cur.style.transform="translate("+zx+"px,"+zy+"px)";
+      wait(560,function(){
+        g.classList.remove("is-in");
+        zone.classList.remove("is-over");
+        f.classList.add("is-in");
+        wait(120,function(){
+          f.classList.add("is-done");
+          $(".an-tick",f).textContent="Uploading";
+          wait(560,function(){ $(".an-tick",f).textContent="Uploaded"; n=k+1; wait(180,step); });
+        });
+      });
+    });
+  })();
+}
+
+function turnTo(r,sub,cb,title){
+  var t=document.getElementById("turn");
+  t.className="turn is-on turn--"+(r==="b"?"b":"c");
+  document.getElementById("turnW").textContent = r==="b" ? "Broker" : "Borrower";
+  document.getElementById("turnT").textContent = title || (r==="b" ? "Broker\u2019s turn" : "Borrower\u2019s turn");
+  document.getElementById("turnS").innerHTML = sub || "&nbsp;";
+  role(r);
+  wait(1817,function(){ t.classList.remove("is-on"); wait(220,cb); });   /* 1400ms + 500ms, pre-RATE */
+}
+
+function build(cb){
+  var arc=document.getElementById("bdArc"), pc=document.getElementById("bdPc");
+  var ids=["bd1","bd2","bd3","bd4"], n=0;
+  arc.style.strokeDashoffset=163; pc.textContent="0%";
+  ids.forEach(function(x){ document.getElementById(x).classList.remove("is-done"); });
+  ["rd1","rd2","rd3"].forEach(function(x){ document.getElementById(x).classList.remove("is-red"); });
+  document.getElementById("rdFill").style.width="0%"; document.getElementById("rdN").textContent="0";
+  function mark(){
+    var f=n/ids.length;
+    arc.style.strokeDashoffset=163*(1-f);
+    pc.textContent=Math.round(f*100)+"%";
+  }
+  (function tick(){
+    if(n>=ids.length){ wait(620,cb); return; }
+    document.getElementById(ids[n]).classList.add("is-done");
+    n++; mark();
+    if(n===1){                                   /* redact before anything is analysed */
+      var r=0, fill=document.getElementById("rdFill"), cnt=document.getElementById("rdN");
+      (function black(){
+        if(r<3){
+          r++;
+          document.getElementById("rd"+r).classList.add("is-red");
+          fill.style.width=(r/3*100)+"%"; cnt.textContent=r;
+          wait(620,black);
+        } else wait(900,tick);
+      })();
+    } else wait(480,tick);
+  })();
+}
+
+function scan(cb){
+  var sc=document.getElementById("scan"), f=document.getElementById("scanFill"), t=document.getElementById("scanS");
+  var msgs=["Reading merchants\u2026","Matching recurring patterns\u2026","Scoring one-off likelihood\u2026","Ranking by confidence\u2026"];
+  sc.classList.add("is-on"); f.style.width="0%";
+  var n=0;
+  (function tick(){
+    if(n<msgs.length){ t.textContent=msgs[n]; f.style.width=(((n+1)/msgs.length)*100)+"%"; n++; wait(430,tick); }
+    else wait(360,function(){ sc.classList.remove("is-on"); cb(); });
+  })();
+}
+
+var S=[
+ {who:"b",t:"Broker sends a secure link",
+  ph:"Create scenario",
+  done:"App created, link generated. Send by text or copy for email.", nxt:"Borrower uploads statements and the details behind the HEM<span class=\"hq\" tabindex=\"0\">?<span class=\"hq-t\">Household Expenditure Measure &mdash; a benchmark of what a household of that size and location typically spends. Lenders assess on the higher of HEM or the declared figure, so the comparison decides how much of the real number matters.</span></span> calculation \u2014 or the broker fills these in beforehand if they already hold them.",
+  scr:"scSetup",
+  run:function(cb){ screen("scSetup");
+    turnTo("b","Enter the customer and send the secure link",function(){
+    var a=$("#setName"),b=$("#setTo"),c=$("#setDec");
+    go(a,function(){ type(a,a,"A. Sample",function(){
+      go(b,function(){ type(b,b,"0412 884 201",function(){
+        go(c,function(){ type(c,c,"$2,860 / mo",function(){
+          go($("#setSend"),function(){
+            wait(260,function(){ go($("#setCopy"),function(){ $("#setDone").classList.add("is-on"); wait(520,cb); }); });
+          }); });
+        }); }); }); }); }); },"Broker creates scenario"); },
+  end:function(){ role("b"); screen("scSetup");
+    $("#setName").textContent="A. Sample"; $("#setTo").textContent="0412 884 201"; $("#setDec").textContent="$2,860 / mo";
+    $("#setDone").classList.add("is-on"); }},
+
+ {who:"c",t:"Borrower uploads their statements",
+  ph:"Fill in your details",
+  done:"Household size, postcode and income captured for HEM<span class=\"hq\" tabindex=\"0\">?<span class=\"hq-t\">Household Expenditure Measure &mdash; a benchmark of what a household of that size and location typically spends. Lenders assess on the higher of HEM or the declared figure, so the comparison decides how much of the real number matters.</span></span>, six months of statements uploaded. Either party can enter these details.", nxt:"Statements are read and turned into a full category breakdown.",
+  scr:"scUpload",
+  run:function(cb){ screen("scUpload");
+    turnTo("c","Confirm the household, then upload six months",function(){
+    var A=$("#hhA"),D=$("#hhD"),P=$("#hhP");
+    go(A,function(){ type(A,A,"2",function(){
+      go(D,function(){ type(D,D,"1",function(){
+        go(P,function(){ type(P,P,"3121",function(){
+      var I1=$("#hhI1"),I2=$("#hhI2");
+      go(I1,function(){ type(I1,I1,"$96,000",function(){
+        go(I2,function(){ type(I2,I2,"$74,000",function(){
+    wait(200,function(){
+      var body=stage.querySelector(".an-body");
+      body.scrollTo({top:body.scrollHeight,behavior:"smooth"});
+      wait(560,function(){ dropFiles(cb); });
+    }); }); }); }); }); }); }); }); }); }); }); },"Borrower fills in details"); },
+  end:function(){ role("c"); screen("scUpload");
+    $("#hhA").textContent="2"; $("#hhD").textContent="1"; $("#hhP").textContent="3121";
+    $("#hhI1").textContent="$96,000"; $("#hhI2").textContent="$74,000";
+    $("#upOk").classList.add("is-on"); $("#upGen").classList.add("is-on");
+    ["f1","f2","f3"].forEach(function(x){ var f=document.getElementById(x); f.classList.add("is-in","is-done"); $(".an-tick",f).textContent="Uploaded"; }); }},
+
+ {who:"c",t:"Their spending comes back, category by category",
+  ph:"Review your expenses",
+  done:"Names, account numbers and addresses are stripped out before anything is analysed. What is left \u2014 date, amount, merchant \u2014 is sorted into twelve priced categories.", nxt:"AI scores each transaction and lifts the likely once-off expenses to the top.",
+  scr:"scBuild",
+  run:function(cb){ role("c"); screen("scUpload"); S[1].end();
+    goS($("#upGen"),function(){
+    screen("scBuild");
+    build(function(){
+    screen("scReview");
+    var body=stage.querySelector(".an-body"); body.scrollTop=0;
+    wait(400,function(){ goS($("#cxGro .cx-hd"),function(){
+      openIt(document.getElementById("cxGro"));
+      wait(700,function(){ goS($("#cxRes .cx-hd"),function(){
+        openIt(document.getElementById("cxRes"));
+        wait(800,function(){
+          var body=stage.querySelector(".an-body");
+          body.scrollTo({top:0,behavior:"smooth"});
+          wait(560,function(){ go($("#minAll"),function(){
+            stage.querySelectorAll(".cx").forEach(function(c){ c.setAttribute("data-open","false"); });
+            wait(420,function(){ point($("#scanBtn"),function(){ wait(400,cb); }); });
+          }); });
+        });
+      }); });
+    }); }); }); }); },
+  end:function(){ role("c"); screen("scReview");
+    document.getElementById("totAct").classList.add("is-on");
+    document.getElementById("topSend").classList.add("is-on");
+    stage.querySelectorAll(".cx").forEach(function(c){ c.setAttribute("data-open","false"); }); }},
+
+ {who:"c",t:"AI scores every line and lifts the one-offs up",
+  ph:"See what AI found",
+  done:"AI reviewed all 1,184 transactions and ranked the ones least likely to be ongoing expenses \u2014 the once-off costs.", nxt:"Borrower can work through the AI suggestions, or open any category and raise their own.",
+  scr:"scReview",
+  run:function(cb){ role("c"); screen("scReview");
+    var body=stage.querySelector(".an-body"); body.scrollTop=0;
+    document.getElementById("cxGro").setAttribute("data-open","false");
+    document.getElementById("cxRes").setAttribute("data-open","false");
+    var sb=document.getElementById("scanBtn");
+    goS(sb,function(){ sb.classList.add("is-gone");
+      scan(function(){
+        document.getElementById("aiBlock").classList.add("is-on");
+        flIn(function(){
+          var ig=document.getElementById("ign");
+          ig.classList.add("is-on");
+          wait(260,function(){ ig.classList.add("is-lit");
+            wait(900,function(){ point($("#flWed .fl-hd"),function(){ wait(400,cb); }); });
+          });
+        });
+      });
+    }); },
+  end:function(){ role("c"); screen("scReview");
+    document.getElementById("scanBtn").classList.add("is-gone");
+    document.getElementById("aiBlock").classList.add("is-on");
+    document.getElementById("ign").classList.add("is-on");
+    ["flWed","flAami"].forEach(function(id){ document.getElementById(id).classList.add("is-in"); });
+    document.getElementById("ign").classList.add("is-lit"); }},
+
+ {who:"c",t:"Borrower requests amendments",
+  ph:"Request amendments",
+  done:"Borrower edits the transactions they believe are one-off expenses and provides reasoning.", nxt:"Requests are sent to the broker for review.",
+  scr:"scReview",
+  run:function(cb){ role("c"); screen("scReview"); S[3].end();
+    amend("flWed","0","One-off \u2014 our wedding venue deposit.","$5,190",function(){
+      amend("flAami","0","This is a yearly premium, not a monthly cost.","$4,890",function(){
+        goS($("#cxRec .cx-hd"),function(){
+          openIt(document.getElementById("cxRec"));
+          wait(560,function(){
+            amend("flHotel","0","We won\u2019t be going on a holiday again.","$4,490",function(){
+              document.getElementById("cxRec").setAttribute("data-open","false");
+              var body=stage.querySelector(".an-body");
+              body.scrollTo({top:0,behavior:"smooth"});
+              wait(620,function(){ point($("#topSend"),function(){ wait(400,cb); }); });
+            });
+          });
+        });
+      });
+    }); },
+  end:function(){ S[3].end();
+    flSet("flWed","is-pending",'<s>$700</s>$0<small>/mo</small>');
+    flSet("flAami","is-pending",'<s>$300</s>$0<small>/mo</small>');
+    flSet("flHotel","is-pending",'<s>$400</s>$0<small>/mo</small>');
+    document.getElementById("totAct").classList.add("is-on");
+    document.getElementById("topSend").classList.add("is-on");
+    showTot("Requested","$4,490"); }},
+
+ {who:"b",t:"Borrower submits, broker takes over",
+  ph:"Review the requests",
+  done:"Broker sets the final amount on each request, then approves, reduces or declines.", nxt:"Broker can respond to open further discussion on anything declined or queried, or finalise by pressing Generate assessment for the full audit trail.",
+  scr:"scReview",
+  run:function(cb){ role("c"); screen("scReview"); S[4].end();
+    goS($("#topSend"),function(){
+      turnTo("b","3 requests submitted &middot; $4,490 requested<br>Nothing has changed yet",function(){
+        queueNote.classList.add("is-on");
+        document.getElementById("topSend").classList.remove("is-on");
+        document.getElementById("topReply").classList.add("is-on");
+        document.getElementById("topGen").classList.add("is-on");
+        stage.querySelectorAll(".cx").forEach(function(c){ c.setAttribute("data-open","false"); });
+        showTot("Assessed","$5,890");
+        stage.querySelector(".an-body").scrollTop=0;
+        wait(500,function(){
+          decide({id:"flWed",note:"Single payment, nothing comparable across six months. Removed in full.",approve:true,kind:"ok",label:"Approved",
+            val:'<s>$700</s>$0<small>/mo</small>',total:"$5,190",cb:function(){ catAssess("cxRec");
+            decide({id:"flAami",amt:"150",note:"Correct that it isn\u2019t monthly, but the cover continues. Spread across the year.",approve:true,kind:"part",label:"Reduced",
+              val:'<s>$300</s>$150<small>/mo</small>',total:"$5,040",cb:function(){
+              document.getElementById("aiBlock").appendChild(document.getElementById("flHotel"));
+              decide({id:"flHotel",note:"Holidays recur for most households and nothing evidences that this one stops. Retained.",approve:false,kind:"bad",label:"Declined",
+                val:'$400<small>/mo</small>',total:"$5,040",cb:function(){
+                  var body=stage.querySelector(".an-body");
+                  body.scrollTo({top:0,behavior:"smooth"});
+                  wait(620,function(){ point($("#topGen"),function(){ wait(420,cb); }); });
+                }});
+            }});
+          }});
+        });
+      },"Broker reviews requests");
+    }); },
+  end:function(){ role("b"); screen("scReview"); queueNote.classList.add("is-on");
+    document.getElementById("totAct").classList.add("is-on");
+    document.getElementById("topSend").classList.remove("is-on");
+    document.getElementById("topReply").classList.add("is-on");
+    document.getElementById("topGen").classList.add("is-on");
+    stage.querySelectorAll(".cx").forEach(function(c){ c.setAttribute("data-open","false"); });
+    flSet("flWed","is-ok",'<s>$700</s>$0<small>/mo</small>',"Approved","Single payment, nothing comparable across six months. Removed in full.");
+    flSet("flAami","is-part",'<s>$300</s>$150<small>/mo</small>',"Reduced","Correct that it isn\u2019t monthly, but the cover continues. Spread across the year.");
+    document.getElementById("aiBlock").appendChild(document.getElementById("flHotel"));
+    flSet("flHotel","is-bad",'$400<small>/mo</small>',"Declined","Holidays recur for most households and nothing evidences that this one stops. Retained.");
+    catAssess("cxRec"); catAssess("cxIns");
+    showTot("Assessed","$5,040"); }},
+
+ {who:"b",t:"Generate the assessment",
+  ph:"Finalise the assessment",
+  done:"Assessment generated: documented against assessed, with the HEM<span class=\"hq\" tabindex=\"0\">?<span class=\"hq-t\">Household Expenditure Measure &mdash; a benchmark of what a household of that size and location typically spends. Lenders assess on the higher of HEM or the declared figure, so the comparison decides how much of the real number matters.</span></span> comparison and a trail on every amendment.", nxt:"That is the whole loop &mdash; one link out, one file note back.",
+  scr:"scReview",
+  run:function(cb){ role("b"); screen("scReview"); S[5].end();
+    wait(300,function(){
+      goS($("#topReply"),function(){
+        wait(320,function(){ goS($("#topGen"),function(){
+          docWrap.innerHTML=DOC; wireDoc(); screen("scDoc");
+          document.getElementById("scrT").textContent="Review the assessment";
+          stage.querySelector(".an-body").scrollTop=0;
+          wait(560,function(){
+            var bm=document.getElementById("bmBlock");
+            goS(bm.querySelector(".bm-hd"),function(){
+              openIt(bm);
+              wait(1300,function(){
+                go(bm.querySelector(".bm-hd"),function(){
+                  bm.setAttribute("data-open","false");
+                  wait(360,function(){
+                    var dr=docWrap.querySelector(".dr");
+                    goS(dr.querySelector(".dr-hd"),function(){
+                      openIt(dr);
+                      wait(1800,function(){
+                        go(dr.querySelector(".dr-hd"),function(){
+                          dr.setAttribute("data-open","false");
+                          wait(400,function(){
+                            var dc=docWrap.querySelectorAll(".dcat")[1];
+                            goS(dc.querySelector(".dcat-hd"),function(){
+                              openIt(dc);
+                              wait(1700,function(){
+                                go(dc.querySelector(".dcat-hd"),function(){
+                                  dc.setAttribute("data-open","false"); wait(400,cb);
+                                });
+                              });
+                            });
+                          });
+                        });
+                      });
+                    });
+                  });
+                });
+              });
+            });
+          });
+        }); });
+      });
+    }); },
+  end:function(){ S[5].end(); docWrap.innerHTML=DOC; wireDoc(); screen("scDoc");
+    document.getElementById("scrT").textContent="Review the assessment"; }}
+];
+
+function hardReset(){
+  clearAll();
+  stage.querySelectorAll(".cx").forEach(function(c){ c.setAttribute("data-open","false"); });
+  catReset("cxRec"); catReset("cxIns");
+  var hp=document.getElementById("flHotelHome"), fh=document.getElementById("flHotel");
+  if(hp && fh && fh.parentNode!==hp) hp.appendChild(fh);
+  document.getElementById("scan").classList.remove("is-on");
+  document.getElementById("scanBtn").classList.remove("is-gone");
+  document.getElementById("ign").classList.remove("is-on");
+  document.getElementById("aiBlock").classList.remove("is-on");
+  document.getElementById("ign").setAttribute("data-open","false");
+  document.getElementById("ign").classList.remove("is-lit");
+  ["bd1","bd2","bd3","bd4"].forEach(function(x){ document.getElementById(x).classList.remove("is-done"); });
+  ["rd1","rd2","rd3"].forEach(function(x){ document.getElementById(x).classList.remove("is-red"); });
+  document.getElementById("rdFill").style.width="0%"; document.getElementById("rdN").textContent="0";
+  document.getElementById("bdArc").style.strokeDashoffset=163;
+  document.getElementById("bdPc").textContent="0%";
+  stage.querySelectorAll(".fl").forEach(function(f){
+    f.className="fl"; f.setAttribute("data-open","false");
+    f.querySelector(".fl-a").innerHTML="$"+f.dataset.was+"<small>/mo</small>";
+    f.querySelector(".an-r-num").textContent=f.dataset.was;
+    f.querySelector(".an-f-num").textContent=f.dataset.was;
+    f.querySelector(".an-verdict").innerHTML=""; });
+  stage.querySelectorAll(".an-f-txt,.an-r-txt").forEach(function(e){ e.textContent=""; });
+  document.getElementById("totAct").classList.remove("is-on");
+  ["topSend","topReply","topGen"].forEach(function(x){ document.getElementById(x).classList.remove("is-on"); });
+  document.getElementById("turn").classList.remove("is-on");
+  stage.querySelector(".an-body").scrollTop=0;
+  arrow.classList.add("is-hid"); nowWrap.classList.add("is-hid");
+  queueNote.classList.remove("is-on"); docWrap.innerHTML="";
+  $("#setName").textContent="\u2014"; $("#setTo").textContent="\u2014"; $("#setDec").textContent="\u2014";
+  $("#hhA").textContent="\u2014"; $("#hhD").textContent="\u2014"; $("#hhP").textContent="\u2014";
+  $("#hhI1").textContent="\u2014"; $("#hhI2").textContent="\u2014";
+  $("#setDone").classList.remove("is-on");
+  ["f1","f2","f3"].forEach(function(x){ var f=document.getElementById(x); f.classList.remove("is-done","is-in"); $(".an-tick",f).textContent="0%"; });
+  ["dg1","dg2","dg3"].forEach(function(x){ document.getElementById(x).classList.remove("is-in"); });
+  $("#upOk").classList.remove("is-on"); $("#upGen").classList.remove("is-on"); $("#upZone").classList.remove("is-over");
+  lastX=stage.offsetWidth/2; lastY=Math.round(stage.offsetHeight*0.42);
+}
+function label(){
+  var st=S[i];
+  sTitle.textContent=st.t;
+  document.getElementById("scrT").textContent=st.ph||st.t;
+  document.querySelector(".scr-n").textContent=i+1;
+  pNum.textContent=i+1;
+  progFill.style.width=(((i+(played[i]?1:0))/S.length)*100)+"%";
+  prev.disabled=(i===0);
+  next.disabled=busy;
+  next.textContent = busy ? "Playing\u2026"
+    : (played[i] ? (i<S.length-1 ? "Next step \u2192" : "Replay \u21bb") : "Play step \u2192");
+}
+function jump(n){ clearAll(); busy=false; hidePop(); i=n; hardReset();
+  for(var k=0;k<n;k++){ if(played[k]&&S[k].end) S[k].end(); }
+  if(played[n]&&S[n].end) S[n].end(); else { role(S[n].who); screen(S[n].scr||"scReview"); }
+  label(); }
+function play(){ if(busy) return; document.body.classList.remove("is-idle"); clearAll(); hardReset();
+  if(window.innerWidth<=680){
+    var r=stage.getBoundingClientRect();
+    if(r.top<0 || r.bottom>window.innerHeight) stage.scrollIntoView({behavior:"smooth",block:"center"});
+  }
+  for(var k=0;k<i;k++){ if(S[k].end) S[k].end(); }
+  busy=true; label();
+  hidePop();
+  S[i].run(function(){ busy=false; played[i]=true; label(); showPop(); }); }
+
+var ctlRun=document.getElementById("ctlRun"),
+    startBtn=document.getElementById("startBtn");
+startBtn.addEventListener("click",function(){
+  document.body.classList.remove("is-idle");
+  ctlRun.classList.add("is-on");
+  play();
+});
+
+next.addEventListener("click",function(){
+  if(busy) return;
+  if(played[i] && i<S.length-1){ i++; jump(i); play(); }
+  else play();
+});
+document.addEventListener("keydown",function(e){
+  if(e.key==="ArrowRight" && !busy){ next.click(); e.preventDefault(); }
+  if(e.key==="ArrowLeft" && i>0 && !busy){ prev.click(); e.preventDefault(); }
+});
+prev.addEventListener("click",function(){ if(i>0){ i--; jump(i); } });
+document.getElementById("popGo").addEventListener("click",function(){
+  if(busy) return;
+  hidePop();
+  if(i<S.length-1){ i++; jump(i); play(); } else { play(); }
+});
+document.getElementById("popPrev").addEventListener("click",function(){
+  if(busy || i===0) return;
+  i--; jump(i);
+  if(played[i]) showPop();            /* keep navigation reachable */
+});
+document.getElementById("popMin").addEventListener("click",minPop);
+document.getElementById("popTab").addEventListener("click",function(){ showPop(); });
+document.getElementById("popReplay").addEventListener("click",function(){
+  if(busy) return; hidePop(); play();
+});
+
+document.addEventListener("click",function(e){
+  var h=e.target.closest(".cx-hd,.fl-hd,.ign-hd,.bm-hd,.dcat-hd");
+  if(!h||busy) return;
+  var w=h.closest(".cx,.fl,.ign,.bm,.dcat");
+  var op=w.getAttribute("data-open")==="true";
+  if(op) w.setAttribute("data-open","false"); else openIt(w);
+});
+
+document.body.classList.add("is-idle");
+cur.style.transform="translate("+(stage.offsetWidth/2)+"px,"+Math.round(stage.offsetHeight*0.55)+"px)";
+screen("scStart");
+if(reduce){ played=[true,true,true,true,true,true,true]; jump(0); }
+})();
+</script>
+</body>
+</html>
