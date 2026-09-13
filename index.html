@@ -520,13 +520,14 @@ body.ids-off .dv::after{display:none;}
 .pn-l b{display:block;color:var(--ink);font-weight:600;margin-bottom:3px;letter-spacing:-.01em;}
 
 /* ============ EMBEDDED DEMO ============ */
+#demo{scroll-margin-top:80px;}
 .demo-wrap{border:1px solid var(--line);border-radius:var(--r-xl);overflow:hidden;background:var(--paper);
   box-shadow:var(--shadow-lg);}
 .demo-bar{display:flex;align-items:center;gap:12px;padding:12px 20px;border-bottom:1px solid var(--line-2);background:var(--wash-2);flex-wrap:wrap;}
 .demo-bar b{font-family:var(--display);font-size:14px;font-weight:800;letter-spacing:-.025em;}
 .demo-bar span{font-family:var(--mono);font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-4);}
 .demo-bar a{margin-left:auto;font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);}
-.demo-frame{height:940px;background:var(--paper);}
+.demo-frame{height:700px;background:var(--paper);}
 .demo-frame iframe{width:100%;height:100%;border:0;display:block;}
 
 /* ============ PRICING ============ */
@@ -548,7 +549,7 @@ body.ids-off .dv::after{display:none;}
 
 @media (max-width:900px){
   .vs,.pain,.price{grid-template-columns:1fr;}
-  .demo-frame{height:780px;}
+  .demo-frame{height:600px;}
 }
 </style>
 </head>
@@ -577,7 +578,7 @@ body.ids-off .dv::after{display:none;}
     <div class="dv" id="hero-copy">
       <p class="eyebrow">Living expense verification</p>
       <h1>Other tools show what was spent. We find what&rsquo;s ongoing.</h1>
-      <p class="lede">The borrower explains, you decide what counts, and every decision lands on the file.</p>
+      <p class="lede">Capture true living expenses &mdash; not inflated averages from one-off purchases. When borrowers explain their spending and you approve each adjustment, you unlock their real borrowing capacity while building the audit trail that proves responsible lending.</p>
       <div class="hero-cta">
         <a href="#demo" class="btn btn--primary">See the demo <svg class="arw" width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7h9M7.5 3.5 11 7l-3.5 3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
         <a href="#cta" class="btn btn--ghost">Book a walkthrough</a>
@@ -1345,7 +1346,7 @@ body.ids-off .dv::after{display:none;}
         <a href="trueline-how-it-works.html" target="_blank">Open full page &rarr;</a>
       </div>
       <div class="demo-frame">
-        <iframe src="trueline-how-it-works.html" title="Trueline interactive walkthrough" loading="lazy"></iframe>
+        <iframe src="trueline-how-it-works.html?embed=1" title="Trueline interactive walkthrough" loading="lazy"></iframe>
       </div>
     </div>
   </div>

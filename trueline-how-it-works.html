@@ -792,7 +792,14 @@ body:not(.is-idle) .an-stage:not(.is-broker) .an-r-b{color:#0B0E14;}
 .rd-v.is-red{color:transparent;background:var(--ink-3);}
 .rd-f{margin-top:9px;padding-top:9px;border-top:1px dashed var(--accent-line);
   font-size:10.5px;line-height:1.5;color:var(--ink-3);}
+
+/* Embed mode - hide header and hero when loaded in iframe */
+html.is-embed .site-head,
+html.is-embed .page-hero{display:none !important;}
+html.is-embed .band{padding-block:24px;}
+html.is-embed main{padding-top:0;}
 </style>
+<script>if(location.search.includes('embed=1'))document.documentElement.classList.add('is-embed');</script>
 </head>
 <body>
 <header class="site-head dv" id="site-header">
